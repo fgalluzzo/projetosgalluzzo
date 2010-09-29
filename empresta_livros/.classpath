@@ -15,8 +15,8 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces/primefaces-2.2.M1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jstl/jstl.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jstl/standard.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsf2/primefaces-2.2.M1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

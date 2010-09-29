@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+	<ui:composition template="/templates/common_nosidebar.xhtml">
+		<ui:define name="header" />
+		<ui:define name="content">
+			<div class="post">
+				
+				<h:form prependId="false">
+					
+					<p:panel  header="#{msg.cadastrar}">
+						<h:panelGrid columns="2" >
+							<h:outputLabel value="#{msg.nome}" for="nome"/>
+							<h:inputText id="nome" value="#{usuario.usuarioBean.nome}"/>
+							
+							<h:outputLabel value="#{msg.apelido}" for="apelido"/>
+							<h:inputText id="apelido" value="#{usuario.usuarioBean.apelido}"/>
+							
+							<h:outputLabel value="#{msg.senha}" for="senha"/>
+							<h:inputSecret id="senha" value="#{usuario.usuarioBean.senha}"/>
+							
+							<h:outputLabel value="#{msg.nascimento}" for="apelido"/>
+							<p:calendar navigator="true" maxdate="#{util.hoje}" effect="Fade" value="#{usuario.usuarioBean.dt_nascimento}"/>
+							
+							
+						</h:panelGrid>
+						
+						<p:commandButton action="#{usuario.cadastra}" value="#{msg.enviar}"/>
+					</p:panel>
+					
+				</h:form>
+				
+			</div>
+		</ui:define>
+	</ui:composition>
+</html>
