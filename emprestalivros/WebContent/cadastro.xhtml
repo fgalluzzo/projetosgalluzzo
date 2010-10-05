@@ -13,6 +13,7 @@
 				<h:form prependId="false">
 					
 					<p:panel  header="#{msg.cadastrar}">
+						 <p:messages id="msgs" showDetail="false"/>  
 						<h:panelGrid columns="2" >
 							<h:outputLabel value="#{msg.nome}" for="nome"/>
 							<h:inputText id="nome" value="#{usuario.usuarioBean.nome}"/>
@@ -23,14 +24,17 @@
 							<h:outputLabel value="#{msg.senha}" for="senha"/>
 							<h:inputSecret id="senha" value="#{usuario.usuarioBean.senha}"/>
 							
+							<h:outputLabel value="#{msg.email}" for="email"/>
+							<h:inputText id="email" value="#{usuario.usuarioBean.email}" />
+							
 							<h:outputLabel value="#{msg.nascimento}" for="nascimento"/>						
-							<p:inputMask id="nascimento" mask="99/99/9999" value="#{usuario.usuarioBean.}"/>
+							<p:inputMask id="nascimento" mask="99/99/9999" value="#{usuario.usuarioBean.st_nascimento}"/>
 							
 														
 							
 						</h:panelGrid>
 						
-						<p:commandButton action="#{usuario.cadastra}" value="#{msg.enviar}"/>
+						<p:commandButton action="#{usuario.cadastra}" update="msgs" value="#{msg.enviar}"/>
 					</p:panel>
 					
 				</h:form>
