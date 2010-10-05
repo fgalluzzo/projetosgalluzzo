@@ -2,25 +2,36 @@ package managedBean;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.xml.ws.Action;
+
+import util.PersistenceUtil;
 
 import bean.UsuarioBean;
+import controller.MessagesController;
+import dao.UsuarioDao;
 
 @ManagedBean(name="usuario")
 @RequestScoped
 public class UsuarioMB {
 	private UsuarioBean usuarioBean; 
-	
+	UsuarioDao usuarioDao;
 	public UsuarioMB() {
 		usuarioBean = new UsuarioBean();
-	
+		usuarioDao = new UsuarioDao(PersistenceUtil.getEntityManager());
 	}
 	
 	
 	
 	public void cadastra(){
+		try{
+			usuarioDao.createUsuario(usuarioBean);
+			 MessagesController.mensagemInsercaoSucesso("Usuário");
+		}catch (Exception e) {
+			// TODO: handle exception
+			MessagesController.mensagemErroInsercao("Usuário");
+		}
 		
-		System.out.println(getUsuarioBean().getNome());
+				
+		
 	}
 	
 	public UsuarioBean getUsuarioBean() {
