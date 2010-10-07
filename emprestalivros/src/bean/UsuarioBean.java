@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.annotation.Generated;
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,8 @@ public class UsuarioBean {
 	@Column(name="data_nascimento")
 	private Date dt_nascimento;
 	
-	private String st_nascimento;
+	
+	
 	
 	@Column(name="email")
 	private String email;
@@ -78,23 +80,6 @@ public class UsuarioBean {
 		this.dt_nascimento = dt_nascimento;
 	}
 	
-	public String getSt_nascimento() {
-		return st_nascimento;
-	}
-	
-	public void setSt_nascimento(String st_nascimento) {
-		this.st_nascimento = st_nascimento;
-		SimpleDateFormat spf = new SimpleDateFormat("d/M/y");
-		Date d = new Date();
-		try {
-			d = spf.parse(st_nascimento);
-			this.setDt_nascimento(d);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
 
 	public String getEmail() {
 		return email;

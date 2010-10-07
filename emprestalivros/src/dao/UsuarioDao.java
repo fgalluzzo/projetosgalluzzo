@@ -16,7 +16,7 @@ public class UsuarioDao extends AbstractDao<UsuarioBean> {
         super(em);
     }
 	
-	public void createUsuario(UsuarioBean usuario){
+	public void createUsuario(UsuarioBean usuario) throws Exception{
 				 		
 		
 		 try{			 
@@ -24,7 +24,8 @@ public class UsuarioDao extends AbstractDao<UsuarioBean> {
 			 	em.persist(usuario); 
 			 em.getTransaction().commit();			
 		 }catch (Exception e) {
-			 em.getTransaction().rollback();			 
+			 em.getTransaction().rollback();
+			 throw new Exception();
 		}finally{
 			if (em != null) {
 				em.close();
