@@ -22,7 +22,9 @@
 							<h:inputText id="apelido" value="#{usuario.usuarioBean.apelido}"/>
 							
 							<h:outputLabel value="#{msg.senha}" for="senha"/>
-							<h:inputSecret id="senha" value="#{usuario.usuarioBean.senha}"/>
+							<p:password minLength="5" id="senha" value="#{usuario.usuarioBean.senha}" 
+							promptLabel="#{msg.promptPassword}" weakLabel="#{msg.senhaFraca}" goodLabel="#{msg.senhaBoa}"
+							strongLabel="#{msg.senhaForte}" />
 							
 							<h:outputLabel value="#{msg.email}" for="email"/>
 							<h:inputText id="email" value="#{usuario.usuarioBean.email}" />
