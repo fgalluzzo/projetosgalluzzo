@@ -16,21 +16,21 @@
 						 <p:messages id="msgs" showDetail="false"/>  
 						<h:panelGrid columns="2" >
 							<h:outputLabel value="#{msg.nome}" for="nome"/>
-							<h:inputText id="nome" value="#{usuario.usuarioBean.nome}"/>
+							<h:inputText id="nome" value="#{usuario.usuarioBean.nome}" required="true"/>
 							
 							<h:outputLabel value="#{msg.apelido}" for="apelido"/>
-							<h:inputText id="apelido" value="#{usuario.usuarioBean.apelido}"/>
+							<h:inputText id="apelido" value="#{usuario.usuarioBean.apelido}" required="true"/>
 							
 							<h:outputLabel value="#{msg.senha}" for="senha"/>
 							<p:password minLength="5" id="senha" value="#{usuario.usuarioBean.senha}" 
-							promptLabel="#{msg.promptPassword}" weakLabel="#{msg.senhaFraca}" goodLabel="#{msg.senhaBoa}"
+							promptLabel="#{msg.promptPassword}" weakLabel="#{msg.senhaFraca}" required="true" goodLabel="#{msg.senhaBoa}"
 							strongLabel="#{msg.senhaForte}" />
 							
 							<h:outputLabel value="#{msg.email}" for="email"/>
-							<h:inputText id="email" value="#{usuario.usuarioBean.email}" />
+							<h:inputText id="email" value="#{usuario.usuarioBean.email}" required="true" />
 							
 							<h:outputLabel value="#{msg.nascimento}" for="nascimento"/>						
-							<p:inputMask id="nascimento" mask="99/99/9999" value="#{usuario.st_nascimento}"/>
+							<p:inputMask id="nascimento" mask="99/99/9999" value="#{usuario.st_nascimento}" required="true"/>
 							
 														
 							
