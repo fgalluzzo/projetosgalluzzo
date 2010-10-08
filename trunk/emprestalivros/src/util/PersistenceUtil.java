@@ -1,8 +1,14 @@
 package util;
 
+import java.sql.SQLException;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import org.hibernate.exception.JDBCExceptionHelper;
+import org.hibernate.exception.TemplatedViolatedConstraintNameExtracter;
+import org.hibernate.exception.ViolatedConstraintNameExtracter;
 
 public class PersistenceUtil {
 	
@@ -49,6 +55,41 @@ public class PersistenceUtil {
 		
 		System.out.println("finalize");
 	}
+	
+	public static ViolatedConstraintNameExtracter getViolatedConstraintNameExtracter() {
+        return EXTRACTER;
+   }
+	
+	private static ViolatedConstraintNameExtracter EXTRACTER = new TemplatedViolatedConstraintNameExtracter() {
+
+	      /**
+	       * Extract the name of the violated constraint from the given SQLException.
+	       *
+	       * @param sqle The exception that was the result of the constraint violation.
+	       * @return The extracted constraint name.
+	       */
+	      public String extractConstraintName(SQLException sqle) {
+	         String constraintName = null;
+	         
+	         int errorCode = JDBCExceptionHelper.extractErrorCode(sqle);
+
+	         if ( errorCode == -8 ) {
+	            constraintName = extractUsingTemplate( "Integrity constraint violation ", " table:", sqle.getMessage() );
+	         }
+	         else if ( errorCode == -9 ) {
+	            constraintName = extractUsingTemplate( "Violation of unique index: ", " in statement [", sqle.getMessage() );
+	         }
+	         else if ( errorCode == -104 ) {
+	            constraintName = extractUsingTemplate( "Unique constraint violation: ", " in statement [", sqle.getMessage() );
+	         }
+	         else if ( errorCode == -177 ) {
+	            constraintName = extractUsingTemplate( "Integrity constraint violation - no parent ", " table:", sqle.getMessage() );
+	         }
+
+	         return constraintName;
+	      }
+
+	   };
 }
 
 

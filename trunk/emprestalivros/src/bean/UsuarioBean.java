@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="usuario")
@@ -27,7 +28,8 @@ public class UsuarioBean {
 	@Column(name="nome")
 	private String nome; 
 	
-	@Column(name="apelido")
+	
+	@Column(name="apelido",unique=true)	
 	private String apelido;
 	
 	@Column(name="senha")
@@ -36,10 +38,7 @@ public class UsuarioBean {
 	@Column(name="data_nascimento")
 	private Date dt_nascimento;
 	
-	
-	
-	
-	@Column(name="email")
+	@Column(name="email",unique=true)
 	private String email;
 
 	public Long getId() {
