@@ -42,21 +42,27 @@ public class UsuarioDao extends AbstractDao<UsuarioBean> {
 			 	em.flush();
 			 em.getTransaction().commit();			
 		 }catch (PersistenceException e) {
+			
 			 Throwable lastCause = e;
-		    while (lastCause != null){	
-		    	  System.out.println("bla");
+			 String constraintName =null;
+			 while (lastCause != null){		
 		    	  if(lastCause.toString().startsWith("java.sql.BatchUpdateException")){
 		    		  BatchUpdateException bu = (BatchUpdateException) lastCause;
-		    		  System.out.println(PersistenceUtil.getViolatedConstraintNameExtracter().extractConstraintName(bu.getNextException()));
+		    		  constraintName = PersistenceUtil.getViolatedConstraintNameExtracter().extractConstraintName(bu.getNextException());
 		    		  
 		    	  }
 		    	  lastCause = lastCause.getCause();
 
-		    }
-
-		      			 
-			 if(e.getCause().getMessage().equals("org.hibernate.exception.ConstraintViolationException: Could not execute JDBC batch update"))
-				 throw new ConstraintViolationException(MessagesReader.getMessages().getProperty("erros.constraint.unique"),new SQLException(),MessagesReader.getMessages().getProperty("alerta.loginUnico"));				 			 	
+			 }
+		      			
+			if(constraintName !=null){
+				if(constraintName.equals("usuario_uk")){
+					throw new ConstraintViolationException(MessagesReader.getMessages().getProperty("erros.constraint.unique"),new SQLException(),MessagesReader.getMessages().getProperty("alerta.loginUnico"));
+				}else if(constraintName.equals("email_uk")){
+					throw new ConstraintViolationException(MessagesReader.getMessages().getProperty("erros.constraint.unique"),new SQLException(),MessagesReader.getMessages().getProperty("alerta.emailUnico"));
+				}
+			}
+				 
 			  
 		}catch (Exception e) {
 			 //em.getTransaction().rollback();

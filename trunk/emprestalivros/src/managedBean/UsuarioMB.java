@@ -31,13 +31,17 @@ public class UsuarioMB {
 	public void cadastra(){
 		try{
 			usuarioDao.createUsuario(usuarioBean);
-			MessagesController.mensagemInsercaoSucesso("Usuário");
+			MessagesController.mensagemInsercaoSucesso("Usuário "+usuarioBean.getApelido());
+			usuarioBean = null;
+			this.st_nascimento = null;
 		}catch (ConstraintViolationException e) {
 			MessagesController.mensagemInsercaoLoginDup(e.getMessage(), e.getConstraintName());
+			usuarioBean.setSenha("");
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			MessagesController.mensagemErroInsercao("Usuário");
+			usuarioBean.setSenha("");
 		}
 		
 				
