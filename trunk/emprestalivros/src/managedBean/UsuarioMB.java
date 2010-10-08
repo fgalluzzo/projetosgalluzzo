@@ -7,6 +7,8 @@ import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import org.hibernate.exception.ConstraintViolationException;
+
 import util.PersistenceUtil;
 
 import bean.UsuarioBean;
@@ -30,7 +32,10 @@ public class UsuarioMB {
 		try{
 			usuarioDao.createUsuario(usuarioBean);
 			MessagesController.mensagemInsercaoSucesso("Usuário");
-		}catch (Exception e) {
+		}catch (ConstraintViolationException e) {
+			MessagesController.mensagemInsercaoLoginDup(e.getMessage(), e.getConstraintName());
+		}
+		catch (Exception e) {
 			// TODO: handle exception
 			MessagesController.mensagemErroInsercao("Usuário");
 		}

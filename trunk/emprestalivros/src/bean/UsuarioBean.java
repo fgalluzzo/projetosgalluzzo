@@ -12,14 +12,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="usuario")
 public class UsuarioBean {
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Id	
+	@SequenceGenerator(name="usuario_seq",sequenceName="usuario_seq")
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="usuario_seq")	
 	private Long id;
 	
 	@Column(name="nome")

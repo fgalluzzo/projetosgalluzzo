@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Started on 2010-09-29 10:38:41 BRT
+-- Started on 2010-10-08 09:06:02 BRT
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -18,9 +18,9 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 1511 (class 1259 OID 17297)
+-- TOC entry 1518 (class 1259 OID 17297)
 -- Dependencies: 3
--- Name: grupo; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: grupo; Type: TABLE; Schema: public; Owner: uel; Tablespace: 
 --
 
 CREATE TABLE grupo (
@@ -30,10 +30,37 @@ CREATE TABLE grupo (
 );
 
 
+ALTER TABLE public.grupo OWNER TO uel;
+
 --
--- TOC entry 1509 (class 1259 OID 17274)
+-- TOC entry 1523 (class 1259 OID 17375)
 -- Dependencies: 3
--- Name: livro; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: grupo_seq; Type: SEQUENCE; Schema: public; Owner: uel
+--
+
+CREATE SEQUENCE grupo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.grupo_seq OWNER TO uel;
+
+--
+-- TOC entry 1856 (class 0 OID 0)
+-- Dependencies: 1523
+-- Name: grupo_seq; Type: SEQUENCE SET; Schema: public; Owner: uel
+--
+
+SELECT pg_catalog.setval('grupo_seq', 1, false);
+
+
+--
+-- TOC entry 1516 (class 1259 OID 17274)
+-- Dependencies: 3
+-- Name: livro; Type: TABLE; Schema: public; Owner: uel; Tablespace: 
 --
 
 CREATE TABLE livro (
@@ -50,10 +77,37 @@ CREATE TABLE livro (
 );
 
 
+ALTER TABLE public.livro OWNER TO uel;
+
 --
--- TOC entry 1515 (class 1259 OID 17358)
+-- TOC entry 1524 (class 1259 OID 17377)
 -- Dependencies: 3
--- Name: livros_pedido; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: livro_seq; Type: SEQUENCE; Schema: public; Owner: uel
+--
+
+CREATE SEQUENCE livro_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.livro_seq OWNER TO uel;
+
+--
+-- TOC entry 1857 (class 0 OID 0)
+-- Dependencies: 1524
+-- Name: livro_seq; Type: SEQUENCE SET; Schema: public; Owner: uel
+--
+
+SELECT pg_catalog.setval('livro_seq', 1, false);
+
+
+--
+-- TOC entry 1522 (class 1259 OID 17358)
+-- Dependencies: 3
+-- Name: livros_pedido; Type: TABLE; Schema: public; Owner: uel; Tablespace: 
 --
 
 CREATE TABLE livros_pedido (
@@ -63,10 +117,37 @@ CREATE TABLE livros_pedido (
 );
 
 
+ALTER TABLE public.livros_pedido OWNER TO uel;
+
 --
--- TOC entry 1510 (class 1259 OID 17284)
+-- TOC entry 1525 (class 1259 OID 17379)
 -- Dependencies: 3
--- Name: livros_usuario; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: livros_pedido_seq; Type: SEQUENCE; Schema: public; Owner: uel
+--
+
+CREATE SEQUENCE livros_pedido_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.livros_pedido_seq OWNER TO uel;
+
+--
+-- TOC entry 1858 (class 0 OID 0)
+-- Dependencies: 1525
+-- Name: livros_pedido_seq; Type: SEQUENCE SET; Schema: public; Owner: uel
+--
+
+SELECT pg_catalog.setval('livros_pedido_seq', 1, false);
+
+
+--
+-- TOC entry 1517 (class 1259 OID 17284)
+-- Dependencies: 3
+-- Name: livros_usuario; Type: TABLE; Schema: public; Owner: uel; Tablespace: 
 --
 
 CREATE TABLE livros_usuario (
@@ -75,10 +156,12 @@ CREATE TABLE livros_usuario (
 );
 
 
+ALTER TABLE public.livros_usuario OWNER TO uel;
+
 --
--- TOC entry 1514 (class 1259 OID 17341)
+-- TOC entry 1521 (class 1259 OID 17341)
 -- Dependencies: 3
--- Name: pedido; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: pedido; Type: TABLE; Schema: public; Owner: uel; Tablespace: 
 --
 
 CREATE TABLE pedido (
@@ -91,10 +174,37 @@ CREATE TABLE pedido (
 );
 
 
+ALTER TABLE public.pedido OWNER TO uel;
+
 --
--- TOC entry 1513 (class 1259 OID 17327)
+-- TOC entry 1526 (class 1259 OID 17381)
 -- Dependencies: 3
--- Name: perfil_grupo; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: pedido_seq; Type: SEQUENCE; Schema: public; Owner: uel
+--
+
+CREATE SEQUENCE pedido_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pedido_seq OWNER TO uel;
+
+--
+-- TOC entry 1859 (class 0 OID 0)
+-- Dependencies: 1526
+-- Name: pedido_seq; Type: SEQUENCE SET; Schema: public; Owner: uel
+--
+
+SELECT pg_catalog.setval('pedido_seq', 1, false);
+
+
+--
+-- TOC entry 1520 (class 1259 OID 17327)
+-- Dependencies: 3
+-- Name: perfil_grupo; Type: TABLE; Schema: public; Owner: uel; Tablespace: 
 --
 
 CREATE TABLE perfil_grupo (
@@ -103,10 +213,37 @@ CREATE TABLE perfil_grupo (
 );
 
 
+ALTER TABLE public.perfil_grupo OWNER TO uel;
+
 --
--- TOC entry 1508 (class 1259 OID 17267)
+-- TOC entry 1527 (class 1259 OID 17383)
 -- Dependencies: 3
--- Name: usuario; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: perfil_grupo_seq; Type: SEQUENCE; Schema: public; Owner: uel
+--
+
+CREATE SEQUENCE perfil_grupo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.perfil_grupo_seq OWNER TO uel;
+
+--
+-- TOC entry 1860 (class 0 OID 0)
+-- Dependencies: 1527
+-- Name: perfil_grupo_seq; Type: SEQUENCE SET; Schema: public; Owner: uel
+--
+
+SELECT pg_catalog.setval('perfil_grupo_seq', 1, false);
+
+
+--
+-- TOC entry 1515 (class 1259 OID 17267)
+-- Dependencies: 3
+-- Name: usuario; Type: TABLE; Schema: public; Owner: uel; Tablespace: 
 --
 
 CREATE TABLE usuario (
@@ -119,10 +256,37 @@ CREATE TABLE usuario (
 );
 
 
+ALTER TABLE public.usuario OWNER TO uel;
+
 --
--- TOC entry 1512 (class 1259 OID 17307)
+-- TOC entry 1528 (class 1259 OID 17385)
 -- Dependencies: 3
--- Name: usuarios_grupo; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: usuario_seq; Type: SEQUENCE; Schema: public; Owner: uel
+--
+
+CREATE SEQUENCE usuario_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.usuario_seq OWNER TO uel;
+
+--
+-- TOC entry 1861 (class 0 OID 0)
+-- Dependencies: 1528
+-- Name: usuario_seq; Type: SEQUENCE SET; Schema: public; Owner: uel
+--
+
+SELECT pg_catalog.setval('usuario_seq', 18, true);
+
+
+--
+-- TOC entry 1519 (class 1259 OID 17307)
+-- Dependencies: 3
+-- Name: usuarios_grupo; Type: TABLE; Schema: public; Owner: uel; Tablespace: 
 --
 
 CREATE TABLE usuarios_grupo (
@@ -133,10 +297,118 @@ CREATE TABLE usuarios_grupo (
 );
 
 
+ALTER TABLE public.usuarios_grupo OWNER TO uel;
+
 --
--- TOC entry 1804 (class 2606 OID 17304)
--- Dependencies: 1511 1511
--- Name: grupo_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 1529 (class 1259 OID 17387)
+-- Dependencies: 3
+-- Name: usuarios_grupo_seq; Type: SEQUENCE; Schema: public; Owner: uel
+--
+
+CREATE SEQUENCE usuarios_grupo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.usuarios_grupo_seq OWNER TO uel;
+
+--
+-- TOC entry 1862 (class 0 OID 0)
+-- Dependencies: 1529
+-- Name: usuarios_grupo_seq; Type: SEQUENCE SET; Schema: public; Owner: uel
+--
+
+SELECT pg_catalog.setval('usuarios_grupo_seq', 1, false);
+
+
+--
+-- TOC entry 1847 (class 0 OID 17297)
+-- Dependencies: 1518
+-- Data for Name: grupo; Type: TABLE DATA; Schema: public; Owner: uel
+--
+
+COPY grupo (id, nome, descricao) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1845 (class 0 OID 17274)
+-- Dependencies: 1516
+-- Data for Name: livro; Type: TABLE DATA; Schema: public; Owner: uel
+--
+
+COPY livro (id, nome, isbn, origem, ano, edicao, paginas, acabamento, formato, descricao) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1851 (class 0 OID 17358)
+-- Dependencies: 1522
+-- Data for Name: livros_pedido; Type: TABLE DATA; Schema: public; Owner: uel
+--
+
+COPY livros_pedido (id, pedido_fk, livro_fk) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1846 (class 0 OID 17284)
+-- Dependencies: 1517
+-- Data for Name: livros_usuario; Type: TABLE DATA; Schema: public; Owner: uel
+--
+
+COPY livros_usuario (livro_fk, usuario_fk) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1850 (class 0 OID 17341)
+-- Dependencies: 1521
+-- Data for Name: pedido; Type: TABLE DATA; Schema: public; Owner: uel
+--
+
+COPY pedido (id, codigo, data, usuario_pede_fk, usuario_pedido_fk, estado) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1849 (class 0 OID 17327)
+-- Dependencies: 1520
+-- Data for Name: perfil_grupo; Type: TABLE DATA; Schema: public; Owner: uel
+--
+
+COPY perfil_grupo (id, nome) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1844 (class 0 OID 17267)
+-- Dependencies: 1515
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: uel
+--
+
+COPY usuario (id, nome, apelido, senha, data_nascimento, email) FROM stdin;
+50	Fabio	galluzzo	1234	1987-05-26	fgalluzzo@gmail.com
+\.
+
+
+--
+-- TOC entry 1848 (class 0 OID 17307)
+-- Dependencies: 1519
+-- Data for Name: usuarios_grupo; Type: TABLE DATA; Schema: public; Owner: uel
+--
+
+COPY usuarios_grupo (grupo_fk, usuario_fk, id, perfil_fk) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1818 (class 2606 OID 17304)
+-- Dependencies: 1518 1518
+-- Name: grupo_pk; Type: CONSTRAINT; Schema: public; Owner: uel; Tablespace: 
 --
 
 ALTER TABLE ONLY grupo
@@ -144,9 +416,9 @@ ALTER TABLE ONLY grupo
 
 
 --
--- TOC entry 1806 (class 2606 OID 17306)
--- Dependencies: 1511 1511
--- Name: grupo_uk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 1820 (class 2606 OID 17306)
+-- Dependencies: 1518 1518
+-- Name: grupo_uk; Type: CONSTRAINT; Schema: public; Owner: uel; Tablespace: 
 --
 
 ALTER TABLE ONLY grupo
@@ -154,9 +426,9 @@ ALTER TABLE ONLY grupo
 
 
 --
--- TOC entry 1798 (class 2606 OID 17278)
--- Dependencies: 1509 1509
--- Name: livro_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 1812 (class 2606 OID 17278)
+-- Dependencies: 1516 1516
+-- Name: livro_pk; Type: CONSTRAINT; Schema: public; Owner: uel; Tablespace: 
 --
 
 ALTER TABLE ONLY livro
@@ -164,9 +436,9 @@ ALTER TABLE ONLY livro
 
 
 --
--- TOC entry 1800 (class 2606 OID 17280)
--- Dependencies: 1509 1509
--- Name: livro_uk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 1814 (class 2606 OID 17280)
+-- Dependencies: 1516 1516
+-- Name: livro_uk; Type: CONSTRAINT; Schema: public; Owner: uel; Tablespace: 
 --
 
 ALTER TABLE ONLY livro
@@ -174,9 +446,9 @@ ALTER TABLE ONLY livro
 
 
 --
--- TOC entry 1818 (class 2606 OID 17362)
--- Dependencies: 1515 1515
--- Name: lp_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 1832 (class 2606 OID 17362)
+-- Dependencies: 1522 1522
+-- Name: lp_pk; Type: CONSTRAINT; Schema: public; Owner: uel; Tablespace: 
 --
 
 ALTER TABLE ONLY livros_pedido
@@ -184,9 +456,9 @@ ALTER TABLE ONLY livros_pedido
 
 
 --
--- TOC entry 1820 (class 2606 OID 17364)
--- Dependencies: 1515 1515 1515
--- Name: lp_uk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 1834 (class 2606 OID 17364)
+-- Dependencies: 1522 1522 1522
+-- Name: lp_uk; Type: CONSTRAINT; Schema: public; Owner: uel; Tablespace: 
 --
 
 ALTER TABLE ONLY livros_pedido
@@ -194,9 +466,9 @@ ALTER TABLE ONLY livros_pedido
 
 
 --
--- TOC entry 1802 (class 2606 OID 17313)
--- Dependencies: 1510 1510 1510
--- Name: lu_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 1816 (class 2606 OID 17313)
+-- Dependencies: 1517 1517 1517
+-- Name: lu_pk; Type: CONSTRAINT; Schema: public; Owner: uel; Tablespace: 
 --
 
 ALTER TABLE ONLY livros_usuario
@@ -204,9 +476,9 @@ ALTER TABLE ONLY livros_usuario
 
 
 --
--- TOC entry 1814 (class 2606 OID 17345)
--- Dependencies: 1514 1514
--- Name: pedido_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 1828 (class 2606 OID 17345)
+-- Dependencies: 1521 1521
+-- Name: pedido_pk; Type: CONSTRAINT; Schema: public; Owner: uel; Tablespace: 
 --
 
 ALTER TABLE ONLY pedido
@@ -214,9 +486,9 @@ ALTER TABLE ONLY pedido
 
 
 --
--- TOC entry 1816 (class 2606 OID 17347)
--- Dependencies: 1514 1514
--- Name: pedido_uk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 1830 (class 2606 OID 17347)
+-- Dependencies: 1521 1521
+-- Name: pedido_uk; Type: CONSTRAINT; Schema: public; Owner: uel; Tablespace: 
 --
 
 ALTER TABLE ONLY pedido
@@ -224,9 +496,9 @@ ALTER TABLE ONLY pedido
 
 
 --
--- TOC entry 1810 (class 2606 OID 17331)
--- Dependencies: 1513 1513
--- Name: perfil_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 1824 (class 2606 OID 17331)
+-- Dependencies: 1520 1520
+-- Name: perfil_pk; Type: CONSTRAINT; Schema: public; Owner: uel; Tablespace: 
 --
 
 ALTER TABLE ONLY perfil_grupo
@@ -234,9 +506,9 @@ ALTER TABLE ONLY perfil_grupo
 
 
 --
--- TOC entry 1812 (class 2606 OID 17333)
--- Dependencies: 1513 1513
--- Name: perfil_uk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 1826 (class 2606 OID 17333)
+-- Dependencies: 1520 1520
+-- Name: perfil_uk; Type: CONSTRAINT; Schema: public; Owner: uel; Tablespace: 
 --
 
 ALTER TABLE ONLY perfil_grupo
@@ -244,9 +516,9 @@ ALTER TABLE ONLY perfil_grupo
 
 
 --
--- TOC entry 1808 (class 2606 OID 17335)
--- Dependencies: 1512 1512
--- Name: ug_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 1822 (class 2606 OID 17335)
+-- Dependencies: 1519 1519
+-- Name: ug_pk; Type: CONSTRAINT; Schema: public; Owner: uel; Tablespace: 
 --
 
 ALTER TABLE ONLY usuarios_grupo
@@ -254,9 +526,9 @@ ALTER TABLE ONLY usuarios_grupo
 
 
 --
--- TOC entry 1794 (class 2606 OID 17271)
--- Dependencies: 1508 1508
--- Name: usuario_pk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 1808 (class 2606 OID 17271)
+-- Dependencies: 1515 1515
+-- Name: usuario_pk; Type: CONSTRAINT; Schema: public; Owner: uel; Tablespace: 
 --
 
 ALTER TABLE ONLY usuario
@@ -264,9 +536,9 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 1796 (class 2606 OID 17273)
--- Dependencies: 1508 1508
--- Name: usuario_uk; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- TOC entry 1810 (class 2606 OID 17273)
+-- Dependencies: 1515 1515
+-- Name: usuario_uk; Type: CONSTRAINT; Schema: public; Owner: uel; Tablespace: 
 --
 
 ALTER TABLE ONLY usuario
@@ -274,9 +546,9 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 1827 (class 2606 OID 17353)
--- Dependencies: 1793 1508 1514
--- Name: dono; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 1841 (class 2606 OID 17353)
+-- Dependencies: 1521 1515 1807
+-- Name: dono; Type: FK CONSTRAINT; Schema: public; Owner: uel
 --
 
 ALTER TABLE ONLY pedido
@@ -284,9 +556,9 @@ ALTER TABLE ONLY pedido
 
 
 --
--- TOC entry 1823 (class 2606 OID 17314)
--- Dependencies: 1511 1803 1512
--- Name: grupo_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 1837 (class 2606 OID 17314)
+-- Dependencies: 1519 1518 1817
+-- Name: grupo_fk; Type: FK CONSTRAINT; Schema: public; Owner: uel
 --
 
 ALTER TABLE ONLY usuarios_grupo
@@ -294,9 +566,9 @@ ALTER TABLE ONLY usuarios_grupo
 
 
 --
--- TOC entry 1821 (class 2606 OID 17287)
--- Dependencies: 1510 1797 1509
--- Name: livro_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 1835 (class 2606 OID 17287)
+-- Dependencies: 1516 1811 1517
+-- Name: livro_fk; Type: FK CONSTRAINT; Schema: public; Owner: uel
 --
 
 ALTER TABLE ONLY livros_usuario
@@ -304,9 +576,9 @@ ALTER TABLE ONLY livros_usuario
 
 
 --
--- TOC entry 1829 (class 2606 OID 17370)
--- Dependencies: 1797 1509 1515
--- Name: livro_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 1843 (class 2606 OID 17370)
+-- Dependencies: 1516 1811 1522
+-- Name: livro_fk; Type: FK CONSTRAINT; Schema: public; Owner: uel
 --
 
 ALTER TABLE ONLY livros_pedido
@@ -314,9 +586,9 @@ ALTER TABLE ONLY livros_pedido
 
 
 --
--- TOC entry 1826 (class 2606 OID 17348)
--- Dependencies: 1514 1793 1508
--- Name: pede_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 1840 (class 2606 OID 17348)
+-- Dependencies: 1521 1515 1807
+-- Name: pede_fk; Type: FK CONSTRAINT; Schema: public; Owner: uel
 --
 
 ALTER TABLE ONLY pedido
@@ -324,9 +596,9 @@ ALTER TABLE ONLY pedido
 
 
 --
--- TOC entry 1828 (class 2606 OID 17365)
--- Dependencies: 1813 1514 1515
--- Name: pedido_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 1842 (class 2606 OID 17365)
+-- Dependencies: 1521 1522 1827
+-- Name: pedido_fk; Type: FK CONSTRAINT; Schema: public; Owner: uel
 --
 
 ALTER TABLE ONLY livros_pedido
@@ -334,9 +606,9 @@ ALTER TABLE ONLY livros_pedido
 
 
 --
--- TOC entry 1825 (class 2606 OID 17336)
--- Dependencies: 1512 1513 1809
--- Name: perfil_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 1839 (class 2606 OID 17336)
+-- Dependencies: 1519 1520 1823
+-- Name: perfil_fk; Type: FK CONSTRAINT; Schema: public; Owner: uel
 --
 
 ALTER TABLE ONLY usuarios_grupo
@@ -344,9 +616,9 @@ ALTER TABLE ONLY usuarios_grupo
 
 
 --
--- TOC entry 1822 (class 2606 OID 17292)
--- Dependencies: 1793 1510 1508
--- Name: usuario_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 1836 (class 2606 OID 17292)
+-- Dependencies: 1515 1807 1517
+-- Name: usuario_fk; Type: FK CONSTRAINT; Schema: public; Owner: uel
 --
 
 ALTER TABLE ONLY livros_usuario
@@ -354,9 +626,9 @@ ALTER TABLE ONLY livros_usuario
 
 
 --
--- TOC entry 1824 (class 2606 OID 17319)
--- Dependencies: 1512 1793 1508
--- Name: usuario_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 1838 (class 2606 OID 17319)
+-- Dependencies: 1519 1807 1515
+-- Name: usuario_fk; Type: FK CONSTRAINT; Schema: public; Owner: uel
 --
 
 ALTER TABLE ONLY usuarios_grupo
@@ -364,9 +636,9 @@ ALTER TABLE ONLY usuarios_grupo
 
 
 --
--- TOC entry 1833 (class 0 OID 0)
+-- TOC entry 1855 (class 0 OID 0)
 -- Dependencies: 3
--- Name: public; Type: ACL; Schema: -; Owner: -
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
@@ -375,7 +647,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2010-09-29 10:38:41 BRT
+-- Completed on 2010-10-08 09:06:02 BRT
 
 --
 -- PostgreSQL database dump complete
