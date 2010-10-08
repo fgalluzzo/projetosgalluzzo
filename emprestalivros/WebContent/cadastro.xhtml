@@ -14,7 +14,7 @@
 					
 					<p:panel  header="#{msg.cadastrar}">
 						 <p:messages id="msgs" showDetail="false"/>  
-						<h:panelGrid columns="2" >
+						<h:panelGrid id="cadastrar" columns="2" >
 							<h:outputLabel value="#{msg.nome}" for="nome"/>
 							<h:inputText id="nome" value="#{usuario.usuarioBean.nome}" required="true"/>
 							
@@ -36,7 +36,8 @@
 							
 						</h:panelGrid>
 						
-						<p:commandButton action="#{usuario.cadastra}" update="msgs" value="#{msg.enviar}"/>
+						<p:commandButton action="#{usuario.cadastra}" update="cadastrar,msgs" value="#{msg.enviar}"/>						
+						<p:button outcome="login" value="#{msg.voltar}"/>
 					</p:panel>
 					
 				</h:form>
