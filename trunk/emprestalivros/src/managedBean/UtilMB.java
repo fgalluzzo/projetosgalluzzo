@@ -7,7 +7,7 @@ import javax.faces.bean.RequestScoped;
 
 @ManagedBean(name="util")
 @RequestScoped
-public class UtilBean {
+public class UtilMB {
 	
 	private Date hoje;
 	

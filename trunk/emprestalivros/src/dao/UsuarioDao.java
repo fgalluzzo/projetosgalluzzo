@@ -4,30 +4,22 @@ import java.sql.BatchUpdateException;
 import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
-import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.Query;
 
-import org.hibernate.HibernateException;
-import org.hibernate.JDBCException;
-import org.hibernate.exception.Configurable;
 import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.exception.JDBCExceptionHelper;
-import org.hibernate.exception.SQLExceptionConverterFactory;
-import org.hibernate.exception.TemplatedViolatedConstraintNameExtracter;
-import org.hibernate.exception.ViolatedConstraintNameExtracter;
-import org.hibernate.util.JDBCExceptionReporter;
-import org.postgresql.translation.messages_bg;
 
-import controller.MessagesController;
+import com.sun.xml.internal.messaging.saaj.packaging.mime.util.QEncoderStream;
 
-import bean.UsuarioBean;
-
-import sun.misc.resources.Messages;
 import util.MessagesReader;
 import util.PersistenceUtil;
+import bean.UsuarioBean;
 
 public class UsuarioDao extends AbstractDao<UsuarioBean> {
+	
+	public static final int OK = 1;
+	public static final int NOK = 0;
 	
 	public UsuarioDao(EntityManager em) {
         super(em);
@@ -76,6 +68,22 @@ public class UsuarioDao extends AbstractDao<UsuarioBean> {
 		 
 		 
 		 
+	}
+	
+	public UsuarioBean findByLoginSenha(String login,String senha){
+		
+		try{
+			Query query = em.createQuery("FROM UsuarioBean WHERE apelido = :apelido AND senha = :senha");
+			
+			query.setParameter("apelido", login);
+			query.setParameter("senha", senha);
+			return (UsuarioBean)query.getSingleResult();
+		}catch (NoResultException e) {
+			throw new NoResultException();
+		}
+		
+				
+		
 	}
 	
 	

@@ -9,6 +9,7 @@ import javax.faces.bean.RequestScoped;
 
 import org.hibernate.exception.ConstraintViolationException;
 
+import util.CriaHash;
 import util.PersistenceUtil;
 
 import bean.UsuarioBean;
@@ -30,8 +31,9 @@ public class UsuarioMB {
 	
 	public void cadastra(){
 		try{
+			usuarioBean.setSenha(CriaHash.SHA1(usuarioBean.getSenha()));
 			usuarioDao.createUsuario(usuarioBean);
-			MessagesController.mensagemInsercaoSucesso("Usu√°rio "+usuarioBean.getApelido());
+			MessagesController.mensagemInsercaoSucesso("Usu·rio "+usuarioBean.getApelido());
 			usuarioBean = null;
 			this.st_nascimento = null;
 		}catch (ConstraintViolationException e) {
@@ -40,7 +42,7 @@ public class UsuarioMB {
 		}
 		catch (Exception e) {
 			// TODO: handle exception
-			MessagesController.mensagemErroInsercao("Usu√°rio");
+			MessagesController.mensagemErroInsercao("Usu·rio");
 			usuarioBean.setSenha("");
 		}
 		
