@@ -6,45 +6,47 @@
 	xmlns:p="http://primefaces.prime.com.tr/ui">
 
 <ui:composition template="/templates/common.xhtml">
-	
-		<ui:define name="header" />
-		
-		<ui:define name="content">
-			<h:form prependId="false">
-			<div class="post">
-				<p:panel >
+
+	<ui:define name="header" />
+
+	<ui:define name="content">
+		<h:form prependId="false">
+			<div class="post"><p:panel>
 				Você, que tem muitos livros, alguns você já leu e tá lá encostado no fundo da estante, tem um grupo de amigos, e costuma emprestar alguns livros para eles, e vez ou outra, perde um livro porque não lembra pra quem emprestou!
 Utilize o troca livros, aqui você cadastra seus livros, chama seus amigos, e controla suas trocas, além de ver o que seus amigos têm e pedir livros emprestados a ele!
-				</p:panel>
-			</div>
-			</h:form>
-		</ui:define>
-		<ui:define name="sidebar">
+				</p:panel></div>
+		</h:form>
+	</ui:define>
+	<ui:define name="sidebar">
 		<h:form>
 			<ul>
 				<li>
-				
-				<h2><h:outputText value="#{msg.logar}" /></h2>
-				<h:panelGrid columns="2">
 
-					<h:outputLabel value="#{msg.usuario}" for="usuario" />
-					<h:inputText id="usuario" />
+				<h2><h:outputText value="#{msg.logar}" /></h2>
+				<p:panel>
+					<p:messages id="msgs" showDetail="false" />
+					<h:panelGrid id="login" columns="2">
+
+						<h:outputLabel value="#{msg.usuario}" for="usuario" />
+						<h:inputText id="usuario" value="#{logado.usuario.apelido}" />
+
+						<h:outputLabel value="#{msg.senha}" for="senha" />
+						<h:inputSecret id="senha" value="#{logado.usuario.senha}" />
+
+					</h:panelGrid>
+					<h:panelGrid columns="1">
 					
-					<h:outputLabel value="#{msg.senha}" for="senha" />
-					<h:inputSecret id="senha" />
-					
-					<h:inputHidden  />
-					<p:commandButton value="#{msg.entrar}" />
-					
-					<h:commandLink value="#{msg.cadastrar}" action="cadastro" />
-					<h:inputHidden  />
-					
-				</h:panelGrid>
-				
-				</li>
-				
+						<p:commandButton value="#{msg.entrar}" action="#{logado.entrar}"
+							update="msgs,login" />
+
+						<h:commandLink value="#{msg.cadastrar}" action="cadastro" />
+
+					</h:panelGrid>
+
+				</p:panel></li>
+
 			</ul>
-			</h:form>
-		</ui:define>
+		</h:form>
+	</ui:define>
 </ui:composition>
 </html>
