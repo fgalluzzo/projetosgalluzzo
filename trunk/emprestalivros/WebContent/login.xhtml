@@ -25,6 +25,13 @@ Utilize o troca livros, aqui você cadastra seus livros, chama seus amigos, e co
 				<h2><h:outputText value="#{msg.logar}" /></h2>
 				<p:panel>
 					<p:messages id="msgs" showDetail="false" />
+					<p:ajaxStatus onstart="statusDialog.show();"
+						onsuccess="statusDialog.hide();" />
+
+					<p:dialog modal="true" widgetVar="statusDialog" header="Status"
+						draggable="false" closable="false" resizable="false">
+						<h:outputText value="Carregando"/>
+					</p:dialog>
 					<h:panelGrid id="login" columns="2">
 
 						<h:outputLabel value="#{msg.usuario}" for="usuario" />
@@ -35,7 +42,7 @@ Utilize o troca livros, aqui você cadastra seus livros, chama seus amigos, e co
 
 					</h:panelGrid>
 					<h:panelGrid columns="1">
-					
+
 						<p:commandButton value="#{msg.entrar}" action="#{logado.entrar}"
 							update="msgs,login" />
 
