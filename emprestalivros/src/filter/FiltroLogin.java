@@ -37,10 +37,14 @@ public class FiltroLogin implements PhaseListener{
 
        UsuarioLogadoMB usuario = (UsuarioLogadoMB) expression.getValue(context.getELContext());
        //descomentar depois q criar os usuários no banco
-       if(!( pagesWL || pagesWL2) && usuario.getUsuario().getApelido()== null ){
+       if(!( pagesWL || pagesWL2) && usuario.getUsuario().getApelido()== null ) {
            NavigationHandler nh = app.getNavigationHandler();
            nh.handleNavigation(context, null, "login");
+       }else if(pagesWL && usuario.getUsuario().getApelido()!= null) {
+    	   NavigationHandler nh = app.getNavigationHandler();
+           nh.handleNavigation(context, null, "index");
        }
+       
     }
 
     public void beforePhase(PhaseEvent event) {
