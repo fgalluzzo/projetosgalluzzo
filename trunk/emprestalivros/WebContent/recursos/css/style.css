@@ -93,19 +93,19 @@ hr { display: none; }
 #logo {
 	width: 940px;
 	height: 110px;
-	margin: 0 auto;
+	margin: 0 auto;	
 	padding: 30px 20px 0px 20px;
+	background: url("../images/books.png") no-repeat left bottom;
 }
-
-#logo h1, #logo p {
+#logo h1,#logo p {
+	padding-left:100px;	
 	margin: 0px;
 	line-height: normal;
 	text-transform: lowercase;
 	font-weight: normal;
 	color: #FFFFFF;
 }
-
-#logo p {
+#logo p {	
 	margin-top: -4px;
 	text-transform: lowercase;
 	font-size: 13px;
@@ -453,7 +453,7 @@ hr { display: none; }
 	height: 100px;
 	margin: 0 auto;
 	padding: 0;
-	background: #323232 url(images/img02.jpg) repeat-x left top;
+	background: #323232 url(../images/img02.jpg) repeat-x left top;
 }
 
 #footer-bgcontent {
