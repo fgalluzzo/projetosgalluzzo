@@ -1,10 +1,14 @@
 package bean;
 
+import java.io.File;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+
+import org.primefaces.model.StreamedContent;
 
 public class LivroBean {
 	
@@ -36,6 +40,9 @@ public class LivroBean {
 	
 	@Column(name="formato")
 	private String formato;
+	
+	@Column(name="imagem")
+	private StreamedContent imagem;
 	
 	@Column(name="descricao")
 	private String descricao;
@@ -110,6 +117,14 @@ public class LivroBean {
 
 	public void setFormato(String formato) {
 		this.formato = formato;
+	}
+
+	public StreamedContent getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(StreamedContent imagem) {
+		this.imagem = imagem;
 	}
 
 	public String getDescricao() {

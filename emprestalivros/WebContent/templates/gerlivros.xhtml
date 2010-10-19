@@ -7,25 +7,19 @@
 
 <ui:composition template="/templates/common.xhtml">
 	<ui:define name="sidebar">
-		<div class="post">
-			<h:form>
-				<h:form>
+		<h:form>
 			<ul>
 				<li>
-					<h2><h:outputText value="#{msg.opcoes}" /></h2>
-					<ul>
-						<li>
-							<h:commandLink value="#{msg.novolivro}" action="cadastrarlivro" />							
-						</li>
-						<li>
-							<h:commandLink value="#{msg.meuslivros}" action="livros" />							
-						</li>
-					</ul> 
+				<h2><h:outputText value="#{msg.opcoes}" /></h2>
+				<ul>
+					<li><h:commandLink value="#{msg.novolivro}"
+						action="cadastrarlivro" /></li>
+					<li><h:commandLink value="#{msg.meuslivros}" action="livros" />
+					</li>
+				</ul>
 				</li>
 			</ul>
 		</h:form>
-			</h:form>
-		</div>
 	</ui:define>
 </ui:composition>
 </html>
