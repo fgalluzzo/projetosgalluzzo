@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<ui:composition template="templates/gerlivros.xhtml">
+	<ui:define name="content">
+		<div class="post"><h:form prependId="false">
+			<p:growl id="messages" showDetail="true" />
+			<p:panel header="#{msg.cadastrarLivro}">
+				<h:panelGrid columns="2">
+					<h:outputLabel for="nome" value="#{msg.nome}" />
+					<h:inputText id="nome" value="#{livroMB.livro.nome}" />
+
+					<h:outputLabel for="isbn" value="#{msg.isbn}" />
+					<h:inputText id="isbn" value="#{livroMB.livro.isbn}" />
+
+					<h:outputLabel for="origem" value="#{msg.origem}" />
+					<h:inputText id="origem" value="#{livroMB.livro.origem}" />
+
+					<h:outputLabel for="ano" value="#{msg.ano}" />
+					<h:inputText id="ano" value="#{livroMB.livro.ano}" />
+
+					<h:outputLabel for="edicao" value="#{msg.edicao}" />
+					<h:inputText id="edicao" value="#{livroMB.livro.edicao}" />
+
+					<h:outputLabel for="paginas" value="#{msg.paginas}" />
+					<h:inputText id="paginas" value="#{livroMB.livro.paginas}" />
+
+					<h:outputLabel for="acabamento" value="#{msg.acabamento}" />
+					<h:inputText id="acabamento" value="#{livroMB.livro.acabamento}" />
+
+					<h:outputLabel for="formato" value="#{msg.formato}" />
+					<h:inputText id="formato" value="#{livroMB.livro.formato}" />
+
+
+					<h:outputLabel for="imagem" value="#{msg.imagem}" />
+					<p:columnGroup>
+						<p:column colspan="2">
+
+							<p:fileUpload  id="imagem" label="#{msg.procurar}"
+								fileUploadListener="#{livroMB.handleFileUpload}"
+								allowTypes="*.jpg;*.png;*.gif;"  update="img,messages" />														
+
+							<p:graphicImage id="img" width="50" height="70"
+								value="#{livroMB.livro.imagem}" />
+						</p:column>
+					</p:columnGroup>
+
+					<h:outputLabel for="descricao" value="#{msg.descricao}" />
+					<h:inputTextarea id="descricao" value="#{livroMB.livro.descricao}" />
+
+
+				</h:panelGrid>
+
+				<p:commandButton action="#{livroMB.cadastrar}"
+					value="#{msg.cadastrar}" />
+			</p:panel>
+		</h:form></div>
+	</ui:define>
+</ui:composition>
+</html>
