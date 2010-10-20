@@ -20,6 +20,12 @@ public class MessagesController {
 				new FacesMessage(FacesMessage.SEVERITY_ERROR,
 						"Houve algum erro ao tentar cadastrar um novo "+objeto+"!", ""));  
 	}
+	
+	public static void mensagemOK(String msg, String objeto){
+		FacesContext.getCurrentInstance().addMessage(null, 
+				new FacesMessage(FacesMessage.SEVERITY_INFO,
+						objeto + " "+msg+".", ""));
+	}
 	public static void mensagemWarn(String msg,String objeto){
 		FacesContext.getCurrentInstance().addMessage(null, 
 				new FacesMessage(FacesMessage.SEVERITY_WARN,
