@@ -9,7 +9,9 @@
 	<ui:define name="content">
 		<div class="post"><h:form prependId="false">
 			<p:growl id="messages" showDetail="true" />
+			
 			<p:panel header="#{msg.cadastrarLivro}">
+				 <p:messages id="msgs" showDetail="false"/>  
 				<h:panelGrid columns="2">
 					<h:outputLabel for="nome" value="#{msg.nome}" />
 					<h:inputText id="nome" value="#{livroMB.livro.nome}" />
@@ -45,7 +47,7 @@
 								allowTypes="*.jpg;*.png;*.gif;"  update="img,messages" />														
 
 							<p:graphicImage id="img" width="50" height="70"
-								value="#{livroMB.livro.imagem}" />
+								value="#{livroMB.imagem}" />
 						</p:column>
 					</p:columnGroup>
 
@@ -56,7 +58,7 @@
 				</h:panelGrid>
 
 				<p:commandButton action="#{livroMB.cadastrar}"
-					value="#{msg.cadastrar}" />
+					value="#{msg.cadastrar}" update="msgs" />
 			</p:panel>
 		</h:form></div>
 	</ui:define>

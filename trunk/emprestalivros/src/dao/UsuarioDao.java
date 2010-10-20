@@ -10,8 +10,6 @@ import javax.persistence.Query;
 
 import org.hibernate.exception.ConstraintViolationException;
 
-import com.sun.xml.internal.messaging.saaj.packaging.mime.util.QEncoderStream;
-
 import util.MessagesReader;
 import util.PersistenceUtil;
 import bean.UsuarioBean;
