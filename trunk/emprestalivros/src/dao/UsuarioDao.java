@@ -32,7 +32,7 @@ public class UsuarioDao extends AbstractDao<UsuarioBean> {
 			 	em.flush();
 			 em.getTransaction().commit();			
 		 }catch (PersistenceException e) {
-			
+			 
 			 Throwable lastCause = e;
 			 String constraintName =null;
 			 while (lastCause != null){		
@@ -51,11 +51,13 @@ public class UsuarioDao extends AbstractDao<UsuarioBean> {
 				}else if(constraintName.equals("email_uk")){
 					throw new ConstraintViolationException(MessagesReader.getMessages().getProperty("erros.constraint.unique"),new SQLException(),MessagesReader.getMessages().getProperty("alerta.emailUnico"));
 				}
+			}else{
+				 throw new Exception();
 			}
 				 
 			  
 		}catch (Exception e) {
-			 //em.getTransaction().rollback();
+			 
 			 throw new Exception();
 		}finally{
 			if (em != null) {

@@ -24,25 +24,25 @@ public class UsuarioMB {
 	private String st_nascimento;
 	public UsuarioMB() {
 		usuarioBean = new UsuarioBean();
-		usuarioDao = new UsuarioDao(PersistenceUtil.getEntityManager());
+		
 	}
 	
 	
 	
 	public void cadastra(){
 		try{
+			usuarioDao = new UsuarioDao(PersistenceUtil.getEntityManager());
 			usuarioBean.setSenha(CriaHash.SHA1(usuarioBean.getSenha()));
 			usuarioDao.createUsuario(usuarioBean);
-			MessagesController.mensagemInsercaoSucesso("Usuário "+usuarioBean.getApelido());
+			MessagesController.mensagemInsercaoSucesso("Usuï¿½rio "+usuarioBean.getApelido());
 			usuarioBean = null;
 			this.st_nascimento = null;
 		}catch (ConstraintViolationException e) {
 			MessagesController.mensagemInsercaoLoginDup(e.getMessage(), e.getConstraintName());
 			usuarioBean.setSenha("");
 		}
-		catch (Exception e) {
-			// TODO: handle exception
-			MessagesController.mensagemErroInsercao("Usuário");
+		catch (Exception e) {			
+			MessagesController.mensagemErroInsercao("Usuï¿½rio");
 			usuarioBean.setSenha("");
 		}
 		
@@ -68,8 +68,7 @@ public class UsuarioMB {
 		try {
 			d = spf.parse(st_nascimento);
 			getUsuarioBean().setDt_nascimento(d);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+		} catch (ParseException e) {			
 			e.printStackTrace();
 		}
 		

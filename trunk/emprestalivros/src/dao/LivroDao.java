@@ -19,15 +19,15 @@ public class LivroDao extends AbstractDao<LivroBean> {
 		super(em);
 	}
 
-	public void createLivro(LivroBean livro) {
+	public void createLivro(LivroBean livro) throws Exception {
 
 		try {
-			em.getTransaction().begin();
-			em.persist(livro);
+			em.getTransaction().begin();	
+				em.persist(livro);			
 			em.flush();
 			em.getTransaction().commit();
-		} catch (PersistenceException e) {
-
+		} catch (PersistenceException e) {	
+			
 			Throwable lastCause = e;
 			String constraintName = null;
 			while (lastCause != null) {
@@ -45,12 +45,23 @@ public class LivroDao extends AbstractDao<LivroBean> {
 
 			if (constraintName != null) {
 				if (constraintName.equals("livro_uk")) {
+					
 					throw new ConstraintViolationException(MessagesReader
 							.getMessages().getProperty(
 									"erros.constraint.unique"),
 							new SQLException(), MessagesReader.getMessages()
 									.getProperty("alerta.isbnUnico"));
 				}
+			}else{
+				
+				throw new Exception();
+			}
+		}catch (Exception e) {			 
+			 
+			 throw new Exception();
+		}finally{
+			if (em != null) {
+				em.close();
 			}
 		}
 	}
