@@ -10,9 +10,9 @@
 		<div class="post"><h:form prependId="false">
 			<p:growl id="messages" showDetail="true" />
 			
-			<p:panel header="#{msg.cadastrarLivro}">
+			<p:panel  header="#{msg.cadastrarLivro}">
 				 <p:messages id="msgs" showDetail="false"/>  
-				<h:panelGrid columns="2">
+				<h:panelGrid  columns="2">
 					<h:outputLabel for="nome" value="#{msg.nome}" />
 					<h:inputText id="nome" value="#{livroMB.livro.nome}" />
 
@@ -40,13 +40,14 @@
 
 					<h:outputLabel for="imagem" value="#{msg.imagem}" />
 					<p:columnGroup>
-						<p:column colspan="2">
+						<p:column >
 
-							<p:fileUpload  id="imagem" label="#{msg.procurar}"
+							<p:fileUpload auto="true"  id="imagem" label="#{msg.procurar}"
 								fileUploadListener="#{livroMB.handleFileUpload}"
-								allowTypes="*.jpg;*.png;*.gif;"  update="img,messages" />														
-
-							<p:graphicImage id="img" width="50" height="70"
+								allowTypes="*.jpg;*.png;*.gif;" sizeLimit="256000" update="img,messages" />														
+						</p:column>
+						<p:column id="img" >
+							<p:graphicImage  width="50" height="70"
 								value="#{livroMB.imagem}" />
 						</p:column>
 					</p:columnGroup>

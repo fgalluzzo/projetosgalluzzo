@@ -1,14 +1,9 @@
 package managedBean;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -17,15 +12,11 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
-import controller.MessagesController;
-
-import dao.LivroDao;
-
-import util.CriaHash;
 import util.MessagesReader;
 import util.PersistenceUtil;
-
 import bean.LivroBean;
+import controller.MessagesController;
+import dao.LivroDao;
 
 @ManagedBean(name = "livroMB")
 @SessionScoped
@@ -38,11 +29,12 @@ public class LivroMB {
 	
 	public LivroMB() {
 		livro = new LivroBean();
-		livroDao = new LivroDao(PersistenceUtil.getEntityManager());
+		
 	}
 
 	public void cadastrar() {
-		try{			
+		try{		
+			livroDao = new LivroDao(PersistenceUtil.getEntityManager());
 			livroDao.createLivro(livro);
 			MessagesController.mensagemOK(MessagesReader
 					.getMessages().getProperty(
@@ -54,8 +46,7 @@ public class LivroMB {
 		}catch (ConstraintViolationException e) {
 			MessagesController.mensagemInsercaoLoginDup(e.getMessage(), e.getConstraintName());			
 		}
-		catch (Exception e) {
-			// TODO: handle exception
+		catch (Exception e) {			
 			MessagesController.mensagemErro(MessagesReader
 					.getMessages().getProperty(
 					"alerta.insercao.erro"),MessagesReader

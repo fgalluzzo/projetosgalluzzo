@@ -47,8 +47,7 @@ public class PersistenceUtil {
 	}
 	
 	@Override
-	protected void finalize() throws Throwable {
-		// TODO Auto-generated method stub
+	protected void finalize() throws Throwable {		
 		super.finalize();
 				
 		emf.close();
