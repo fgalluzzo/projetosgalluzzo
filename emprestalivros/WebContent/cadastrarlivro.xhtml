@@ -9,10 +9,10 @@
 	<ui:define name="content">
 		<div class="post"><h:form prependId="false">
 			<p:growl id="messages" showDetail="true" />
-			
-			<p:panel  header="#{msg.cadastrarLivro}">
-				 <p:messages id="msgs" showDetail="false"/>  
-				<h:panelGrid  columns="2">
+
+			<p:panel header="#{msg.cadastrarLivro}">
+				<p:messages id="msgs" showDetail="false" />
+				<h:panelGrid columns="2">
 					<h:outputLabel for="nome" value="#{msg.nome}" />
 					<h:inputText id="nome" value="#{livroMB.livro.nome}" />
 
@@ -39,18 +39,20 @@
 
 
 					<h:outputLabel for="imagem" value="#{msg.imagem}" />
-					<p:columnGroup>
+					<p:columnGroup >
+					<p:column colspan="2">
+						<p:fileUpload id="imagem" label="#{msg.procurar}"
+							fileUploadListener="#{livroMB.handleFileUpload}"
+							allowTypes="*.jpg;*.png;*.gif;" sizeLimit="256000"
+							update="img"   />						
+					</p:column>
 						<p:column >
-
-							<p:fileUpload auto="true"  id="imagem" label="#{msg.procurar}"
-								fileUploadListener="#{livroMB.handleFileUpload}"
-								allowTypes="*.jpg;*.png;*.gif;" sizeLimit="256000" update="img,messages" />														
-						</p:column>
-						<p:column id="img" >
-							<p:graphicImage  width="50" height="70"
-								value="#{livroMB.imagem}" />
+							
 						</p:column>
 					</p:columnGroup>
+					
+
+
 
 					<h:outputLabel for="descricao" value="#{msg.descricao}" />
 					<h:inputTextarea id="descricao" value="#{livroMB.livro.descricao}" />
@@ -58,7 +60,7 @@
 
 				</h:panelGrid>
 
-				<p:commandButton action="#{livroMB.cadastrar}"
+				<p:commandButton id="cadastrar"  action="#{livroMB.cadastrar}"
 					value="#{msg.cadastrar}" update="msgs" />
 			</p:panel>
 		</h:form></div>

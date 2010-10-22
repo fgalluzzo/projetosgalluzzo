@@ -4,7 +4,9 @@ import java.sql.BatchUpdateException;
 import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -64,5 +66,18 @@ public class LivroDao extends AbstractDao<LivroBean> {
 				em.close();
 			}
 		}
+	}
+
+	public LivroBean findByISBN(String isbn){
+		
+		Query q = em.createQuery("FROM LivroBean l WHERE l.isbn = :isbn");
+		q.setParameter("isbn", isbn);
+		try{
+			return (LivroBean) q.getSingleResult();
+		}catch (NoResultException e) {
+			return null;
+		}
+						
+		
 	}
 }

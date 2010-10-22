@@ -35,16 +35,23 @@ public class LivroMB {
 	public void cadastrar() {
 		try{		
 			livroDao = new LivroDao(PersistenceUtil.getEntityManager());
-			livroDao.createLivro(livro);
-			MessagesController.mensagemOK(MessagesReader
-					.getMessages().getProperty(
-							"alerta.insercao.sucesso"),MessagesReader
-					.getMessages().getProperty(
-							"novolivro"));
-			livro = null;
-			this.imagem = null;
-		}catch (ConstraintViolationException e) {
-			MessagesController.mensagemInsercaoLoginDup(e.getMessage(), e.getConstraintName());			
+			LivroBean livroExistente = livroDao.findByISBN(livro.getIsbn());
+			if(livroExistente == null){
+				livroDao.createLivro(livro);
+				MessagesController.mensagemOK(MessagesReader
+						.getMessages().getProperty(
+								"alerta.insercao.sucesso"),MessagesReader
+						.getMessages().getProperty(
+								"novolivro"));
+				livro = null;
+				this.imagem = null;
+			}
+			
+			else{
+				MessagesController.mensagemErro(MessagesReader
+						.getMessages().getProperty(
+						"alerta.isbnUnico"));
+			}
 		}
 		catch (Exception e) {			
 			MessagesController.mensagemErro(MessagesReader
