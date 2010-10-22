@@ -1,39 +1,46 @@
 package bean;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="usuario")
+@Table(name = "usuario")
 public class UsuarioBean {
-	
-	@Id	
-	@SequenceGenerator(name="usuario_seq",sequenceName="usuario_seq")
-	@GeneratedValue(strategy=GenerationType.AUTO,generator="usuario_seq")	
+
+	@Id
+	@SequenceGenerator(name = "usuario_seq", sequenceName = "usuario_seq")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "usuario_seq")
 	private Long id;
-	
-	@Column(name="nome")
-	private String nome; 
-	
-	
-	@Column(name="apelido",unique=true)	
+
+	@Column(name = "nome")
+	private String nome;
+
+	@Column(name = "apelido", unique = true)
 	private String apelido;
-	
-	@Column(name="senha")
+
+	@Column(name = "senha")
 	private String senha;
-	
-	@Column(name="data_nascimento")
+
+	@Column(name = "data_nascimento")
 	private Date dt_nascimento;
-	
-	@Column(name="email",unique=true)
+
+	@Column(name = "email", unique = true)
 	private String email;
+
+	@ManyToMany(mappedBy = "donos")
+	private Set<LivroBean> livros;
 
 	public Long getId() {
 		return id;
@@ -74,7 +81,6 @@ public class UsuarioBean {
 	public void setDt_nascimento(Date dt_nascimento) {
 		this.dt_nascimento = dt_nascimento;
 	}
-	
 
 	public String getEmail() {
 		return email;
@@ -83,7 +89,13 @@ public class UsuarioBean {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
+
+	public Set<LivroBean> getLivros() {
+		return livros;
+	}
+
+	public void setLivros(Set<LivroBean> livros) {
+		this.livros = livros;
+	}
+
 }
