@@ -55,9 +55,8 @@ public class LivroBean {
 	private String descricao;
 	
 	@ManyToMany(targetEntity=UsuarioBean.class,fetch=FetchType.LAZY )
-	@JoinTable(name="livros_usuario", 
-			joinColumns=@JoinColumn(name="livro_fk"),
-	        inverseJoinColumns=@JoinColumn(name="usuario_fk"))
+	@JoinTable(name="livros_usuario",joinColumns=@JoinColumn(name="livro_fk"),
+			inverseJoinColumns=@JoinColumn(name="usuario_fk"))
 	private Set<UsuarioBean> donos;
 
 	public Long getId() {

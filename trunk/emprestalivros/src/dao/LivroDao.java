@@ -25,8 +25,7 @@ public class LivroDao extends AbstractDao<LivroBean> {
 
 		try {
 			em.getTransaction().begin();	
-				em.persist(livro);			
-			em.flush();
+				em.persist(livro);						
 			em.getTransaction().commit();
 		} catch (PersistenceException e) {	
 			
