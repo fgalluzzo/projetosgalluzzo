@@ -10,58 +10,58 @@
 		<div class="post"><h:form prependId="false">
 			<p:growl id="messages" showDetail="true" />
 
-			<p:panel header="#{msg.cadastrarLivro}">
+			<p:panel id="cadastro" header="#{msg.cadastrarLivro}">
 				<p:messages id="msgs" showDetail="false" />
 				<h:panelGrid columns="2">
 					<h:outputLabel for="nome" value="#{msg.nome}" />
-					<h:inputText id="nome" value="#{livroMB.livro.nome}" />
+					<h:inputText id="nome" required="true" value="#{livroMB.livro.nome}" />
 
 					<h:outputLabel for="isbn" value="#{msg.isbn}" />
-					<h:inputText id="isbn" value="#{livroMB.livro.isbn}" />
+					<h:inputText id="isbn" required="true" value="#{livroMB.livro.isbn}" />
 
 					<h:outputLabel for="origem" value="#{msg.origem}" />
-					<h:inputText id="origem" value="#{livroMB.livro.origem}" />
+					<h:inputText id="origem" required="true" value="#{livroMB.livro.origem}" />
 
 					<h:outputLabel for="ano" value="#{msg.ano}" />
-					<h:inputText id="ano" value="#{livroMB.livro.ano}" />
+					<h:inputText id="ano" required="true"  value="#{livroMB.livro.ano}" validator="#{validator.validaAno}">
+						
+					</h:inputText>
 
 					<h:outputLabel for="edicao" value="#{msg.edicao}" />
-					<h:inputText id="edicao" value="#{livroMB.livro.edicao}" />
+					<h:inputText id="edicao" required="true"  value="#{livroMB.livro.edicao}" />
 
 					<h:outputLabel for="paginas" value="#{msg.paginas}" />
-					<h:inputText id="paginas" value="#{livroMB.livro.paginas}" />
+					<h:inputText id="paginas" required="true" value="#{livroMB.livro.paginas}" />
 
 					<h:outputLabel for="acabamento" value="#{msg.acabamento}" />
-					<h:inputText id="acabamento" value="#{livroMB.livro.acabamento}" />
+					<h:inputText id="acabamento" required="true" value="#{livroMB.livro.acabamento}" />
 
 					<h:outputLabel for="formato" value="#{msg.formato}" />
-					<h:inputText id="formato" value="#{livroMB.livro.formato}" />
+					<h:inputText id="formato" required="true" value="#{livroMB.livro.formato}" />
 
 
 					<h:outputLabel for="imagem" value="#{msg.imagem}" />
-					<p:columnGroup >
-					<p:column colspan="2">
-						<p:fileUpload id="imagem" label="#{msg.procurar}"
-							fileUploadListener="#{livroMB.handleFileUpload}"
-							allowTypes="*.jpg;*.png;*.gif;" sizeLimit="256000"
-							update="img"   />						
-					</p:column>
+					<p:columnGroup>
 						<p:column >
-							
+							<p:fileUpload id="imagem"  label="#{msg.procurar}"
+								fileUploadListener="#{livroMB.handleFileUpload}"
+								allowTypes="*.jpg;*.png;*.gif;" sizeLimit="256000" update="imagemCapa,img" />
+						</p:column>
+						<p:column>
+							<h:inputHidden id="imagemCapa" required="true" value="#{livroMB.imagemNome}"/>
+						</p:column>
+						<p:column>
+							<p:graphicImage  width="70" height="100" id="img" value="#{livroMB.imagem}" />
 						</p:column>
 					</p:columnGroup>
-					
-
-
 
 					<h:outputLabel for="descricao" value="#{msg.descricao}" />
-					<h:inputTextarea id="descricao" value="#{livroMB.livro.descricao}" />
-
+					<h:inputTextarea id="descricao" required="true" value="#{livroMB.livro.descricao}" />
 
 				</h:panelGrid>
 
-				<p:commandButton id="cadastrar"  action="#{livroMB.cadastrar}"
-					value="#{msg.cadastrar}" update="msgs" />
+				<p:commandButton id="cadastrar" action="#{livroMB.cadastrar}"
+					value="#{msg.cadastrar}" update="cadastro" />
 			</p:panel>
 		</h:form></div>
 	</ui:define>
