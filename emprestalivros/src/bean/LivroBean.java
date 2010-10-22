@@ -1,10 +1,17 @@
 package bean;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -46,6 +53,12 @@ public class LivroBean {
 	
 	@Column(name="descricao")
 	private String descricao;
+	
+	@ManyToMany(targetEntity=UsuarioBean.class,fetch=FetchType.LAZY )
+	@JoinTable(name="livros_usuario", 
+			joinColumns=@JoinColumn(name="livro_fk"),
+	        inverseJoinColumns=@JoinColumn(name="usuario_fk"))
+	private Set<UsuarioBean> donos;
 
 	public Long getId() {
 		return id;
@@ -134,6 +147,16 @@ public class LivroBean {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+	public Set<UsuarioBean> getDonos() {
+		return donos;
+	}
+
+	public void setDonos(Set<UsuarioBean> donos) {
+		this.donos = donos;
+	}
+	
+	
 	
 	
 }

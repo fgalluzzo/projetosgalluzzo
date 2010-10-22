@@ -25,8 +25,9 @@ public class ValidatorUtil {
 		cal.setTime(date);
 		
 		Integer ano = (Integer) value;
-		((UIInput) toValidate).setValid(false);
+		
 		if (ano.compareTo(cal.get(Calendar.YEAR)) > 0) {
+			((UIInput) toValidate).setValid(false);
 			MessagesController.mensagemErroCampo(toValidate.getClientId(),MessagesReader.getMessages()
 					.getProperty("erro.ano.maior"));
 		}

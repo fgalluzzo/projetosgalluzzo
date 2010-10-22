@@ -57,11 +57,14 @@
 
 					<h:outputLabel for="descricao" value="#{msg.descricao}" />
 					<h:inputTextarea id="descricao" required="true" value="#{livroMB.livro.descricao}" />
-
+					
+					<h:outputLabel for="meuLivro" value="#{msg.tenhoLivro}"/>
+					<h:selectBooleanCheckbox id="meuLivro" value="#{livroMB.temLivro}"/>
+					
 				</h:panelGrid>
 
 				<p:commandButton id="cadastrar" action="#{livroMB.cadastrar}"
-					value="#{msg.cadastrar}" update="cadastro" />
+					value="#{msg.cadastrar}" update="cadastro,img" />
 			</p:panel>
 		</h:form></div>
 	</ui:define>
