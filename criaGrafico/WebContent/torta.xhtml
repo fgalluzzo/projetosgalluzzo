@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/style.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+
+	<ui:composition template="/template/common-sidebar.xhtml">
+		
+			<ui:define name="content">
+				<h:form id="frm" prependId="false">
+				<div class="post">
+				<h3><h:outputText id="titulo" value="#{tortaMB.titulo}" /></h3>
+				<p:pieChart rendered="#{tortaMB.rendered}"  id="grafico" model="#{tortaMB.pieModel}"></p:pieChart></div>
+				
+				</h:form>
+			</ui:define>
+			<ui:define name="sidebar">
+				<h:form prependId="false">
+				<p:messages showSummary="true"/>
+				<h:panelGrid >
+					<h:outputLabel for="title" value="#{msg.title}" />
+					<h:inputText required="true" id="title" value="#{tortaMB.titulo}" />
+				
+
+				<!-- <p:fieldset legend="#{msg.valores}" >
+					<h:panelGrid> -->
+						<h:outputLabel value="#{msg.adicioneDados}" />
+						<h:inputTextarea required="true" value="#{tortaMB.valores}" />
+						<!--</h:panelGrid>
+				</p:fieldset> -->
+				</h:panelGrid>
+				<p:commandButton action="#{tortaMB.processa}"
+					value="#{msg.geraGrafico}" update="frm" />
+				</h:form>
+			</ui:define>
+		
+	</ui:composition>
+
+
+</h:body>
+
+
+</html>
