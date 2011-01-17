@@ -15,35 +15,65 @@
 <h:body>
 
 	<ui:composition template="/template/common-sidebar.xhtml">
-		
-			<ui:define name="content">
-				<h:form id="frm" prependId="false">
+
+		<ui:define name="content">
+			<h:form id="frm" >
 				<div class="post">
 				<h3><h:outputText id="titulo" value="#{tortaMB.titulo}" /></h3>
-				<p:pieChart rendered="#{tortaMB.rendered}"  id="grafico" model="#{tortaMB.pieModel}"></p:pieChart></div>
-				
-				</h:form>
-			</ui:define>
-			<ui:define name="sidebar">
-				<h:form prependId="false">
-				<p:messages showSummary="true"/>
-				<h:panelGrid >
-					<h:outputLabel for="title" value="#{msg.title}" />
-					<h:inputText required="true" id="title" value="#{tortaMB.titulo}" />
-				
+				<p:pieChart rendered="#{tortaMB.rendered}" id="grafico"
+					model="#{tortaMB.pieModel}"></p:pieChart></div>
 
-				<!-- <p:fieldset legend="#{msg.valores}" >
-					<h:panelGrid> -->
-						<h:outputLabel value="#{msg.adicioneDados}" />
-						<h:inputTextarea required="true" value="#{tortaMB.valores}" />
-						<!--</h:panelGrid>
-				</p:fieldset> -->
+			</h:form>
+		</ui:define>
+		<ui:define name="sidebar">
+			<h:form prependId="false" id="frmInput">
+				<h:outputLabel for="title" value="#{msg.title}" />
+				<h:inputText required="true" id="title" value="#{tortaMB.titulo}" />
+				
+				<h:outputText value="#{msg.adicioneDados}" />
+				<h:panelGrid id="addValor" columns="2">
+					<h:outputLabel for="nome" value="#{msg.label}" />
+					<h:inputText id="nome" size="14"  value="#{tortaMB.dado.nome}" />
+			
+					<h:outputLabel for="valor" value="#{msg.valor}" />
+					<h:inputText id="valor" size="5"  value="#{tortaMB.dado.valor}" />
 				</h:panelGrid>
+				<p:commandButton value="#{msg.addDados}" action="#{tortaMB.add}"
+						update="valores,addValor">
+					<p:collector value="#{tortaMB.dado}" addTo="#{tortaMB.dados}"></p:collector>
+				</p:commandButton>
+				
+				<br />
+				<p:separator ></p:separator>	
+				<br />				
+									
+				<p:outputPanel id="valores">
+					<p:dataTable value="#{tortaMB.dados}" var="dado">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Label" />
+							</f:facet>
+							<h:outputText value="#{dado.nome}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Valor" />
+							</f:facet>
+							<h:outputText value="#{dado.valor}" />
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+				
+				<br />
+				<p:separator ></p:separator>
+				<br />
+							
+				<p:commandButton action="#{tortaMB.reinit}" value="#{msg.reiniciar}"  update="frm,frmInput"></p:commandButton>		
 				<p:commandButton action="#{tortaMB.processa}"
-					value="#{msg.geraGrafico}" update="frm" />
-				</h:form>
-			</ui:define>
-		
+					value="#{msg.geraGrafico}" update="frm" />				
+			</h:form>
+		</ui:define>
+
 	</ui:composition>
 
 
