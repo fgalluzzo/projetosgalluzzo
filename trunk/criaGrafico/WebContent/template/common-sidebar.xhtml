@@ -27,10 +27,13 @@
 
 	<div id="menu">
 	<ul>
+		<ui:insert name="home">
 		<li ><h:outputLink title="Home"
 			value="index.xhtml">
 			<h:outputText value="Home" />
 		</h:outputLink></li>
+		</ui:insert>
+		<ui:insert name="grafico">
 		<li><h:outputLink title="Grafico">
 			<h:outputText value="Grafico" />
 		</h:outputLink>
@@ -49,9 +52,12 @@
 			</h:outputLink></li>
 		</ul>
 		</li>
+		</ui:insert>
+		<ui:insert name="about">
 		<li><h:outputLink title="About">
 			<h:outputText value="About" />
 		</h:outputLink></li>
+		</ui:insert>
 	</ul>
 	</div>
 
