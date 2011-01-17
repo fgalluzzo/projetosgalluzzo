@@ -19,8 +19,7 @@ public class LinhaMB {
 	private DadosDoisEixos dado;
 	private ArrayList<DadosDoisEixos> dados;
 	private boolean rendered;
-	private ArrayList<ChartSeries> series;
-	private ArrayList<String> nomes;
+	
 	public LinhaMB() {
 		// TODO Auto-generated constructor stub
 		reinit();
@@ -28,14 +27,15 @@ public class LinhaMB {
 	}
 	
 	public void reinit(){
+		titulo = "";
 		cartesianModel = new CartesianChartModel();
 		dado = new DadosDoisEixos();
 		dados = new ArrayList<DadosDoisEixos>();
-		rendered = false;
-		nomes = new ArrayList<String>();;
+		rendered = false;	
 	}
 	public void processa(){
-		series = new ArrayList<ChartSeries>();
+		ArrayList<ChartSeries> series = new ArrayList<ChartSeries>();
+		ArrayList<String> nomes = new ArrayList<String>();
 		 
 		for(DadosDoisEixos d : dados){
 			if(nomes.isEmpty() || !nomes.contains(d.getNome())){
@@ -53,6 +53,7 @@ public class LinhaMB {
 				}
 			}
 		}
+		cartesianModel = new CartesianChartModel();
 		for(ChartSeries s : series){
 			cartesianModel.addSeries(s);
 		}
