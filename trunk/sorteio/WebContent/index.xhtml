@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+	  xmlns:rich="http://richfaces.org/rich">
+
+<h:head>
+        <title></title>
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+                media="screen" />
+</h:head>
+<h:body>
+        <ui:composition template="/template/common.xhtml">
+        	<ui:define name="content">
+        		
+        		<h:form >
+        			<div class="post">
+        			<!-- há Sorteio -->
+        			<rich:panel rendered="#{participacaoMB.temSorteio}">
+        			<h2 class="title"><h:outputText value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}" /></h2>
+        				<div class="entry">
+        				
+						
+							<h:panelGrid columns="2">
+								<h:outputLabel for="nome" value="Nome" />
+								<h:inputText id="nome" value="#{participacaoMB.participacao.participante.nome}"/>
+								
+								<h:outputLabel for="sobrenome" value="Sobrenome" />
+								<h:inputText id="sobrenome" value="#{participacaoMB.participacao.participante.sobrenome}"/>
+								
+								<h:outputLabel for="email" value="E-mail" />
+								<h:inputText id="email" value="#{participacaoMB.participacao.participante.email}"/>
+							
+							</h:panelGrid>
+							<h:commandButton action="processar" value="Inscrever-se" />
+						
+						
+						</div>
+					</rich:panel>	
+        				
+        		</div>  
+        		<!-- Não há sorteio -->
+						<rich:panel rendered="#{not participacaoMB.temSorteio}">
+							<p>Não há nenhum sorteio em vigência no momento</p>
+							
+						</rich:panel>
+        		</h:form> 	
+        	</ui:define>
+		</ui:composition>
+</h:body>
+
+   
+</html>
