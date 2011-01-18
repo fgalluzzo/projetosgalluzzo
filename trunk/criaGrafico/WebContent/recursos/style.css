@@ -89,6 +89,10 @@ hr { display: none; }
 }
 
 /*------------*/
+#menup {
+	position:relative;
+	top:1px;
+	}
 #menu {
 	float: left;
 	width: 540px;
