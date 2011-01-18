@@ -7,9 +7,12 @@ public class Participacao {
 	private Calendar dataInscricao;
 	private Participante participante;
 	private InetAddress ip;
-	private Integer numero;
+	private String numeroInscricao;
 	
-	
+	public Participacao() {
+		participante = new Participante();
+
+	}
 	public Calendar getDataInscricao() {
 		return dataInscricao;
 	}
@@ -28,11 +31,11 @@ public class Participacao {
 	public void setIp(InetAddress ip) {
 		this.ip = ip;
 	}
-	public Integer getNumero() {
-		return numero;
+	public String getNumeroInscricao() {
+		return numeroInscricao;
 	}
-	public void setNumero(Integer numero) {
-		this.numero = numero;
+	public void setNumeroInscricao(String numeroInscricao) {
+		this.numeroInscricao = numeroInscricao;
 	}
 	
 	

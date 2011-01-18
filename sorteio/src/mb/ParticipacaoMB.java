@@ -3,7 +3,9 @@ package mb;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import modelo.Participacao;
 import modelo.Sorteio;
@@ -13,26 +15,53 @@ import modelo.Sorteio;
 public class ParticipacaoMB {
 	private Sorteio sorteio;
 	private Participacao participacao;
-	private boolean temSorteio = false;
+	private boolean temSorteio = false;	
 
 	public ParticipacaoMB() {
 		participacao = new Participacao();
+		this.sorteio = new Sorteio();
 		String sorteio = ((HttpServletRequest) FacesContext.getCurrentInstance().
 				getExternalContext().getRequest()).getParameter("sorteio");
 		if(sorteio !=null && !sorteio.isEmpty() ){
 			temSorteio = true;
-			this.sorteio = new Sorteio();
 			this.sorteio.setNome(sorteio);
 		}
-		 
+		
 		
 	}
 
+	
 	public String processar() {
-		Integer numero = (int) (Math.round(Math.random()) * 10000);
-		participacao.setNumero(numero);
-		System.out.println(numero);
-		return "inscrito";
+		String cookieValue = "";
+		Integer numero = (int) (Math.round(Math.random()* 10000));
+		 HttpServletRequest httpServletRequest = 
+			   (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();   
+		 Cookie[] cookies = httpServletRequest.getCookies();
+		 if (cookies != null) {
+			 for(int i=0; i<cookies.length; i++){
+				 if (cookies[i].getName().equalsIgnoreCase("c")){
+					 cookieValue = cookies[i].getValue();
+				 }
+			 }
+		 }
+		if(!cookieValue.equals("xx")){
+			participacao.setNumeroInscricao(numero.toString());
+			System.out.println(numero);
+			HttpServletResponse httpServletResponse = 
+				   (HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
+				  Cookie cookie = new Cookie("c", "xx");   
+				  cookie.setMaxAge(365);
+				  cookie.setComment("teste");
+				  httpServletResponse.addCookie(cookie);  
+			return "inscrito";
+		}else
+			return "naoInscrito";
+		
+		
+	}
+	
+	public void processa(){
+		System.out.println("oi");
 	}
 
 	public Sorteio getSorteio() {
