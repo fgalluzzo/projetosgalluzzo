@@ -17,13 +17,13 @@
         <ui:composition template="/template/common.xhtml">
         	<ui:define name="content">
         		
-        		<h:form >
+        		
         			<div class="post">
         			<!-- há Sorteio -->
         			<rich:panel rendered="#{participacaoMB.temSorteio}">
         			<h2 class="title"><h:outputText value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}" /></h2>
         				<div class="entry">
-        				
+        				<h:form >
 						
 							<h:panelGrid columns="2">
 								<h:outputLabel for="nome" value="Nome" />
@@ -36,13 +36,15 @@
 								<h:inputText id="email" value="#{participacaoMB.participacao.participante.email}"/>
 							
 							</h:panelGrid>
-							<h:commandButton action="processar" value="Inscrever-se" />
-						
+							
+							<h:commandButton  action="#{participacaoMB.processar}" value="Inscrever-se" />
+						</h:form> 	
 						
 						</div>
 					</rich:panel>	
         				
         		</div>  
+        		<h:form >
         		<!-- Não há sorteio -->
 						<rich:panel rendered="#{not participacaoMB.temSorteio}">
 							<p>Não há nenhum sorteio em vigência no momento</p>

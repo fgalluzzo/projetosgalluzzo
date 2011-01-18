@@ -29,8 +29,10 @@ public class ParticipacaoMB {
 	}
 
 	public String processar() {
-		
-		return null;
+		Integer numero = (int) (Math.round(Math.random()) * 10000);
+		participacao.setNumero(numero);
+		System.out.println(numero);
+		return "inscrito";
 	}
 
 	public Sorteio getSorteio() {
