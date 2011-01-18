@@ -25,49 +25,48 @@
 	<!-- end #logo -->
 	<div id="header">
 
-	<div id="menu">
-	<ul>
-		<ui:insert name="home">
-		<li ><h:outputLink title="Home"
-			value="index.xhtml">
-			<h:outputText value="Home" />
-		</h:outputLink></li>
-		</ui:insert>
-		<ui:insert name="grafico">
-		<li><h:outputLink title="Grafico">
-			<h:outputText value="Grafico" />
-		</h:outputLink>
-		<ul>
-			<li><h:outputLink title="Torta" value="torta.xhtml">
-				<h:outputText value="Torta" />
-			</h:outputLink></li>
-			<li><h:outputLink title="Barra" value="torta.xhtml">
-				<h:outputText value="Barra" />
-			</h:outputLink></li>
-			<li><h:outputLink title="Coluna" value="torta.xhtml">
-				<h:outputText value="Coluna" />
-			</h:outputLink></li>
-			<li><h:outputLink title="Linha" value="linha.xhtml">
-				<h:outputText value="Linha" />
-			</h:outputLink></li>
-		</ul>
-		</li>
-		</ui:insert>
-		<ui:insert name="about">
-		<li><h:outputLink title="About">
-			<h:outputText value="About" />
-		</h:outputLink></li>
-		</ui:insert>
-	</ul>
+	<div id="menup">
+		<!-- <ul>			
+			<li class="current_page_item"><h:outputLink title="Home"  value="index.xhtml"><h:outputText value="Home" /> </h:outputLink> </li>
+			<li><h:outputLink title="Grafico" ><h:outputText value="Grafico" /></h:outputLink>
+				<ul>
+					<li><h:outputLink title="Torta" value="torta.xhtml"><h:outputText value="Torta" /></h:outputLink></li>
+					<li><h:outputLink title="Barra" value="torta.xhtml"><h:outputText value="Barra" /></h:outputLink></li>
+					<li><h:outputLink title="Coluna" value="torta.xhtml"><h:outputText value="Coluna" /></h:outputLink></li>
+					<li><h:outputLink title="Linha" value="linha.xhtml"><h:outputText value="Linha" /></h:outputLink></li>
+				</ul> 
+			</li>
+			<li><h:outputLink title="About" ><h:outputText value="About" /></h:outputLink> </li>
+		</ul> -->
+		<h:form>
+		<p:menubar autoSubmenuDisplay="true" >
+			<p:submenu>
+				<f:facet name="label"  >
+					<p:menuitem value="#{msg.home}" url="index.xhtml"/>
+				</f:facet>
+			</p:submenu>
+			<p:submenu  label="#{msg.grafico}">
+				<p:menuitem value="#{msg.barra}"  url="barra.xhtml"/>
+				<p:menuitem value="#{msg.coluna}" url="coluna.xhtml"/>
+				<p:menuitem value="#{msg.linha}" url="linha.xhtml"/>
+				<p:menuitem value="#{msg.torta}" url="torta.xhtml"/>
+			</p:submenu>
+			<p:submenu>
+				<f:facet name="label" >
+					<p:menuitem value="#{msg.sobre}"/>
+				</f:facet>
+			</p:submenu>
+		</p:menubar>
+		</h:form>
 	</div>
 
 	<!-- end #menu -->
-	<div id="search">
+	<!-- <div id="search">
 	<form method="get" action="">
 	<fieldset><input type="text" name="s" id="search-text"
 		size="15" /> <input type="submit" id="search-submit" value="GO" /></fieldset>
 	</form>
-	</div>
+	</div> -->
 	<!-- end #search --></div>
 	<!-- end #header --> <!-- end #header-wrapper -->
 	<div id="page">

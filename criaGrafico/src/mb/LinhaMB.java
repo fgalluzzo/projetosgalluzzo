@@ -15,6 +15,8 @@ import org.primefaces.model.chart.CartesianChartModel;
 @SessionScoped
 public class LinhaMB {
 	private String titulo;	
+	private String labelX;
+	private String labelY;
 	private CartesianChartModel cartesianModel;
 	private DadosDoisEixos dado;
 	private ArrayList<DadosDoisEixos> dados;
@@ -100,5 +102,21 @@ public class LinhaMB {
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
+	}
+
+	public String getLabelX() {
+		return labelX;
+	}
+
+	public void setLabelX(String labelX) {
+		this.labelX = labelX;
+	}
+
+	public String getLabelY() {
+		return labelY;
+	}
+
+	public void setLabelY(String labelY) {
+		this.labelY = labelY;
 	}
 }

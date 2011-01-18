@@ -21,7 +21,7 @@
 				<div class="post">
 				<h3><h:outputText id="titulo" value="#{linhaMB.titulo}" /></h3>
 				<p:lineChart  rendered="#{linhaMB.rendered}" id="grafico"
-					model="#{linhaMB.cartesianModel}" titleX="X" titleY="Y" >	
+					model="#{linhaMB.cartesianModel}" titleX="#{linhaMB.labelX}" titleY="#{linhaMB.labelY}" >	
 					</p:lineChart></div>
 
 			</h:form>
@@ -30,6 +30,13 @@
 			<h:form prependId="false" id="frmInput">
 				<h:outputLabel for="title" value="#{msg.title}" />
 				<h:inputText required="true" id="title" value="#{linhaMB.titulo}" />
+				
+				<h:outputLabel for="eixoX" value="#{msg.eixoX}" />
+				<h:inputText required="true" id="eixoX" value="#{linhaMB.labelX}" />
+				
+				<h:outputLabel for="eixoY" value="#{msg.eixoY}" />
+				<h:inputText required="true" id="eixoY" value="#{linhaMB.labelY}" />
+
 				
 				<h:outputText value="#{msg.adicioneDados}" />
 				<h:panelGrid id="addValor" columns="2">
