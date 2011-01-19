@@ -2,25 +2,24 @@ package dao;
 
 import javax.persistence.EntityManager;
 
-import modelo.Sorteio;
+import modelo.Participante;
 
-public class SorteioDao extends AbstractDao<Sorteio> {
+public class ParticipanteDao extends AbstractDao<Participante> {
 
-	public SorteioDao(EntityManager em) {
+	public ParticipanteDao(EntityManager em) {
 		super(em);
 		// TODO Auto-generated constructor stub
 	}
-
-	public void createSorteio(Sorteio sorteio) throws Exception {
-		try {
+	
+	public void createParticipante(Participante p) throws Exception{
+		
+		try{
 			em.getTransaction().begin();
-				em.persist(sorteio);
+				em.persist(p);
 			em.getTransaction().commit();
-
 		} catch (Exception e) {
 			em.getTransaction().rollback();
 			throw new Exception();
 		}
 	}
-
 }
