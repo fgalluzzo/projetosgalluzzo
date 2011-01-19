@@ -32,13 +32,11 @@
 								<h:inputTextarea id="desc" value="#{cadastroSorteioMB.sorteio.descricao}" />
 								
 								<h:outputLabel for="dtInicio" value="#{msg.dtInicio}" />
-								<rich:calendar id="dtInicio" value="#{cadastroSorteioMB.sorteio.dataInicio}">
-								<f:convertDateTime type="date" dateStyle="short" pattern="dd/MM/yyyy"/>  
+								<rich:calendar datePattern="dd/MM/yyyy HH:mm" showApplyButton="true" id="dtInicio" value="#{cadastroSorteioMB.sorteio.dataInicio}" >								
 								</rich:calendar>
 								
 								<h:outputLabel for="dtFim" value="#{msg.dtFim}" />
-								<rich:calendar id="dtFim" value="#{cadastroSorteioMB.sorteio.dataFim}">
-								<f:convertDateTime type="date" dateStyle="short" pattern="dd/MM/yyyy"/>  
+								<rich:calendar datePattern="dd/MM/yyyy HH:mm" showApplyButton="true" id="dtFim" value="#{cadastroSorteioMB.sorteio.dataFim}">								
 								</rich:calendar>
 							</h:panelGrid>							
 							<h:commandButton action="#{cadastroSorteioMB.cadastrar}" value="#{msg.cadastrar}" />		
