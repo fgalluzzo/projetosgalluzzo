@@ -30,7 +30,7 @@ public class Participacao {
 	private Participante participante;
 	
 	@Column(name="endereco_ip")
-	private InetAddress ip;
+	private String ip;
 	
 	@Column(name="inscricao")
 	private String numeroInscricao;
@@ -54,10 +54,10 @@ public class Participacao {
 	public void setParticipante(Participante participante) {
 		this.participante = participante;
 	}
-	public InetAddress getIp() {
+	public String getIp() {
 		return ip;
 	}
-	public void setIp(InetAddress ip) {
+	public void setIp(String ip) {
 		this.ip = ip;
 	}
 	public String getNumeroInscricao() {

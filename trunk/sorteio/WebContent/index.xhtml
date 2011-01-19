@@ -23,6 +23,7 @@
 				<rich:panel>
 					<h2 class="title"><h:outputText
 						value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}" /></h2>
+					<h:inputHidden value="#{participacaoMB.sorteio.id}"/>
 					<div class="entry"><h:panelGrid columns="2">
 						<h:outputLabel for="nome" value="Nome" />
 						<h:inputText id="nome"
