@@ -41,7 +41,7 @@ public class CadastroSorteioMB {
 			SchedulerFactory sf = new StdSchedulerFactory();
 			Scheduler sched = sf.getScheduler();		
 
-			JobDetail job = new JobDetail("Sorteio",Sortear.class);
+			JobDetail job = new JobDetail(sorteio.getId().toString(),Sortear.class);			
 			SimpleTrigger disparo = new SimpleTrigger("Disparo do sorteio",sorteio.getDataFim());
 			sched.scheduleJob(job, disparo);
 			 
