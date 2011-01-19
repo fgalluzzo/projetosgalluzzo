@@ -113,10 +113,6 @@ public class ParticipacaoMB {
 		
 		
 	}
-	
-	public void processa(){
-		System.out.println("oi");
-	}
 
 	public Sorteio getSorteio() {
 		return sorteio;
