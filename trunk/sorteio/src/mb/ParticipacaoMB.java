@@ -1,6 +1,5 @@
 package mb;
 
-import java.net.InetAddress;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -11,14 +10,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import modelo.Participacao;
+import modelo.Sorteio;
 import util.PersistenceUtil;
-
 import dao.ParticipacaoDao;
 import dao.ParticipanteDao;
 import dao.SorteioDao;
-
-import modelo.Participacao;
-import modelo.Sorteio;
 
 @ManagedBean(name = "participacaoMB")
 @RequestScoped
@@ -47,7 +44,7 @@ public class ParticipacaoMB {
 				Calendar dtAtual = new GregorianCalendar();
 				
 				if(this.sorteio != null){
-					if(dtAtual.after(this.sorteio.getDataInicio()) && dtAtual.before(this.sorteio.getDataFimCal())){
+					if(dtAtual.after(this.sorteio.getDataInicioCal()) && dtAtual.before(this.sorteio.getDataFimCal())){
 						temSorteio = true;
 					}
 					
