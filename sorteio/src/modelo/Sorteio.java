@@ -1,14 +1,42 @@
 package modelo;
 
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="sorteio")
 public class Sorteio {
+	
+	@Id	
+	@SequenceGenerator(name="sorteio_seq",sequenceName="sorteio_seq")
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="sorteio_seq")	
+	private Long id;
+	
+	@Column(name="nome")
 	private String nome;
+	
+	@Column(name="dt_inicio")
 	private Calendar dataInicio;
+	
+	@Column(name="dt_fim")
 	private Calendar dataFim;
+	
+	@Column(name="descricao")
 	private String descricao;
-	private ArrayList<Participacao> participacoes;
+	
+	@OneToMany(mappedBy="sorteio")
+	private List<Participacao> participacoes;
 	
 	public String getNome() {
 		return nome;
@@ -16,17 +44,29 @@ public class Sorteio {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Calendar getDataInicio() {
-		return dataInicio;
+	public Date getDataInicio() {
+		if(dataInicio != null) {
+			return dataInicio.getTime();
+		}else{
+			return null;
+		}
+			
 	}
-	public void setDataInicio(Calendar dataInicio) {
-		this.dataInicio = dataInicio;
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = new GregorianCalendar();
+		this.dataInicio.setTime(dataInicio);
 	}
-	public Calendar getDataFim() {
-		return dataFim;
+	public Date getDataFim() {
+		if(dataFim != null){
+			return dataFim.getTime();
+		}else {
+			return null;
+		}
+			
 	}
-	public void setDataFim(Calendar dataFim) {
-		this.dataFim = dataFim;
+	public void setDataFim(Date dataFim) {
+		this.dataFim = new GregorianCalendar();
+		this.dataFim.setTime(dataFim);
 	}
 	public String getDescricao() {
 		return descricao;
@@ -34,10 +74,10 @@ public class Sorteio {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public ArrayList<Participacao> getParticipacoes() {
+	public List<Participacao> getParticipacoes() {
 		return participacoes;
 	}
-	public void setParticipacoes(ArrayList<Participacao> participacoes) {
+	public void setParticipacoes(List<Participacao> participacoes) {
 		this.participacoes = participacoes;
 	}
 	

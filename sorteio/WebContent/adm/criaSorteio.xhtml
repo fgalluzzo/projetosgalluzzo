@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:composition template="/adm/template/common.xhtml">
+		<ui:define name="content">
+			<h:form>
+				<div class="post">
+					<h2 class="title"><h:outputText value="#{msg.criarSorteio}" /></h2>
+					<div class="entry">
+					
+						<rich:panel>
+							<rich:message></rich:message>
+							<h:panelGrid columns="2">
+							
+								<h:outputLabel for="nome"  value="#{msg.nome}"/>
+								<h:inputText id="nome" value="#{cadastroSorteioMB.sorteio.nome}" />
+								
+								<h:outputLabel for="desc" value="#{msg.descricao}"/>
+								<h:inputTextarea id="desc" value="#{cadastroSorteioMB.sorteio.descricao}" />
+								
+								<h:outputLabel for="dtInicio" value="#{msg.dtInicio}" />
+								<rich:calendar id="dtInicio" value="#{cadastroSorteioMB.sorteio.dataInicio}">
+								<f:convertDateTime type="date" dateStyle="short" pattern="dd/MM/yyyy"/>  
+								</rich:calendar>
+								
+								<h:outputLabel for="dtFim" value="#{msg.dtFim}" />
+								<rich:calendar id="dtFim" value="#{cadastroSorteioMB.sorteio.dataFim}">
+								<f:convertDateTime type="date" dateStyle="short" pattern="dd/MM/yyyy"/>  
+								</rich:calendar>
+							</h:panelGrid>							
+							<h:commandButton action="#{cadastroSorteioMB.cadastrar}" value="#{msg.cadastrar}" />		
+						</rich:panel>
+						<h:outputLink action="index" ><h:outputText value="#{msg.voltar}"/> </h:outputLink>
+					</div>
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>
