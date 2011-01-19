@@ -1,6 +1,7 @@
 package mb;
 
 import java.net.InetAddress;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.faces.bean.ManagedBean;
@@ -32,8 +33,10 @@ public class ParticipacaoMB {
 	public ParticipacaoMB() {
 		participacao = new Participacao();
 		this.sorteio = new Sorteio();
-		String sorteio = ((HttpServletRequest) FacesContext.getCurrentInstance().
-				getExternalContext().getRequest()).getParameter("sorteio");
+		HttpServletRequest request = ((HttpServletRequest) FacesContext.getCurrentInstance().
+				getExternalContext().getRequest());
+		String sorteio = request.getParameter("sorteio");		
+		
 		if(sorteio !=null && !sorteio.isEmpty() ){
 			
 			sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
@@ -41,8 +44,13 @@ public class ParticipacaoMB {
 				
 				Long numero = Long.parseLong(sorteio);			
 				this.sorteio = sorteioDao.findById(Sorteio.class, numero);
+				Calendar dtAtual = new GregorianCalendar();
+				
 				if(this.sorteio != null){
-					temSorteio = true;
+					if(dtAtual.after(this.sorteio.getDataInicio()) && dtAtual.before(this.sorteio.getDataFimCal())){
+						temSorteio = true;
+					}
+					
 				}
 				
 			} catch (Exception e) {
