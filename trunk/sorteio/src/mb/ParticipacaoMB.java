@@ -44,6 +44,7 @@ public class ParticipacaoMB {
 				 }
 			 }
 		 }
+		System.out.println(httpServletRequest.getRemoteAddr());
 		if(!cookieValue.equals("xx")){
 			participacao.setNumeroInscricao(numero.toString());
 			System.out.println(numero);
