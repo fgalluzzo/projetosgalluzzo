@@ -87,5 +87,13 @@ public class Sorteio {
 		this.id = id;
 	}
 	
+	public Calendar getDataInicioCal(){
+		return this.dataInicio;
+	}
+	
+	public Calendar getDataFimCal() {
+		return this.dataFim;
+	}
+
 	
 }
