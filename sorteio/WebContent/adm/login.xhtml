@@ -16,14 +16,28 @@
 <h:body>
 	<ui:composition template="/adm/template/common.xhtml">
 		<ui:define name="content">
-			<h:form>
-				<rich:panel>
-					<f:facet name="header" >
-						<h:outputText value="Administração dos sorteios"/>
-					</f:facet>
+			<div class="post">
+			
+				<div class="entry">
 					
-				</rich:panel>
-			</h:form>
+					<h:form>
+						<rich:panel >
+						<f:facet name="header" >
+							<h:outputText value="Administração dos sorteios"/>
+						</f:facet>
+						<h:panelGrid>
+							<h:outputLabel for="login" value="#{msg.usuario}"/>
+							<h:inputText id="login" value="#{loginMB.usuario.apelido}"/>
+							
+							<h:outputLabel for="senha" value="#{msg.senha}"/>
+							<h:inputSecret id="senha" value="#{loginMB.usuario.senha}" />							
+
+						</h:panelGrid>
+						<h:commandButton action="#{loginMB.entrar}" value="#{msg.entrar}"/>
+						</rich:panel>
+					</h:form>
+				</div>
+			</div>
 		</ui:define>
 	</ui:composition>
 </h:body>
