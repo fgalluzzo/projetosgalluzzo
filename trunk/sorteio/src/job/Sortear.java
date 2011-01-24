@@ -1,22 +1,37 @@
 package job;
 
+import java.util.ArrayList;
+
+import modelo.Participante;
 import modelo.Sorteio;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import util.PersistenceUtil;
+
+import dao.ParticipacaoDao;
 import dao.SorteioDao;
 
 public class Sortear implements Job{
 	Sorteio sorteio;
 	SorteioDao sorteioDao;
+	ParticipacaoDao participacaoDao;
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		
-		
-		System.out.println("Sorteando sorteio:" + context.getJobDetail().getName());
-		
+		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
+		participacaoDao = new ParticipacaoDao(PersistenceUtil.getEntityManager());
+		Sorteio sorteio = sorteioDao.findById(Sorteio.class, Long.parseLong(context.getJobDetail().getName()));
+		ArrayList<Participante> ganhadores = new ArrayList<Participante>(participacaoDao.sorteiaParticipanteSorteio(sorteio));
+		sorteio.setGanhadores(ganhadores);
+		sorteio.setSorteado(true);
+		try {
+			sorteioDao.update(sorteio);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
