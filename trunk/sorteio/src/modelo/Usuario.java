@@ -4,9 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -32,6 +34,9 @@ public class Usuario {
 
 	@Column(name = "email", unique = true)
 	private String email;
+	
+	@ManyToOne(targetEntity=Grupo.class,fetch=FetchType.LAZY)
+	private Grupo grupo;
 
 	public Long getId() {
 		return id;
@@ -79,5 +84,13 @@ public class Usuario {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Grupo getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
 	}
 }

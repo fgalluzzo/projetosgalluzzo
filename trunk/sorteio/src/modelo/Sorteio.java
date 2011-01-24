@@ -7,9 +7,11 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -37,6 +39,10 @@ public class Sorteio {
 	
 	@OneToMany(mappedBy="sorteio")
 	private List<Participacao> participacoes;
+	
+	@ManyToOne(targetEntity=Grupo.class,fetch=FetchType.LAZY)
+	private Grupo grupo;
+	
 	
 	public String getNome() {
 		return nome;
@@ -93,6 +99,12 @@ public class Sorteio {
 	
 	public Calendar getDataFimCal() {
 		return this.dataFim;
+	}
+	public Grupo getGrupo() {
+		return grupo;
+	}
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
 	}
 
 	
