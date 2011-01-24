@@ -4,8 +4,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.el.ValueExpression;
+import javax.faces.application.Application;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 import job.Sortear;
 import modelo.Sorteio;
@@ -33,10 +36,16 @@ public class CadastroSorteioMB {
 	}
 	
 	public String cadastrar(){
-		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
+		FacesContext context = FacesContext.getCurrentInstance();
+		Application app = context.getApplication();
+
+	   ValueExpression expression = app.getExpressionFactory().createValueExpression(context.getELContext(),
+	                            String.format("#{%s}", "loginMB"), Object.class);
+	   LoginMB loginMB = (LoginMB) expression.getValue(context.getELContext());
+	   sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
 		
-		try {
-			
+		try {			
+			sorteio.setGrupo(loginMB.getUsuario().getGrupo());
 			sorteioDao.createSorteio(sorteio);
 			SchedulerFactory sf = new StdSchedulerFactory();
 			Scheduler sched = sf.getScheduler();		
