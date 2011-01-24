@@ -49,19 +49,21 @@ public class ParticipacaoDao extends AbstractDao<Participacao> {
 		countQuery.setParameter("sorteio", sorteio);
 		long count = (Long)countQuery.getSingleResult();
 
-	    
-	    Random random = new Random();
-	    Integer number =  random.nextInt((int) count);
+	    if(count > 0) {
+	    	Random random = new Random();
+		    Integer number =  random.nextInt((int) count);
 
-	    
-		q = "SELECT pa FROM Participacao p JOIN p.participante pa " +
-				"WHERE p.sorteio = :sorteio";
-		Query query = em.createQuery(q);
-		query.setParameter("sorteio", sorteio);
-		
-		query.setFirstResult(number);
-		query.setMaxResults(sorteio.getQuantidadeGanhadores());
-		return (List<Participante>)query.getResultList();
-		
+		    
+			q = "SELECT pa FROM Participacao p JOIN p.participante pa " +
+					"WHERE p.sorteio = :sorteio";
+			Query query = em.createQuery(q);
+			query.setParameter("sorteio", sorteio);
+			
+			query.setFirstResult(number);
+			query.setMaxResults(sorteio.getQuantidadeGanhadores());
+			return (List<Participante>)query.getResultList();
+
+	    }
+	    return null;		
 	}
 }
