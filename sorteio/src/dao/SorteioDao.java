@@ -1,7 +1,11 @@
 package dao;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import modelo.Grupo;
 import modelo.Sorteio;
 
 public class SorteioDao extends AbstractDao<Sorteio> {
@@ -22,5 +26,15 @@ public class SorteioDao extends AbstractDao<Sorteio> {
 			throw new Exception();
 		}
 	}
+	
+	public List<Sorteio> findByGrupo(Grupo grupo){
+		String q = "FROM Sorteio s WHERE s.grupo.id = :grupo";
+		Query query = em.createQuery(q);
+		query.setParameter("grupo", grupo.getId());
+		
+		return (List<Sorteio>) query.getResultList();
+		
+	}
+	
 
 }
