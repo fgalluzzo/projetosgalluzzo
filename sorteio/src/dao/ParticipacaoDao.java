@@ -1,10 +1,15 @@
 package dao;
 
 
+import java.util.List;
+import java.util.Random;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import modelo.Participacao;
+import modelo.Participante;
+import modelo.Sorteio;
 
 public class ParticipacaoDao extends AbstractDao<Participacao> {
 
@@ -36,5 +41,27 @@ public class ParticipacaoDao extends AbstractDao<Participacao> {
 			em.getTransaction().rollback();
 			throw new Exception();
 		} 
+	}
+	
+	public List<Participante> sorteiaParticipanteSorteio(Sorteio sorteio) {
+		String q = "SELECT count(id) FROM Participacao p WHERE p.sorteio = :sorteio ";
+		Query countQuery = em.createQuery(q);
+		countQuery.setParameter("sorteio", sorteio);
+		long count = (Long)countQuery.getSingleResult();
+
+	    
+	    Random random = new Random();
+	    Integer number =  random.nextInt((int) count);
+
+	    
+		q = "SELECT pa FROM Participacao p JOIN p.participante pa " +
+				"WHERE p.sorteio = :sorteio";
+		Query query = em.createQuery(q);
+		query.setParameter("sorteio", sorteio);
+		
+		query.setFirstResult(number);
+		query.setMaxResults(sorteio.getQuantidadeGanhadores());
+		return (List<Participante>)query.getResultList();
+		
 	}
 }

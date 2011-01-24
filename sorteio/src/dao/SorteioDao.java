@@ -36,5 +36,17 @@ public class SorteioDao extends AbstractDao<Sorteio> {
 		
 	}
 	
+	public void update(Sorteio sorteio) throws Exception{
+		
+		try {
+			em.getTransaction().begin();
+				em.merge(sorteio);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			throw new Exception();
+		}
+	}
+	
 
 }

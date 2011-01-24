@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="sorteio")
@@ -31,11 +32,20 @@ public class Sorteio {
 	@Column(name="dt_inicio")
 	private Calendar dataInicio;
 	
+	@Transient
+	private Date dataInicioD;
+	
 	@Column(name="dt_fim")
 	private Calendar dataFim;
 	
+	@Transient
+	private Date dataFimD;
+	
 	@Column(name="descricao")
 	private String descricao;
+	
+	@Column(name="sorteado")	
+	private boolean sorteado = false;
 	
 	@OneToMany(mappedBy="sorteio")
 	private List<Participacao> participacoes;
@@ -43,6 +53,17 @@ public class Sorteio {
 	@ManyToOne(targetEntity=Grupo.class,fetch=FetchType.LAZY)
 	private Grupo grupo;
 	
+	@OneToMany(targetEntity=Participante.class,fetch=FetchType.LAZY)
+	private List<Participante> ganhadores;
+	
+	@Column(name="quantidadeGanhadores")
+	private Integer quantidadeGanhadores;
+	
+	@Transient
+	private String sorteadoStr;
+	
+	@Transient
+	private boolean temGanhadores;
 	
 	public String getNome() {
 		return nome;
@@ -50,30 +71,7 @@ public class Sorteio {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Date getDataInicio() {
-		if(dataInicio != null) {
-			return dataInicio.getTime();
-		}else{
-			return null;
-		}
-			
-	}
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = new GregorianCalendar();
-		this.dataInicio.setTime(dataInicio);
-	}
-	public Date getDataFim() {
-		if(dataFim != null){
-			return dataFim.getTime();
-		}else {
-			return null;
-		}
-			
-	}
-	public void setDataFim(Date dataFim) {
-		this.dataFim = new GregorianCalendar();
-		this.dataFim.setTime(dataFim);
-	}
+	
 	public String getDescricao() {
 		return descricao;
 	}
@@ -106,6 +104,58 @@ public class Sorteio {
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
 	}
+	public boolean isSorteado() {
+		return sorteado;
+	}
+	public void setSorteado(boolean sorteado) {
+		this.sorteado = sorteado;
+	}
+	public List<Participante> getGanhadores() {
+		return ganhadores;
+	}
+	public void setGanhadores(List<Participante> ganhadores) {
+		this.ganhadores = ganhadores;
+	}
+	public Integer getQuantidadeGanhadores() {
+		return quantidadeGanhadores;
+	}
+	public void setQuantidadeGanhadores(Integer quantidadeGanhadores) {
+		this.quantidadeGanhadores = quantidadeGanhadores;
+	}
+	public String getSorteadoStr() {
+		return sorteado?"Sim":"Não";
+	}
+	public boolean isTemGanhadores() {
+		if(ganhadores != null && !ganhadores.isEmpty()){
+			return true;
+		}
+		return false;
+	}
+	public Calendar getDataInicio() {
+		return dataInicio;
+	}
+	public void setDataInicio(Calendar dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+	public Date getDataInicioD() {
+		return dataInicio.getTime();
+	}
+	public void setDataInicioD(Date dataInicioD) {		
+		this.dataInicio.setTime(dataInicioD);
+	}
+	public Calendar getDataFim() {
+		return dataFim;
+	}
+	public void setDataFim(Calendar dataFim) {
+		this.dataFim = dataFim;
+	}
+	public Date getDataFimD() {
+		return dataFim.getTime();
+	}
+	public void setDataFimD(Date dataFimD) {
+		this.dataFim.setTime(dataFimD);
+	}
+
 
 	
 }

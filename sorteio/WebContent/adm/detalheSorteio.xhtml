@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:composition template="/adm/template/common.xhtml">
+		<ui:define name="content">
+			<h:form>
+			<div class="post">
+				<h2><h:outputText value="#{msg.sorteio} #{cadastroSorteioMB.sorteio.nome}"></h:outputText> </h2>
+				<div class="entry">
+					<h:panelGrid columns="2">
+					
+						<h:outputText value="#{msg.nome}"></h:outputText>
+						<h:outputText value="#{cadastroSorteioMB.sorteio.nome}"></h:outputText>
+						
+						<h:outputText value="#{msg.dtHoraInicio}"></h:outputText>
+						<h:outputText value="#{cadastroSorteioMB.sorteio.dataInicioD}">	
+							<f:convertDateTime timeStyle="short" timeZone="America/Sao_Paulo" locale="BR" type="both" ></f:convertDateTime>						
+						</h:outputText>
+						
+						<h:outputText value="#{msg.dtHoraFim}"></h:outputText>
+						<h:outputText value="#{cadastroSorteioMB.sorteio.dataFimD}">
+							<f:convertDateTime timeStyle="short" timeZone="America/Sao_Paulo" locale="BR" type="both" ></f:convertDateTime>
+						</h:outputText>
+						
+						<h:outputText value="#{msg.qntPremios}"></h:outputText>
+						<h:outputText value="#{cadastroSorteioMB.sorteio.quantidadeGanhadores}"></h:outputText>
+						
+						<h:outputText value="#{msg.sorteado}"></h:outputText>
+						<h:outputText value="#{cadastroSorteioMB.sorteio.sorteadoStr}"></h:outputText>
+						
+					
+					</h:panelGrid>
+					<rich:dataTable var="ganhador" rendered="#{cadastroSorteioMB.sorteio.temGanhadores}" value="#{cadastroSorteioMB.sorteio.ganhadores}">
+						<f:facet name="header" >
+							<h:outputText value="#{msg.ganhadores}"></h:outputText>
+						</f:facet>
+						
+						<h:column>
+							<f:facet name="header" >
+								<h:outputText value="#{msg.nome}"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{ganhador.nome}"></h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header" >
+								<h:outputText value="#{msg.sobrenome}"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{ganhador.sobrenome}"></h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header" >
+								<h:outputText value="#{msg.email}"></h:outputText>
+							</f:facet>
+							<h:outputText value="#{ganhador.email}"></h:outputText>
+						</h:column>
+					</rich:dataTable>
+					<h:outputLink action="listaSorteio" ><h:outputText value="#{msg.voltar}"/> </h:outputLink>
+					
+					
+				</div>
+				
+			</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>
