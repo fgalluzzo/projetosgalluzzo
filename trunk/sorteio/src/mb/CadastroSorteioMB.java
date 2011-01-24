@@ -39,10 +39,10 @@ public class CadastroSorteioMB {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Application app = context.getApplication();
 
-	   ValueExpression expression = app.getExpressionFactory().createValueExpression(context.getELContext(),
+		ValueExpression expression = app.getExpressionFactory().createValueExpression(context.getELContext(),
 	                            String.format("#{%s}", "loginMB"), Object.class);
-	   LoginMB loginMB = (LoginMB) expression.getValue(context.getELContext());
-	   sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
+		LoginMB loginMB = (LoginMB) expression.getValue(context.getELContext());
+		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
 		
 		try {			
 			sorteio.setGrupo(loginMB.getUsuario().getGrupo());
