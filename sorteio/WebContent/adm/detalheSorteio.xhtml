@@ -18,12 +18,15 @@
 		<ui:define name="content">
 			<h:form>
 			<div class="post">
-				<h2><h:outputText value="#{msg.sorteio} #{cadastroSorteioMB.sorteio.nome}"></h:outputText> </h2>
+				<h2 class="title"><h:outputText value="#{msg.sorteio} #{cadastroSorteioMB.sorteio.nome}"></h:outputText> </h2>
 				<div class="entry">
 					<h:panelGrid columns="2">
-					
+						
 						<h:outputText value="#{msg.nome}"></h:outputText>
 						<h:outputText value="#{cadastroSorteioMB.sorteio.nome}"></h:outputText>
+						
+						<h:outputText value="#{msg.enderecoDivulga}"></h:outputText>
+						<h:outputText value="#{cadastroSorteioMB.enderecoSorteio}"></h:outputText>
 						
 						<h:outputText value="#{msg.dtHoraInicio}"></h:outputText>
 						<h:outputText value="#{cadastroSorteioMB.sorteio.dataInicioD}">	

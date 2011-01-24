@@ -9,6 +9,7 @@ import javax.faces.application.Application;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import job.Sortear;
 import modelo.Sorteio;
@@ -29,6 +30,7 @@ public class CadastroSorteioMB {
 	
 	private Sorteio sorteio;
 	private SorteioDao sorteioDao;
+	private String enderecoSorteio;
 	
 	public CadastroSorteioMB() {
 		sorteio = new Sorteio();
@@ -59,7 +61,7 @@ public class CadastroSorteioMB {
 			// TODO Auto-generated catch block
 			return null;
 		}
-		return "index";
+		return "sorteioCriado";
 	}
 	public Sorteio getSorteio() {
 		return sorteio;
@@ -68,6 +70,14 @@ public class CadastroSorteioMB {
 	public void setSorteio(Sorteio sorteio) {
 		this.sorteio = sorteio;
 	}
+
+	public String getEnderecoSorteio() {
+		HttpServletRequest request = ((HttpServletRequest) FacesContext.getCurrentInstance().
+				getExternalContext().getRequest());
+		return "http://"+request.getLocalName()+ request.getContextPath()+"/?sorteio="+sorteio.getId();
+	}
+
+	
 	
 	
 }

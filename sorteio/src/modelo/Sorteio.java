@@ -138,21 +138,34 @@ public class Sorteio {
 		this.dataInicio = dataInicio;
 	}
 	public Date getDataInicioD() {
-		return dataInicio.getTime();
+		if(dataInicio!=null)
+			return dataInicio.getTime();
+		else
+			return null;
 	}
-	public void setDataInicioD(Date dataInicioD) {		
+	public void setDataInicioD(Date dataInicioD) {	
+		if(this.dataInicio ==null) {
+			this.dataInicio = new GregorianCalendar();
+			
+		} 
 		this.dataInicio.setTime(dataInicioD);
 	}
-	public Calendar getDataFim() {
+	public Calendar getDataFim() {	
 		return dataFim;
 	}
 	public void setDataFim(Calendar dataFim) {
 		this.dataFim = dataFim;
 	}
 	public Date getDataFimD() {
-		return dataFim.getTime();
+		if(dataFim != null)
+			return dataFim.getTime();
+		else
+			return null;
 	}
 	public void setDataFimD(Date dataFimD) {
+		if(this.dataFim == null) {
+			this.dataFim = new GregorianCalendar();
+		}
 		this.dataFim.setTime(dataFimD);
 	}
 
