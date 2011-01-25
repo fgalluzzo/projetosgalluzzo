@@ -16,25 +16,25 @@
 <h:body>
 	<ui:composition template="/adm/template/common.xhtml">
 		<ui:define name="content">
-			<h:form>
 			<div class="post">
-				
-				<rich:panel>
-				
-					<f:facet name="header" >
-						<h:outputText value="#{msg.administracao}"/>
-					</f:facet>
+			
+				<div class="entry">
 					
-					<ul>
-						<li><h:commandLink action="criaSorteio" value="#{msg.criarSorteio}"></h:commandLink> </li>
-						<li><h:commandLink action="listaSorteio" value="#{msg.listaSorteios}"></h:commandLink> </li>
-						<li><h:commandLink  value="#{msg.buscarSorteio}"></h:commandLink></li>
-					
-					</ul>
-					
-				</rich:panel>
+					<h:form>						
+						<rich:panel >
+						<f:facet name="header" >
+							<h:outputText value="#{msg.alterarDadosCadastrais}"/>
+						</f:facet>
+						
+						<h:panelGrid >
+							ZZ
+											
+
+						</h:panelGrid>						
+						</rich:panel>
+					</h:form>
+				</div>
 			</div>
-			</h:form>
 		</ui:define>
 	</ui:composition>
 </h:body>

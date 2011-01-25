@@ -50,6 +50,9 @@ a:hover {
 	text-decoration: none;
 }
 
+img {
+	border: 0;
+	}
 #wrapper {
 	margin: 0 auto;
 	padding: 0;
@@ -391,3 +394,6 @@ a:hover {
 	color: #FFFFFF;
 }
 
+.messages {
+	color: red;
+	}

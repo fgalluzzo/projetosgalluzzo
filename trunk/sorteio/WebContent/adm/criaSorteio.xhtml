@@ -17,37 +17,54 @@
 	<ui:composition template="/adm/template/common.xhtml">
 		<ui:define name="content">
 			<h:form>
-				<div class="post">
-					<h2 class="title"><h:outputText value="#{msg.criarSorteio}" /></h2>
-					<div class="entry">
-					
-						<rich:panel>
-							<rich:message></rich:message>
-							<h:panelGrid columns="2">
-							
-								<h:outputLabel for="nome"  value="#{msg.nome}"/>
-								<h:inputText required="true" id="nome" value="#{cadastroSorteioMB.sorteio.nome}" />
-								
-								<h:outputLabel for="desc" value="#{msg.descricao}"/>
-								<h:inputTextarea required="true" id="desc" value="#{cadastroSorteioMB.sorteio.descricao}" />
-								
-								<h:outputLabel for="premios" value="#{msg.qntPremios}"/>
-								<rich:inputNumberSpinner minValue="1" id="premios" value="#{cadastroSorteioMB.sorteio.quantidadeGanhadores}" >
-								</rich:inputNumberSpinner>
-								
-								<h:outputLabel for="dtInicio" value="#{msg.dtInicio}" />
-								<rich:calendar required="true"  timeZone="#{cadastroSorteioMB.timeZone}" datePattern="dd/MM/yyyy HH:mm" locale="BR" showApplyButton="true" id="dtInicio" value="#{cadastroSorteioMB.sorteio.dataInicioD}" >								
-								</rich:calendar>
-								
-								<h:outputLabel for="dtFim" value="#{msg.dtFim}" />
-								<rich:calendar required="true" timeZone="#{cadastroSorteioMB.timeZone}" locale="BR" datePattern="dd/MM/yyyy HH:mm" showApplyButton="true" id="dtFim" value="#{cadastroSorteioMB.sorteio.dataFimD}">								
-								</rich:calendar>
-							</h:panelGrid>							
-							<h:commandButton  action="#{cadastroSorteioMB.cadastrar}" value="#{msg.cadastrar}" />		
-						</rich:panel>
-						<h:link outcome="index" value="#{msg.voltar}" />
-					</div>
-				</div>
+				<div class="post"><rich:panel>
+					<f:facet name="header">
+						<h:outputText value="#{msg.criarSorteio}" />
+					</f:facet>
+					<div class="messages"><rich:message></rich:message></div>
+					<h:panelGrid columns="2">
+
+						<h:outputLabel for="nome" value="#{msg.nome}*" />
+						<h:inputText requiredMessage="#{msg.validaNomeRequerido}"
+							required="true" id="nome"
+							value="#{cadastroSorteioMB.sorteio.nome}" />
+
+						<h:outputLabel for="desc" value="#{msg.descricao}*" />
+						<h:inputTextarea required="true"
+							requiredMessage="#{msg.validaDescricaoRequerida}" id="desc"
+							value="#{cadastroSorteioMB.sorteio.descricao}" />
+
+
+						<h:outputLabel for="premios" value="#{msg.qntPremios}" />
+						<rich:inputNumberSpinner minValue="1" id="premios"
+							value="#{cadastroSorteioMB.sorteio.quantidadeGanhadores}"></rich:inputNumberSpinner>
+
+						<h:outputLabel for="dtInicio" value="#{msg.dtInicio}*" />
+						<rich:calendar required="true"
+							requiredMessage="#{msg.validaDataInicioRequerida}"
+							timeZone="#{cadastroSorteioMB.timeZone}"
+							datePattern="dd/MM/yyyy HH:mm" locale="BR" showApplyButton="true"
+							id="dtInicio" value="#{cadastroSorteioMB.sorteio.dataInicioD}">
+						</rich:calendar>
+
+						<h:outputLabel for="dtFim" value="#{msg.dtFim}*" />
+						<rich:calendar required="true"
+							requiredMessage="#{msg.validaDataFimRequerida}"
+							timeZone="#{cadastroSorteioMB.timeZone}" locale="BR"
+							datePattern="dd/MM/yyyy HH:mm" showApplyButton="true" id="dtFim"
+							value="#{cadastroSorteioMB.sorteio.dataFimD}">
+						</rich:calendar>
+
+					</h:panelGrid>
+					<h:commandButton action="#{cadastroSorteioMB.cadastrar}"
+						value="#{msg.cadastrar}" />
+				</rich:panel>
+				<div style="text-align : right;">
+							<h:link outcome="index" >
+								<h:outputText value="#{msg.voltar}" />
+							</h:link>
+						</div>
+				</div>						
 			</h:form>
 		</ui:define>
 	</ui:composition>

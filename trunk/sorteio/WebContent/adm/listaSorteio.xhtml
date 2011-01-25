@@ -18,8 +18,10 @@
 		<ui:define name="content">
 			<h:form>
 				<div class="post">
-					<h2 class="title"><h:outputText value="#{msg.listagemSorteios}" /></h2>
-					<div class="entry">					
+					<rich:panel  >		
+						<f:facet name="header" >
+							<h:outputText value="#{msg.listagemSorteios}" />
+						</f:facet>
 						<rich:dataTable  rows="10" id="sorteios" value="#{sorteioMB.sorteios}" var="sorteio">
 							<f:facet name="header">
         						
@@ -53,8 +55,11 @@
           						<rich:dataScroller  maxPages="3"></rich:dataScroller>
 							</f:facet>
 						</rich:dataTable>
-						<h:commandLink action="index" value="#{msg.voltar}"></h:commandLink>						
-					</div>
+											
+						</rich:panel>
+						<div style="text-align: right;"><h:link outcome="index">
+					<h:outputText value="#{msg.voltar}" />
+				</h:link></div>
 				</div>
 			</h:form>
 		</ui:define>

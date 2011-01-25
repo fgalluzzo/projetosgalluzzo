@@ -26,7 +26,9 @@
 			<h:form >
 			<div id="menu">				
 				<ul>
-					<li><h:commandLink rendered="#{loginMB.logado}" action="#{loginMB.sair}" value="#{msg.sair}" /></li>					
+					<li><h:commandLink title="#{msg.paginaInicial}" rendered="#{loginMB.logado}" action="index" > <img width="16"  height="16"  src="recursos/images/home.png"  /></h:commandLink> </li>
+					<li><h:commandLink title="#{msg.preferencia}" rendered="#{loginMB.logado}" action="preferencias" > <img width="16"  height="16"  src="recursos/images/alterar.png"  /></h:commandLink> </li>
+					<li><h:commandLink rendered="#{loginMB.logado}" title="#{msg.sair}"  action="#{loginMB.sair}"> <img width="16"  height="16"   src="recursos/images/logout.png" /></h:commandLink> </li>										
 				</ul>
 			</div>	
 			</h:form>	
