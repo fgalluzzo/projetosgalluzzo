@@ -45,7 +45,7 @@ public class SortearPendentesInicializacao implements ServletContextListener {
 			CronTrigger ct;
 			ct = new CronTrigger("Trigger", "grupo1", "pendentes","grupoJob1");
 			ct.setCronExpression("0 0 12pm * * ?");
-			sched.addJob(job, true);
+			sched.scheduleJob(job, ct);
 			logger.info("Fim do agendamento diário de sorteios pendentes");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

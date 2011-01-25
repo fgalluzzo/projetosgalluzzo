@@ -16,17 +16,20 @@ import modelo.Usuario;
 public class LoginMB {
 	private Usuario usuario;
 	private UsuarioDao usuarioDao;
+	private boolean logado;
 	
 	public LoginMB() {
-
+		logado = false;
 		usuario = new Usuario();
 	}
+	
 	
 	public String entrar(){
 		try{
 			usuarioDao = new UsuarioDao(PersistenceUtil.getEntityManager());
 			usuario.setSenha(CriaHash.SHA1(usuario.getSenha()));
 			usuario = usuarioDao.findByLoginSenha(usuario);
+			logado = true;
 			return "index";
 		} catch(NoResultException e) {
 			System.out.println("e");
@@ -40,10 +43,23 @@ public class LoginMB {
 			return null;
 		} 
 	}
+	public String sair() {
+		usuario = new Usuario();
+		logado = false;
+		return "login";
+	}
 	public Usuario getUsuario() {
 		return usuario;
 	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	public boolean isLogado() {
+		return logado;
+	}
+
+	public void setLogado(boolean logado) {
+		this.logado = logado;
+	}
+
 }

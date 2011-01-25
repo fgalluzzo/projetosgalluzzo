@@ -26,26 +26,26 @@
 							<h:panelGrid columns="2">
 							
 								<h:outputLabel for="nome"  value="#{msg.nome}"/>
-								<h:inputText id="nome" value="#{cadastroSorteioMB.sorteio.nome}" />
+								<h:inputText required="true" id="nome" value="#{cadastroSorteioMB.sorteio.nome}" />
 								
 								<h:outputLabel for="desc" value="#{msg.descricao}"/>
-								<h:inputTextarea id="desc" value="#{cadastroSorteioMB.sorteio.descricao}" />
+								<h:inputTextarea required="true" id="desc" value="#{cadastroSorteioMB.sorteio.descricao}" />
 								
 								<h:outputLabel for="premios" value="#{msg.qntPremios}"/>
-								<rich:inputNumberSpinner id="premios" value="#{cadastroSorteioMB.sorteio.quantidadeGanhadores}" >
+								<rich:inputNumberSpinner minValue="1" id="premios" value="#{cadastroSorteioMB.sorteio.quantidadeGanhadores}" >
 								</rich:inputNumberSpinner>
 								
 								<h:outputLabel for="dtInicio" value="#{msg.dtInicio}" />
-								<rich:calendar datePattern="dd/MM/yyyy HH:mm" locale="BR" showApplyButton="true" id="dtInicio" value="#{cadastroSorteioMB.sorteio.dataInicioD}" >								
+								<rich:calendar required="true"  timeZone="#{cadastroSorteioMB.timeZone}" datePattern="dd/MM/yyyy HH:mm" locale="BR" showApplyButton="true" id="dtInicio" value="#{cadastroSorteioMB.sorteio.dataInicioD}" >								
 								</rich:calendar>
 								
 								<h:outputLabel for="dtFim" value="#{msg.dtFim}" />
-								<rich:calendar locale="BR" datePattern="dd/MM/yyyy HH:mm" showApplyButton="true" id="dtFim" value="#{cadastroSorteioMB.sorteio.dataFimD}">								
+								<rich:calendar required="true" timeZone="#{cadastroSorteioMB.timeZone}" locale="BR" datePattern="dd/MM/yyyy HH:mm" showApplyButton="true" id="dtFim" value="#{cadastroSorteioMB.sorteio.dataFimD}">								
 								</rich:calendar>
 							</h:panelGrid>							
-							<h:commandButton action="#{cadastroSorteioMB.cadastrar}" value="#{msg.cadastrar}" />		
+							<h:commandButton  action="#{cadastroSorteioMB.cadastrar}" value="#{msg.cadastrar}" />		
 						</rich:panel>
-						<h:outputLink action="index" ><h:outputText value="#{msg.voltar}"/> </h:outputLink>
+						<h:link outcome="index" value="#{msg.voltar}" />
 					</div>
 				</div>
 			</h:form>
