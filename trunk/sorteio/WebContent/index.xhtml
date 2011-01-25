@@ -18,38 +18,17 @@
 		<ui:define name="content">
 
 
-			<div class="post"><!-- há Sorteio --> <h:form
-				rendered="#{participacaoMB.temSorteio}">
-				<rich:panel>
-					<h2 class="title"><h:outputText
-						value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}" /></h2>
-					<h:inputHidden value="#{participacaoMB.sorteio.id}"/>
-					<div class="entry"><h:panelGrid columns="2">
-						<h:outputLabel for="nome" value="Nome" />
-						<h:inputText id="nome"
-							value="#{participacaoMB.participacao.participante.nome}" />
-
-						<h:outputLabel for="sobrenome" value="Sobrenome" />
-						<h:inputText id="sobrenome"
-							value="#{participacaoMB.participacao.participante.sobrenome}" />
-
-						<h:outputLabel for="email" value="E-mail" />
-						<h:inputText id="email"
-							value="#{participacaoMB.participacao.participante.email}" />
-
-					</h:panelGrid> <h:commandButton type="reset" value="Limpar" /> <h:commandButton
-						action="#{participacaoMB.processar}" value="Inscrever-se" /></div>
-				</rich:panel>
+			<h:form rendered="#{redirectMB.temSorteio}">
+				<f:viewParam name="sorteio" value="#{redirectMB.sorteioId}"/>
 			</h:form>
-			</div>
-
 			<!-- Não há sorteio -->
-			<h:form rendered="#{not participacaoMB.temSorteio}">
+			<h:form rendered="#{not redirectMB.temSorteio}">
 				<rich:panel>
 					<p>Não há nenhum sorteio em vigência no momento</p>
 
 				</rich:panel>
 			</h:form>
+			
 		</ui:define>
 	</ui:composition>
 </h:body>
