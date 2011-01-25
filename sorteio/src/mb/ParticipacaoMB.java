@@ -3,12 +3,17 @@ package mb;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.faces.application.Application;
+import javax.faces.application.NavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.ajax4jsf.model.KeepAlive;
 
 import modelo.Participacao;
 import modelo.Sorteio;
@@ -18,7 +23,7 @@ import dao.ParticipanteDao;
 import dao.SorteioDao;
 
 @ManagedBean(name = "participacaoMB")
-@RequestScoped
+@SessionScoped
 public class ParticipacaoMB {
 	private Sorteio sorteio;
 	private SorteioDao sorteioDao;
@@ -27,6 +32,7 @@ public class ParticipacaoMB {
 	private ParticipanteDao participanteDao;
 	private boolean temSorteio = false;	
 
+	
 	public ParticipacaoMB() {
 		participacao = new Participacao();
 		this.sorteio = new Sorteio();
@@ -37,31 +43,14 @@ public class ParticipacaoMB {
 		if(sorteio !=null && !sorteio.isEmpty() ){
 			
 			sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
-			try{
-				
-				Long numero = Long.parseLong(sorteio);			
-				this.sorteio = sorteioDao.findById(Sorteio.class, numero);
-				Calendar dtAtual = new GregorianCalendar();
-				
-				if(this.sorteio != null){
-					if(dtAtual.after(this.sorteio.getDataInicioCal()) && dtAtual.before(this.sorteio.getDataFimCal())){
-						temSorteio = true;
-					}
-					
-				}
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
+			Long numero = Long.parseLong(sorteio);					
+			this.sorteio = sorteioDao.findById(Sorteio.class, numero);					
 			
 			
 		}
 		
 		
 	}
-
-	
 	public String processar() {
 		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
 		participacaoDao = new ParticipacaoDao(PersistenceUtil.getEntityManager());
@@ -96,7 +85,7 @@ public class ParticipacaoMB {
 		    participacao.setNumeroInscricao(numero.toString());
 		    try {
 		    	participanteDao.createParticipante(participacao.getParticipante());
-				participacaoDao.createParticipacao(participacao);
+				participacaoDao.createParticipacao(participacao);				
 				return "inscrito";
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
