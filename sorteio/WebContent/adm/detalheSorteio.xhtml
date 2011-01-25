@@ -17,65 +17,71 @@
 	<ui:composition template="/adm/template/common.xhtml">
 		<ui:define name="content">
 			<h:form>
-			<div class="post">
-				<h2 class="title"><h:outputText value="#{msg.sorteio} #{cadastroSorteioMB.sorteio.nome}"></h:outputText> </h2>
-				<div class="entry">
+				<div class="post"><rich:panel>
+					<f:facet name="header">
+						<h:outputText
+							value="#{msg.sorteio} #{cadastroSorteioMB.sorteio.nome}"></h:outputText>
+					</f:facet>
 					<h:panelGrid columns="2">
-						
+
 						<h:outputText value="#{msg.nome}"></h:outputText>
 						<h:outputText value="#{cadastroSorteioMB.sorteio.nome}"></h:outputText>
-						
+
 						<h:outputText value="#{msg.enderecoDivulga}"></h:outputText>
 						<h:outputText value="#{cadastroSorteioMB.enderecoSorteio}"></h:outputText>
-						
+
 						<h:outputText value="#{msg.dtHoraInicio}"></h:outputText>
-						<h:outputText value="#{cadastroSorteioMB.sorteio.dataInicioD}">	
-							<f:convertDateTime timeStyle="short" timeZone="America/Sao_Paulo" locale="BR" type="both" ></f:convertDateTime>						
+						<h:outputText value="#{cadastroSorteioMB.sorteio.dataInicioD}">
+							<f:convertDateTime timeStyle="short" timeZone="America/Sao_Paulo"
+								locale="BR" type="both"></f:convertDateTime>
 						</h:outputText>
-						
+
 						<h:outputText value="#{msg.dtHoraFim}"></h:outputText>
 						<h:outputText value="#{cadastroSorteioMB.sorteio.dataFimD}">
-							<f:convertDateTime timeStyle="short" timeZone="America/Sao_Paulo" locale="BR" type="both" ></f:convertDateTime>
+							<f:convertDateTime timeStyle="short" timeZone="America/Sao_Paulo"
+								locale="BR" type="both"></f:convertDateTime>
 						</h:outputText>
-						
+
 						<h:outputText value="#{msg.qntPremios}"></h:outputText>
-						<h:outputText value="#{cadastroSorteioMB.sorteio.quantidadeGanhadores}"></h:outputText>
-						
+						<h:outputText
+							value="#{cadastroSorteioMB.sorteio.quantidadeGanhadores}"></h:outputText>
+
 						<h:outputText value="#{msg.sorteado}"></h:outputText>
 						<h:outputText value="#{cadastroSorteioMB.sorteio.sorteadoStr}"></h:outputText>
-						
-					
+
+
 					</h:panelGrid>
-					<rich:dataTable var="ganhador" rendered="#{cadastroSorteioMB.sorteio.temGanhadores}" value="#{cadastroSorteioMB.sorteio.ganhadores}">
-						<f:facet name="header" >
+					<rich:dataTable var="ganhador"
+						rendered="#{cadastroSorteioMB.sorteio.temGanhadores}"
+						value="#{cadastroSorteioMB.sorteio.ganhadores}">
+						<f:facet name="header">
 							<h:outputText value="#{msg.ganhadores}"></h:outputText>
 						</f:facet>
-						
+
 						<h:column>
-							<f:facet name="header" >
+							<f:facet name="header">
 								<h:outputText value="#{msg.nome}"></h:outputText>
 							</f:facet>
 							<h:outputText value="#{ganhador.nome}"></h:outputText>
 						</h:column>
 						<h:column>
-							<f:facet name="header" >
+							<f:facet name="header">
 								<h:outputText value="#{msg.sobrenome}"></h:outputText>
 							</f:facet>
 							<h:outputText value="#{ganhador.sobrenome}"></h:outputText>
 						</h:column>
 						<h:column>
-							<f:facet name="header" >
+							<f:facet name="header">
 								<h:outputText value="#{msg.email}"></h:outputText>
 							</f:facet>
 							<h:outputText value="#{ganhador.email}"></h:outputText>
 						</h:column>
 					</rich:dataTable>
-					<h:outputLink action="listaSorteio" ><h:outputText value="#{msg.voltar}"/> </h:outputLink>
-					
-					
+				</rich:panel>
+				<div style="text-align: right;"><h:link outcome="listaSorteio">
+					<h:outputText value="#{msg.voltar}" />
+				</h:link></div>
 				</div>
-				
-			</div>
 			</h:form>
 		</ui:define>
 	</ui:composition>

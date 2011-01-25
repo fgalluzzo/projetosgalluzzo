@@ -18,25 +18,28 @@
 		<ui:define name="content">
 			<div class="post">
 			
-				<div class="entry">
+			
 					
-					<h:form>
+					<h:form>						
 						<rich:panel >
 						<f:facet name="header" >
-							<h:outputText value="Administração dos sorteios"/>
+							<h:outputText value="#{msg.administracao}"/>
 						</f:facet>
+						<div class="messages">
+							<rich:message></rich:message>
+						</div>
 						<h:panelGrid>
 							<h:outputLabel for="login" value="#{msg.usuario}"/>
-							<h:inputText id="login" value="#{loginMB.usuario.apelido}"/>
+							<h:inputText required="true" requiredMessage="#{msg.usuarioRequerido}" id="login" value="#{loginMB.usuario.apelido}"/>
 							
 							<h:outputLabel for="senha" value="#{msg.senha}"/>
-							<h:inputSecret id="senha" value="#{loginMB.usuario.senha}" />							
+							<h:inputSecret requiredMessage="#{msg.senhaRequerida}" required="true" id="senha" value="#{loginMB.usuario.senha}" />							
 
 						</h:panelGrid>
 						<h:commandButton action="#{loginMB.entrar}" value="#{msg.entrar}"/>
 						</rich:panel>
 					</h:form>
-				</div>
+				
 			</div>
 		</ui:define>
 	</ui:composition>

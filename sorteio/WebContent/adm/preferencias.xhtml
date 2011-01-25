@@ -16,25 +16,27 @@
 <h:body>
 	<ui:composition template="/adm/template/common.xhtml">
 		<ui:define name="content">
-			<h:form>
-			<div class="post">
-				
+			<div class="post"><h:form>
 				<rich:panel>
-				
-					<f:facet name="header" >
-						<h:outputText value="#{msg.administracao}"/>
+					<f:facet name="header">
+						<h:outputText value="#{msg.preferencia}" />
 					</f:facet>
-					
+
+
 					<ul>
-						<li><h:commandLink action="criaSorteio" value="#{msg.criarSorteio}"></h:commandLink> </li>
-						<li><h:commandLink action="listaSorteio" value="#{msg.listaSorteios}"></h:commandLink> </li>
-						<li><h:commandLink  value="#{msg.buscarSorteio}"></h:commandLink></li>
-					
+						<li><h:commandLink action="alterarSenha"
+							value="#{msg.alterarSenha}" /></li>
+						<li><h:commandLink action="alterarDadosCadastrais"
+							value="#{msg.alterarDadosCadastrais}" /></li>
+
 					</ul>
-					
+
+
 				</rich:panel>
-			</div>
-			</h:form>
+				<div style="text-align: right;"><h:link outcome="index">
+					<h:outputText value="#{msg.voltar}" />
+				</h:link></div>
+			</h:form></div>
 		</ui:define>
 	</ui:composition>
 </h:body>
