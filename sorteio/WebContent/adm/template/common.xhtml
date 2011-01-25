@@ -22,7 +22,14 @@
 			<div id="logo">
 				<h1><h:outputText value="#{msg.titulo}" /></h1>
 				<p> design by <a href="http://www.freecsstemplates.org/"> CSS Templates</a></p>
-			</div>			
+			</div>	
+			<h:form >
+			<div id="menu">				
+				<ul>
+					<li><h:commandLink rendered="#{loginMB.logado}" action="#{loginMB.sair}" value="#{msg.sair}" /></li>					
+				</ul>
+			</div>	
+			</h:form>	
 		</div>
 	</div>
 	<!-- end #header -->

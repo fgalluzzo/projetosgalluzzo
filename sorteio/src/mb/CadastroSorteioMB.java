@@ -3,6 +3,7 @@ package mb;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import javax.el.ValueExpression;
 import javax.faces.application.Application;
@@ -31,7 +32,16 @@ public class CadastroSorteioMB {
 	private Sorteio sorteio;
 	private SorteioDao sorteioDao;
 	private String enderecoSorteio;
+	private TimeZone timeZone = TimeZone.getTimeZone("America/Sao_Paulo");
 	
+	public TimeZone getTimeZone() {
+		return timeZone;
+	}
+
+	public void setTimeZone(TimeZone timeZone) {
+		this.timeZone = timeZone;
+	}
+
 	public CadastroSorteioMB() {
 		sorteio = new Sorteio();
 
@@ -53,13 +63,14 @@ public class CadastroSorteioMB {
 			Scheduler sched = sf.getScheduler();		
 
 			JobDetail job = new JobDetail(sorteio.getId().toString(),Sortear.class);			
-			SimpleTrigger disparo = new SimpleTrigger("Disparo do sorteio",sorteio.getDataFimD());
+			SimpleTrigger disparo = new SimpleTrigger("Disparo do sorteio"+sorteio.getId().toString(),sorteio.getDataFimD());
 			sched.scheduleJob(job, disparo);
 			 
 			sched.start();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			return null;
+			e.printStackTrace();
+			return "index";
 		}
 		return "sorteioCriado";
 	}
