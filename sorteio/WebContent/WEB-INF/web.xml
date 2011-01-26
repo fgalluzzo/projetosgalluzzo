@@ -17,4 +17,8 @@
 		<welcome-file>login.xhtml</welcome-file>
 		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
+	<context-param>		
+		<param-name>org.richfaces.datatableUsesViewLocale</param-name>
+		<param-value>true</param-value>
+	</context-param>
 </web-app>
