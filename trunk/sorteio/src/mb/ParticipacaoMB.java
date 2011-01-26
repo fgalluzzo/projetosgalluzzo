@@ -3,6 +3,7 @@ package mb;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.el.ValueExpression;
 import javax.faces.application.Application;
 import javax.faces.application.NavigationHandler;
 import javax.faces.bean.ManagedBean;
@@ -23,54 +24,60 @@ import dao.ParticipanteDao;
 import dao.SorteioDao;
 
 @ManagedBean(name = "participacaoMB")
-@SessionScoped
+@RequestScoped
 public class ParticipacaoMB {
 	private Sorteio sorteio;
 	private SorteioDao sorteioDao;
 	private Participacao participacao;
 	private ParticipacaoDao participacaoDao;
 	private ParticipanteDao participanteDao;
-	private boolean temSorteio = false;	
+	private boolean temSorteio = false;
 
-	
 	public ParticipacaoMB() {
 		participacao = new Participacao();
-		this.sorteio = new Sorteio();
-		HttpServletRequest request = ((HttpServletRequest) FacesContext.getCurrentInstance().
-				getExternalContext().getRequest());
-		String sorteio = request.getParameter("sorteio");		
-		
-		if(sorteio !=null && !sorteio.isEmpty() ){
-			
-			sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
-			Long numero = Long.parseLong(sorteio);					
-			this.sorteio = sorteioDao.findById(Sorteio.class, numero);					
-			
-			
-		}
-		
-		
+		FacesContext context = FacesContext.getCurrentInstance();
+		Application app = context.getApplication();
+
+		ValueExpression expression = app.getExpressionFactory()
+				.createValueExpression(context.getELContext(),
+						String.format("#{%s}", "sorteioDTOMB"), Object.class);
+		SorteioDTOMB sorteioDTOMB = (SorteioDTOMB) expression.getValue(context
+				.getELContext());
+
+		this.sorteio = sorteioDTOMB.getSorteio();
+
 	}
+
 	public String processar() {
+		HttpServletRequest httpServletRequest = 
+			   (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		String ip = httpServletRequest.getRemoteAddr();		 
+		
 		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
 		participacaoDao = new ParticipacaoDao(PersistenceUtil.getEntityManager());
 		participanteDao = new ParticipanteDao(PersistenceUtil.getEntityManager());
+		boolean temEmailCadastradoSorteio = participacaoDao.hasEmailParticipante(sorteio.getId(), participacao.getParticipante().getEmail());
+		boolean temIpCadastradoNoSorteio = participacaoDao.hasSorteioAndIp(sorteio.getId(), ip);
+		boolean temNomeSobrenomeCadastrado = participacaoDao.hasNomeSobrenomeParticipante(sorteio.getId(), 
+				participacao.getParticipante().getNome(), participacao.getParticipante().getSobrenome());
 		String cookieValue = "";
 		Integer numero = (int) (Math.round(Math.random()* 10000));
-		 HttpServletRequest httpServletRequest = 
-			   (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		 String ip = httpServletRequest.getRemoteAddr();		 
-		 Cookie[] cookies = httpServletRequest.getCookies();
-		 if (cookies != null) {
+		
+		Cookie[] cookies = httpServletRequest.getCookies();
+		if (cookies != null) {
 			 for(int i=0; i<cookies.length; i++){
 				 if (cookies[i].getName().equalsIgnoreCase(sorteio.getId().toString())){
 					 cookieValue = cookies[i].getValue();
 				 }
 			 }
-		 }		
-		if(participacaoDao.hasSorteioAndIp(sorteio.getId(), ip)){
+		 }	
+		if(temEmailCadastradoSorteio) {
 			return "naoInscrito";
 		}
+		if(temIpCadastradoNoSorteio && temNomeSobrenomeCadastrado ){			
+			return "naoInscrito";
+		}
+
 		if(!cookieValue.equals(sorteio.getId().toString())){
 			
 			HttpServletResponse httpServletResponse = 

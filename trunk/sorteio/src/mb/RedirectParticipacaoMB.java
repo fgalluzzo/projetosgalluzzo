@@ -3,6 +3,7 @@ package mb;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.el.ValueExpression;
 import javax.faces.application.Application;
 import javax.faces.application.NavigationHandler;
 import javax.faces.bean.ManagedBean;
@@ -49,8 +50,14 @@ public class RedirectParticipacaoMB {
 						temSorteio = true;
 						FacesContext context = FacesContext.getCurrentInstance();
 						Application app = context.getApplication();
+
+						ValueExpression expression = app.getExpressionFactory().createValueExpression(context.getELContext(),
+					                            String.format("#{%s}", "sorteioDTOMB"), Object.class);
+						SorteioDTOMB sorteioDTOMB = (SorteioDTOMB) expression.getValue(context.getELContext());	
+						sorteioDTOMB.setSorteio(this.sorteio);
+						
 						NavigationHandler nh = app.getNavigationHandler();
-				        nh.handleNavigation(context, null, "participar.xhtml?faces-redirect=true&includeViewParams=true&sorteio="+sorteioId);
+				        nh.handleNavigation(context, null, "participar.xhtml?faces-redirect=true");
 					}
 					
 				}

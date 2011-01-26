@@ -20,18 +20,20 @@
 
 			<div class="post"><!-- há Sorteio --> 
 			<h:form id="frmParticip">
-				<rich:message></rich:message>
+				
 				<rich:panel>
 					<h2 class="title"><h:outputText
 						value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}" /></h2>				
-					<div class="entry"><h:panelGrid columns="2">
+					<div class="entry">
+					<rich:message></rich:message>
+					<h:panelGrid columns="2">
 						
 						<h:outputLabel for="nome" value="Nome" />
-						<h:inputText required="true" requiredMessage="#{msg.validaNomeRequerido}" id="nome"
-							value="#{participacaoMB.participacao.participante.nome}" />
-
+						<h:inputText required="true" validator="validaNome" requiredMessage="#{msg.validaNomeRequerido}" id="nome"
+							 value="#{participacaoMB.participacao.participante.nome}" />	
+							 					
 						<h:outputLabel for="sobrenome"  value="Sobrenome" />
-						<h:inputText id="sobrenome" required="true" requiredMessage="#{msg.validaSobrenomeRequerido}"
+						<h:inputText id="sobrenome" validator="validaSobrenome" required="true" requiredMessage="#{msg.validaSobrenomeRequerido}"
 							value="#{participacaoMB.participacao.participante.sobrenome}" />
 
 						<h:outputLabel for="email" value="E-mail" />
