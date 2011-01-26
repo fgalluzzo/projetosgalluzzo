@@ -1,6 +1,5 @@
 package dao;
 
-
 import java.util.List;
 import java.util.Random;
 
@@ -17,53 +16,82 @@ public class ParticipacaoDao extends AbstractDao<Participacao> {
 		super(em);
 		// TODO Auto-generated constructor stub
 	}
-	
-	public boolean hasSorteioAndIp(Long sorteio_id,String ip){
+
+	public boolean hasSorteioAndIp(Long sorteio_id, String ip) {
 		String q = "FROM Participacao p WHERE p.sorteio.id = :id AND p.ip = :ip";
 		Query query = em.createQuery(q);
 		query.setParameter("id", sorteio_id);
-		query.setParameter("ip", ip );
-		
-		if(query.getResultList().size() >0){
+		query.setParameter("ip", ip);
+
+		if (query.getResultList().size() > 0) {
 			return true;
-		} 
-		
+		}
+
 		return false;
-		
+
 	}
-	
-	public void createParticipacao(Participacao p) throws Exception{
-		try{
+
+	public boolean hasEmailParticipante(Long sorteio_id, String email) {
+		String q = "FROM Participacao p WHERE p.sorteio.id = :id AND p.participante.email = :email";
+		Query query = em.createQuery(q);
+		query.setParameter("id", sorteio_id);
+		query.setParameter("email", email);
+
+		if (query.getResultList().size() > 0) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	public boolean hasNomeSobrenomeParticipante(Long sorteio_id, String nome,
+			String sobrenome) {
+		String q = "FROM Participacao p WHERE p.sorteio.id = :id AND p.participante.nome" +
+				" = :nome AND p.participante.sobrenome = :sobrenome ";
+		Query query = em.createQuery(q);
+		query.setParameter("id", sorteio_id);
+		query.setParameter("nome", nome);
+		query.setParameter("sobrenome", sobrenome);
+
+		if (query.getResultList().size() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public void createParticipacao(Participacao p) throws Exception {
+		try {
 			em.getTransaction().begin();
-				em.persist(p);
+			em.persist(p);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			em.getTransaction().rollback();
 			throw new Exception();
-		} 
+		}
 	}
-	
+
 	public List<Participante> sorteiaParticipanteSorteio(Sorteio sorteio) {
 		String q = "SELECT count(id) FROM Participacao p WHERE p.sorteio = :sorteio ";
 		Query countQuery = em.createQuery(q);
 		countQuery.setParameter("sorteio", sorteio);
-		long count = (Long)countQuery.getSingleResult();
+		long count = (Long) countQuery.getSingleResult();
 
-	    if(count > 0) {
-	    	Random random = new Random();
-		    Integer number =  random.nextInt((int) count);
+		if (count > 0) {
+			Random random = new Random();
+			Integer number = random.nextInt((int) count);
 
-		    
-			q = "SELECT pa FROM Participacao p JOIN p.participante pa " +
-					"WHERE p.sorteio = :sorteio";
+			q = "SELECT pa FROM Participacao p JOIN p.participante pa "
+					+ "WHERE p.sorteio = :sorteio";
 			Query query = em.createQuery(q);
 			query.setParameter("sorteio", sorteio);
-			
+
 			query.setFirstResult(number);
 			query.setMaxResults(sorteio.getQuantidadeGanhadores());
-			return (List<Participante>)query.getResultList();
+			return (List<Participante>) query.getResultList();
 
-	    }
-	    return null;		
+		}
+		return null;
 	}
 }

@@ -10,4 +10,12 @@
 		<validator-id>validaEmail</validator-id>
 		<validator-class>validadores.EmailValidator</validator-class>
 	</validator>
+	<validator>
+		<validator-id>validaNome</validator-id>
+		<validator-class>validadores.NomeValidator</validator-class>
+	</validator>
+	<validator>
+		<validator-id>validaSobrenome</validator-id>
+		<validator-class>validadores.SobrenomeValidator</validator-class>
+	</validator>
 </faces-config>
