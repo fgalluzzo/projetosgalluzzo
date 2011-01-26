@@ -34,6 +34,7 @@ import dao.SorteioDao;
 public class CadastroSorteioMB {
 	
 	private Sorteio sorteio;
+	private String filtroNome;
 	private SorteioDao sorteioDao;
 	private String enderecoSorteio;
 	private TimeZone timeZone = TimeZone.getTimeZone("America/Sao_Paulo");
@@ -120,6 +121,14 @@ public class CadastroSorteioMB {
 		HttpServletRequest request = ((HttpServletRequest) FacesContext.getCurrentInstance().
 				getExternalContext().getRequest());
 		return "http://"+request.getLocalName()+ request.getContextPath()+"/?sorteio="+sorteio.getCodigo();
+	}
+
+	public String getFiltroNome() {
+		return filtroNome;
+	}
+
+	public void setFiltroNome(String filtroNome) {
+		this.filtroNome = filtroNome;
 	}
 
 	

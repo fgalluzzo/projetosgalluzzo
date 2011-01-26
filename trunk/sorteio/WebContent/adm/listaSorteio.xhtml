@@ -22,11 +22,11 @@
 						<f:facet name="header" >
 							<h:outputText value="#{msg.listagemSorteios}" />
 						</f:facet>
-						<rich:dataTable  rows="10" id="sorteios" value="#{sorteioMB.sorteios}" var="sorteio">
+						<rich:dataTable  sortMode=""  rows="10" id="sorteios" value="#{sorteioMB.sorteios}" var="sorteio">
 							<f:facet name="header">
         						
     						</f:facet>
-    						<rich:column>
+    						<rich:column >
 								<f:facet name="header">
 									<h:outputText value="#{msg.nome}" />
 								</f:facet>
@@ -35,7 +35,7 @@
 								</h:commandLink>
 								
 							</rich:column>
-							<rich:column>
+							<rich:column sortBy="#{sorteio.dataInicioD}">
 								<f:facet name="header">
 									<h:outputText value="#{msg.dtHoraInicio}" />
 								</f:facet>
@@ -43,7 +43,7 @@
 									<f:convertDateTime timeStyle="short" timeZone="America/Sao_Paulo" locale="BR" type="both" ></f:convertDateTime>
 								</h:outputText>
 							</rich:column>
-							<rich:column>
+							<rich:column sortBy="#{sorteio.dataFimD}">
 								<f:facet name="header">
 									<h:outputText value="#{msg.dtHoraFim}" />
 								</f:facet>
