@@ -51,6 +51,27 @@
 									<f:convertDateTime timeStyle="short" timeZone="America/Sao_Paulo" locale="BR"   type="both"   ></f:convertDateTime>
 								</h:outputText>
 							</rich:column>
+							<rich:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.inscritos}" />
+								</f:facet>
+								<h:outputText value="#{sorteio.inscritos}">									
+								</h:outputText>
+							</rich:column>								
+							<rich:column colspan="2">
+								<f:facet name="header">
+									<h:outputText value="#{msg.opcoes}" />
+								</f:facet>
+								<h:commandLink action="alterarSorteio" title="#{msg.alterar}">
+									<img width="16" height="16" src="recursos/images/alterar.jpg" />
+									<f:setPropertyActionListener value="#{sorteio}" target="#{cadastroSorteioMB.sorteio}"></f:setPropertyActionListener>
+								</h:commandLink>
+								
+								<h:commandLink action="excluirSorteio" title="#{msg.excluir}">
+									<img width="16" height="16" src="recursos/images/lixeira.png" />
+									<f:setPropertyActionListener value="#{sorteio}" target="#{cadastroSorteioMB.sorteio}"></f:setPropertyActionListener>
+								</h:commandLink>
+							</rich:column>
 							<f:facet name="footer">							
           						<rich:dataScroller  maxPages="3"></rich:dataScroller>
 							</f:facet>

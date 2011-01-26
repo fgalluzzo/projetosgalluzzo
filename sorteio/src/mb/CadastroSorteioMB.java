@@ -7,8 +7,10 @@ import java.util.TimeZone;
 
 import javax.el.ValueExpression;
 import javax.faces.application.Application;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,11 +25,12 @@ import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
 import util.CriaHash;
+import util.MessagesReader;
 import util.PersistenceUtil;
 import dao.SorteioDao;
 
 @ManagedBean(name="cadastroSorteioMB")
-@RequestScoped
+@SessionScoped
 public class CadastroSorteioMB {
 	
 	private Sorteio sorteio;
@@ -43,11 +46,35 @@ public class CadastroSorteioMB {
 		this.timeZone = timeZone;
 	}
 
-	public CadastroSorteioMB() {
+	public CadastroSorteioMB() {		
 		sorteio = new Sorteio();
 
 	}
+	public String preIncluir() {
+		sorteio = new Sorteio();
+		return "criaSorteio";
+	}
 	
+	public String alterar() {
+		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
+		try {
+			sorteioDao.update(sorteio);
+			FacesMessage message = new FacesMessage();
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"infoAlteracaoSucesso"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"infoAlteracaoSucesso"));
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, message);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	public String cadastrar(){
 		FacesContext context = FacesContext.getCurrentInstance();
 		Application app = context.getApplication();
@@ -74,9 +101,11 @@ public class CadastroSorteioMB {
 			sched.start();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			sorteio = new Sorteio();
 			e.printStackTrace();
 			return "index";
 		}
+		sorteio = new Sorteio();
 		return "sorteioCriado";
 	}
 	public Sorteio getSorteio() {
