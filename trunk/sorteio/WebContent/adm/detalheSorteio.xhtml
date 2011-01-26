@@ -28,7 +28,7 @@
 						<h:outputText value="#{cadastroSorteioMB.sorteio.nome}"></h:outputText>
 						
 						<h:outputText value="#{msg.descricao}"></h:outputText>
-						<h:outputText value="#{cadastroSorteioMB.sorteio.descricao}"></h:outputText>
+						<h:outputText value="#{cadastroSorteioMB.sorteio.descricao}"></h:outputText>						
 
 						<h:outputText value="#{msg.enderecoDivulga}"></h:outputText>
 						<h:outputText value="#{cadastroSorteioMB.enderecoSorteio}"></h:outputText>
@@ -44,7 +44,10 @@
 							<f:convertDateTime timeStyle="short" timeZone="America/Sao_Paulo"
 								locale="BR" type="both"></f:convertDateTime>
 						</h:outputText>
-
+						
+						<h:outputText value="#{msg.inscritos}"></h:outputText>
+						<h:outputText value="#{cadastroSorteioMB.sorteio.inscritos}"></h:outputText>
+						
 						<h:outputText value="#{msg.qntPremios}"></h:outputText>
 						<h:outputText
 							value="#{cadastroSorteioMB.sorteio.quantidadeGanhadores}"></h:outputText>

@@ -22,6 +22,7 @@ import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
+import util.CriaHash;
 import util.PersistenceUtil;
 import dao.SorteioDao;
 
@@ -56,9 +57,13 @@ public class CadastroSorteioMB {
 		LoginMB loginMB = (LoginMB) expression.getValue(context.getELContext());
 		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
 		
-		try {			
+		try {		
+			
 			sorteio.setGrupo(loginMB.getUsuario().getGrupo());
+			sorteio.setInscritos(0);
 			sorteioDao.createSorteio(sorteio);
+			sorteio.setCodigo(CriaHash.SHA1(loginMB.getUsuario().getGrupo()+""+sorteio.getId()));			
+			sorteioDao.update(sorteio);
 			SchedulerFactory sf = new StdSchedulerFactory();
 			Scheduler sched = sf.getScheduler();		
 
@@ -85,7 +90,7 @@ public class CadastroSorteioMB {
 	public String getEnderecoSorteio() {
 		HttpServletRequest request = ((HttpServletRequest) FacesContext.getCurrentInstance().
 				getExternalContext().getRequest());
-		return "http://"+request.getLocalName()+ request.getContextPath()+"/?sorteio="+sorteio.getId();
+		return "http://"+request.getLocalName()+ request.getContextPath()+"/?sorteio="+sorteio.getCodigo();
 	}
 
 	

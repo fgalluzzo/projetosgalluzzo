@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="sorteio")
@@ -58,6 +59,12 @@ public class Sorteio {
 	
 	@Column(name="quantidadeGanhadores")
 	private Integer quantidadeGanhadores;
+	
+	@Column(name="inscritos")
+	private Integer inscritos;
+	
+	@Column(name="codigo",unique=true)
+	private String codigo;
 	
 	@Transient
 	private String sorteadoStr;
@@ -169,6 +176,18 @@ public class Sorteio {
 		this.dataFim.setTime(dataFimD);
 	}
 
+	public Integer getInscritos() {
+		return inscritos;
+	}
+	public void setInscritos(Integer inscritos) {
+		this.inscritos = inscritos;
+	}
+	public String getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
 
 	
 }
