@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.ajax4jsf.model.KeepAlive;
 
 import modelo.Participacao;
+import modelo.Participante;
 import modelo.Sorteio;
 import util.PersistenceUtil;
 import dao.ParticipacaoDao;
@@ -60,8 +61,7 @@ public class ParticipacaoMB {
 		boolean temIpCadastradoNoSorteio = participacaoDao.hasSorteioAndIp(sorteio.getId(), ip);
 		boolean temNomeSobrenomeCadastrado = participacaoDao.hasNomeSobrenomeParticipante(sorteio.getId(), 
 				participacao.getParticipante().getNome(), participacao.getParticipante().getSobrenome());
-		String cookieValue = "";
-		Integer numero = (int) (Math.round(Math.random()* 10000));
+		String cookieValue = "";	
 		
 		Cookie[] cookies = httpServletRequest.getCookies();
 		if (cookies != null) {
@@ -85,12 +85,14 @@ public class ParticipacaoMB {
 			Cookie cookie = new Cookie("c", sorteio.getId().toString());   
 			cookie.setMaxAge(365);				  
 		    httpServletResponse.addCookie(cookie);  
-					    
+		    sorteio.setInscritos(sorteio.getInscritos()+1);
 		    participacao.setDataInscricao(new GregorianCalendar());
 		    participacao.setSorteio(sorteioDao.findById(Sorteio.class, sorteio.getId()));
 		    participacao.setIp(ip);
-		    participacao.setNumeroInscricao(numero.toString());
-		    try {
+		    participacao.setNumeroInscricao(sorteio.getInscritos().toString());
+		    
+		    try {		    	
+		    	sorteioDao.update(sorteio);
 		    	participanteDao.createParticipante(participacao.getParticipante());
 				participacaoDao.createParticipacao(participacao);				
 				return "inscrito";

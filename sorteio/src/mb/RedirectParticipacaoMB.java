@@ -35,14 +35,13 @@ public class RedirectParticipacaoMB {
 	public RedirectParticipacaoMB() {
 		HttpServletRequest request = ((HttpServletRequest) FacesContext.getCurrentInstance().
 				getExternalContext().getRequest());
-		String sorteioId = request.getParameter("sorteio");	
-		if(sorteioId !=null && !sorteioId.isEmpty() ){
+		String codigo = request.getParameter("sorteio");	
+		if(codigo !=null && !codigo.isEmpty() ){
 			
 			sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
 			try{
-				
-				Long numero = Long.parseLong(sorteioId);			
-				this.sorteio = sorteioDao.findById(Sorteio.class, numero);
+								
+				this.sorteio = sorteioDao.findByCodigo(codigo);
 				Calendar dtAtual = new GregorianCalendar();
 				
 				if(this.sorteio != null){

@@ -33,7 +33,15 @@ public class SorteioDao extends AbstractDao<Sorteio> {
 			throw new Exception();
 		}
 	}
-	
+	public Sorteio findByCodigo(String codigo) {
+		String q = "FROM Sorteio s WHERE s.codigo = :codigo";
+		Query query = em.createQuery(q);
+		query.setParameter("codigo", codigo);
+		
+		return (Sorteio) query.getSingleResult(); 
+		
+		
+	}
 	public List<Sorteio> findByGrupo(Grupo grupo){
 		String q = "FROM Sorteio s WHERE s.grupo.id = :grupo";
 		Query query = em.createQuery(q);
