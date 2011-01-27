@@ -19,8 +19,13 @@
 			<h:form>
 				
 				<div class="post"><rich:panel>
-					<p>Sorteio criado para acessá-lo basta acessar o seguinte endereço, <h:outputText
-						value="#{cadastroSorteioMB.enderecoSorteio}"></h:outputText> 
+					<p> <h:outputText
+						value="#{msg.acessoEndNormal} #{cadastroSorteioMB.enderecoSorteio}">
+						</h:outputText> 
+					</p>
+					<p> <h:outputText
+						value="#{msg.acessoEndEmbed} #{cadastroSorteioMB.enderecoSorteioEmbed}">
+						</h:outputText> 
 					</p>
 
 				</rich:panel></div>
