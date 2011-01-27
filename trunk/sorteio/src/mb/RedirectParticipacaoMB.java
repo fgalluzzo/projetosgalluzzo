@@ -36,6 +36,7 @@ public class RedirectParticipacaoMB {
 		HttpServletRequest request = ((HttpServletRequest) FacesContext.getCurrentInstance().
 				getExternalContext().getRequest());
 		String codigo = request.getParameter("sorteio");	
+		String embed = request.getParameter("embed");
 		if(codigo !=null && !codigo.isEmpty() ){
 			
 			sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
@@ -56,7 +57,12 @@ public class RedirectParticipacaoMB {
 						sorteioDTOMB.setSorteio(this.sorteio);
 						
 						NavigationHandler nh = app.getNavigationHandler();
-				        nh.handleNavigation(context, null, "participar.xhtml?faces-redirect=true");
+						if(embed != null && !embed.isEmpty()){
+							nh.handleNavigation(context, null, "participarE.xhtml?faces-redirect=true");
+						} else {
+							nh.handleNavigation(context, null, "participar.xhtml?faces-redirect=true");
+						}
+							
 					}
 					
 				}

@@ -38,6 +38,7 @@ public class CadastroSorteioMB {
 	private String filtroNome;
 	private SorteioDao sorteioDao;
 	private String enderecoSorteio;
+	private String enderecoSorteioEmbed;
 	private TimeZone timeZone = TimeZone.getTimeZone("America/Sao_Paulo");
 	private List<Sorteio> sorteios;
 	
@@ -127,8 +128,7 @@ public class CadastroSorteioMB {
 			sorteio = new Sorteio();
 			e.printStackTrace();
 			return "index";
-		}
-		sorteio = new Sorteio();
+		}		
 		return "sorteioCriado";
 	}
 	public Sorteio getSorteio() {
@@ -167,6 +167,12 @@ public class CadastroSorteioMB {
 
 	public void setSorteios(List<Sorteio> sorteios) {
 		this.sorteios = sorteios;
+	}
+
+	public String getEnderecoSorteioEmbed() {
+		HttpServletRequest request = ((HttpServletRequest) FacesContext.getCurrentInstance().
+				getExternalContext().getRequest());
+		return "http://"+request.getLocalName()+ request.getContextPath()+"/?embed=s&sorteio="+sorteio.getCodigo();
 	}
 
 	
