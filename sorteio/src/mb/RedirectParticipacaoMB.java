@@ -88,19 +88,21 @@ public class RedirectParticipacaoMB {
 						}
 					}
 
+				} else{
+					if (embed != null && !embed.isEmpty()) {
+						nh.handleNavigation(context, null,
+								"indexE.xhtml?faces-redirect=true");
+					} else {
+						nh.handleNavigation(context, null,
+								"indexE.xhtml?faces-redirect=true");
+					}
+
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		if (embed != null && !embed.isEmpty()) {
-			nh.handleNavigation(context, null,
-					"index.xhtml?faces-redirect=true");
-		} else {
-			nh.handleNavigation(context, null,
-					"indexE.xhtml?faces-redirect=true");
-		}
-
+		
 	}
 
 	public String getSorteioId() {
