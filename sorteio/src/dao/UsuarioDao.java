@@ -12,7 +12,17 @@ public class UsuarioDao extends AbstractDao<Usuario>{
 		super(em);
 		// TODO Auto-generated constructor stub
 	}
-	
+	public void update(Usuario usuario) throws Exception {
+		try {
+			em.getTransaction().begin();
+				em.merge(usuario);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			throw new Exception();
+		}
+		
+	}
 	public Usuario findByLoginSenha(Usuario usuario){
 		String q = "FROM Usuario u WHERE u.apelido = :apelido AND u.senha = :senha";
 		Query query = em.createQuery(q);
