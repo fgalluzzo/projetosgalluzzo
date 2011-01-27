@@ -18,23 +18,29 @@
 		<ui:define name="content">
 			<div class="post">
 			
-				<div class="entry">
 					
 					<h:form>						
 						<rich:panel >
+						<div ><h:messages errorClass="messages" infoClass="messagesInfo" /> </div>
 						<f:facet name="header" >
 							<h:outputText value="#{msg.alterarSenha}"/>
 						</f:facet>
 						
-						<h:panelGrid >
-							ZZ
+						<h:panelGrid  columns="2">
+							<h:outputLabel for="senhaAtual" value="#{msg.senhaAtual}*"/>
+							<h:inputSecret required="true" requiredMessage="#{msg.senhaReq}"  id="senhaAtual"  value="#{loginMB.senhaAtual}"/>
+							
+							<h:outputLabel for="novaSenha" value="#{msg.novaSenha}*"/>
+							<h:inputSecret required="true" requiredMessage="#{msg.novaSenhaReq}" id="novaSenha" value="#{loginMB.novaSenha}"/>
+							
+							<h:outputLabel for="confirma" value="#{msg.novaSenhaConfirma}*"/>
+							<h:inputSecret required="true" requiredMessage="#{msg.confSenhaReq}" id="confirma" value="#{loginMB.confirmaNovaSenha}"/>
 											
-
+	
 						</h:panelGrid>
-			
+						<h:commandButton value="#{msg.salvar}" action="#{loginMB.alterarSenha}"/>
 						</rich:panel>
 					</h:form>
-				</div>
 			</div>
 		</ui:define>
 	</ui:composition>
