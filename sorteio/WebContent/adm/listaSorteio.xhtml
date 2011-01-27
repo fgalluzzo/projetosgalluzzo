@@ -63,7 +63,7 @@
 								<f:facet name="header">
 									<h:outputText value="#{msg.opcoes}" />
 								</f:facet>
-								<h:commandLink action="alterarSorteio" title="#{msg.alterar}">
+								<h:commandLink action="alterarSorteio" title="#{msg.alterar}" rendered="#{not sorteio.sorteado}">
 									<img width="16" height="16" src="recursos/images/alterar.jpg" />
 									<f:setPropertyActionListener value="#{sorteio}" target="#{cadastroSorteioMB.sorteio}"></f:setPropertyActionListener>
 								</h:commandLink>
