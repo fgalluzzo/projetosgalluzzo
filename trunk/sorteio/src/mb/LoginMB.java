@@ -64,6 +64,27 @@ public class LoginMB {
 			return null;
 		}
 	}
+	public String alterarEmail(){
+		FacesMessage message = new FacesMessage();
+		try{
+			usuarioDao.update(usuario);
+			message.setDetail(MessagesReader.getMessages().getProperty(
+			"emailAtualizado"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"emailAtualizado"));
+			message.setSeverity(FacesMessage.SEVERITY_INFO);	
+			
+		} catch (Exception e) {
+			message.setDetail(MessagesReader.getMessages().getProperty(
+			"problemaSistema"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);	
+		}
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, message);
+		return null;
+	}
 	public String alterarSenha(){
 		FacesMessage message = new FacesMessage();
 		try {
@@ -94,22 +115,25 @@ public class LoginMB {
 			}
 			
 		} catch (NoSuchAlgorithmException e) {
-			FacesContext.getCurrentInstance().addMessage(
-					"INFO",
-					new FacesMessage(MessagesReader.getMessages().getProperty(
-							"problemaSistema")));
+			message.setDetail(MessagesReader.getMessages().getProperty(
+			"problemaSistema"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);			
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			FacesContext.getCurrentInstance().addMessage(
-					"INFO",
-					new FacesMessage(MessagesReader.getMessages().getProperty(
-							"problemaSistema")));
+			message.setDetail(MessagesReader.getMessages().getProperty(
+			"problemaSistema"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);	
 			e.printStackTrace();
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					"INFO",
-					new FacesMessage(MessagesReader.getMessages().getProperty(
-							"problemaSistema")));
+			message.setDetail(MessagesReader.getMessages().getProperty(
+			"problemaSistema"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);	
 			e.printStackTrace();
 		}
 		FacesContext context = FacesContext.getCurrentInstance();
