@@ -14,9 +14,6 @@
 		media="screen" />
 </h:head>
 <h:body>
-	<ui:composition template="/template/common.xhtml">
-		<ui:define name="content">
-
 
 			<h:form rendered="#{redirectMB.temSorteio}">
 				<f:viewParam name="sorteio" value="#{redirectMB.sorteioId}"/>
@@ -29,8 +26,6 @@
 				</rich:panel>
 			</h:form>
 			
-		</ui:define>
-	</ui:composition>
 </h:body>
 
 

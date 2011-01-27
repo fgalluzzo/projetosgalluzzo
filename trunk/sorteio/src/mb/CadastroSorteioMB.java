@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Random;
 import java.util.TimeZone;
 
 import javax.el.ValueExpression;
@@ -64,6 +65,14 @@ public class CadastroSorteioMB {
 		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
 		try {
 			sorteioDao.update(sorteio);
+			SchedulerFactory sf = new StdSchedulerFactory();
+			Scheduler sched = sf.getScheduler();		
+
+			JobDetail job = new JobDetail(sorteio.getId().toString(),Sortear.class);			
+			SimpleTrigger disparo = new SimpleTrigger("Disparo do sorteio"+sorteio.toString(),sorteio.getDataFimD());
+			sched.scheduleJob(job, disparo);
+			 
+			sched.start();
 			FacesMessage message = new FacesMessage();
 			message.setDetail(MessagesReader.getMessages().getProperty(
 					"infoAlteracaoSucesso"));

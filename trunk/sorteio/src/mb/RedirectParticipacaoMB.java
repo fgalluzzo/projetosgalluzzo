@@ -15,15 +15,15 @@ import modelo.Sorteio;
 import util.PersistenceUtil;
 import dao.SorteioDao;
 
-@ManagedBean(name="redirectMB")
+@ManagedBean(name = "redirectMB")
 @RequestScoped
 public class RedirectParticipacaoMB {
-	
+
 	private SorteioDao sorteioDao;
 	private String sorteioId;
 	private Sorteio sorteio;
-	private boolean temSorteio = false;	
-	
+	private boolean temSorteio = false;
+
 	public boolean isTemSorteio() {
 		return temSorteio;
 	}
@@ -33,44 +33,74 @@ public class RedirectParticipacaoMB {
 	}
 
 	public RedirectParticipacaoMB() {
-		HttpServletRequest request = ((HttpServletRequest) FacesContext.getCurrentInstance().
-				getExternalContext().getRequest());
-		String codigo = request.getParameter("sorteio");	
+		HttpServletRequest request = ((HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest());
+		String codigo = request.getParameter("sorteio");
 		String embed = request.getParameter("embed");
-		if(codigo !=null && !codigo.isEmpty() ){
-			
+		FacesContext context = FacesContext.getCurrentInstance();
+		Application app = context.getApplication();
+		NavigationHandler nh = app.getNavigationHandler();
+		if (codigo != null && !codigo.isEmpty()) {
+
 			sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
-			try{
-								
+			try {
+
 				this.sorteio = sorteioDao.findByCodigo(codigo);
 				Calendar dtAtual = new GregorianCalendar();
-				
-				if(this.sorteio != null){
-					if(dtAtual.after(this.sorteio.getDataInicioCal()) && dtAtual.before(this.sorteio.getDataFimCal())){
-						temSorteio = true;
-						FacesContext context = FacesContext.getCurrentInstance();
-						Application app = context.getApplication();
 
-						ValueExpression expression = app.getExpressionFactory().createValueExpression(context.getELContext(),
-					                            String.format("#{%s}", "sorteioDTOMB"), Object.class);
-						SorteioDTOMB sorteioDTOMB = (SorteioDTOMB) expression.getValue(context.getELContext());	
+				if (this.sorteio != null) {
+					temSorteio = true;
+
+					if (dtAtual.after(this.sorteio.getDataInicioCal())
+							&& dtAtual.before(this.sorteio.getDataFimCal())) {
+						ValueExpression expression = app.getExpressionFactory()
+								.createValueExpression(context.getELContext(),
+										String.format("#{%s}", "sorteioDTOMB"),
+										Object.class);
+						SorteioDTOMB sorteioDTOMB = (SorteioDTOMB) expression
+								.getValue(context.getELContext());
 						sorteioDTOMB.setSorteio(this.sorteio);
 						
-						NavigationHandler nh = app.getNavigationHandler();
-						if(embed != null && !embed.isEmpty()){
-							nh.handleNavigation(context, null, "participarE.xhtml?faces-redirect=true");
+						if (embed != null && !embed.isEmpty()) {
+							nh.handleNavigation(context, null,
+									"participarE.xhtml?faces-redirect=true");
 						} else {
-							nh.handleNavigation(context, null, "participar.xhtml?faces-redirect=true");
+							nh.handleNavigation(context, null,
+									"participar.xhtml?faces-redirect=true");
 						}
-							
+
+					} else if (dtAtual.after(this.sorteio.getDataFimCal())) {
+						ValueExpression expression = app.getExpressionFactory()
+								.createValueExpression(
+										context.getELContext(),
+										String.format("#{%s}",
+												"cadastroSorteioMB"),
+										Object.class);
+						CadastroSorteioMB csMB =  (CadastroSorteioMB) expression
+						.getValue(context.getELContext());
+						csMB.setSorteio(this.sorteio);
+						if (embed != null && !embed.isEmpty()) {
+							nh.handleNavigation(context, null,
+									"resultadoE.xhtml?faces-redirect=true");
+						} else {
+							nh.handleNavigation(context, null,
+									"resultado.xhtml?faces-redirect=true");
+						}
 					}
-					
+
 				}
-				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		if (embed != null && !embed.isEmpty()) {
+			nh.handleNavigation(context, null,
+					"index.xhtml?faces-redirect=true");
+		} else {
+			nh.handleNavigation(context, null,
+					"indexE.xhtml?faces-redirect=true");
+		}
+
 	}
 
 	public String getSorteioId() {
@@ -80,6 +110,5 @@ public class RedirectParticipacaoMB {
 	public void setSorteioId(String sorteioId) {
 		this.sorteioId = sorteioId;
 	}
-	
-	
+
 }
