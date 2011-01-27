@@ -22,7 +22,8 @@
 						<f:facet name="header" >
 							<h:outputText value="#{msg.listagemSorteios}" />
 						</f:facet>
-						<rich:dataTable  sortMode=""  rows="10" id="sorteios" value="#{sorteioMB.sorteios}" var="sorteio">
+						<div class="messagesInfo"><rich:message></rich:message> </div>
+						<rich:dataTable rows="10" id="sorteios" value="#{cadastroSorteioMB.sorteios}" var="sorteio">
 							<f:facet name="header">
         						
     						</f:facet>
@@ -67,9 +68,9 @@
 									<f:setPropertyActionListener value="#{sorteio}" target="#{cadastroSorteioMB.sorteio}"></f:setPropertyActionListener>
 								</h:commandLink>
 								
-								<h:commandLink action="excluirSorteio" title="#{msg.excluir}">
+								<h:commandLink id="sbtLink" action="#{cadastroSorteioMB.excluir}" onclick="if (!confirm('#{msg.desejaExcluirSorteio}')) return false" title="#{msg.excluir}">
 									<img width="16" height="16" src="recursos/images/lixeira.png" />
-									<f:setPropertyActionListener value="#{sorteio}" target="#{cadastroSorteioMB.sorteio}"></f:setPropertyActionListener>
+									<f:setPropertyActionListener value="#{sorteio}" target="#{cadastroSorteioMB.sorteio}"></f:setPropertyActionListener>									
 								</h:commandLink>
 							</rich:column>
 							<f:facet name="footer">							

@@ -62,7 +62,16 @@ public class SorteioDao extends AbstractDao<Sorteio> {
 			throw new Exception();
 		}
 	}
-	
+	public void excluir(Sorteio sorteio) throws Exception {
+		try {
+			em.getTransaction().begin();
+				em.remove(sorteio);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			throw new Exception();
+		}
+	}
 	public void sortearPendentes(){
 		ParticipacaoDao participacaoDao = new ParticipacaoDao(PersistenceUtil.getEntityManager());
 		Logger log = LoggerFactory.getLogger("logInicio");

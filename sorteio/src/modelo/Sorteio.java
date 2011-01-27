@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,13 +49,13 @@ public class Sorteio {
 	@Column(name="sorteado")	
 	private boolean sorteado = false;
 	
-	@OneToMany(mappedBy="sorteio")
+	@OneToMany(mappedBy="sorteio",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<Participacao> participacoes;
 	
 	@ManyToOne(targetEntity=Grupo.class,fetch=FetchType.LAZY)
 	private Grupo grupo;
 	
-	@OneToMany(targetEntity=Participante.class,fetch=FetchType.LAZY)
+	@OneToMany(targetEntity=Participante.class,fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	private List<Participante> ganhadores;
 	
 	@Column(name="quantidadeGanhadores")

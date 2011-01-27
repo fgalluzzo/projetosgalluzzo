@@ -3,6 +3,7 @@ package mb;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import javax.el.ValueExpression;
@@ -38,6 +39,8 @@ public class CadastroSorteioMB {
 	private SorteioDao sorteioDao;
 	private String enderecoSorteio;
 	private TimeZone timeZone = TimeZone.getTimeZone("America/Sao_Paulo");
+	private List<Sorteio> sorteios;
+	
 	
 	public TimeZone getTimeZone() {
 		return timeZone;
@@ -74,6 +77,25 @@ public class CadastroSorteioMB {
 			e.printStackTrace();
 		}
 		
+		return null;
+	}
+	public String excluir() {
+		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
+		try {
+			sorteioDao.excluir(sorteio);
+			FacesMessage message = new FacesMessage();
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"infoExclusaoSucesso"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"infoExclusaoSucesso"));
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, message);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 	public String cadastrar(){
@@ -129,6 +151,22 @@ public class CadastroSorteioMB {
 
 	public void setFiltroNome(String filtroNome) {
 		this.filtroNome = filtroNome;
+	}
+
+	public List<Sorteio> getSorteios() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		Application app = context.getApplication();
+
+		ValueExpression expression = app.getExpressionFactory().createValueExpression(context.getELContext(),
+	                            String.format("#{%s}", "loginMB"), Object.class);
+		LoginMB loginMB = (LoginMB) expression.getValue(context.getELContext());
+		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
+		sorteios = sorteioDao.findByGrupo(loginMB.getUsuario().getGrupo());
+		return sorteios;
+	}
+
+	public void setSorteios(List<Sorteio> sorteios) {
+		this.sorteios = sorteios;
 	}
 
 	
