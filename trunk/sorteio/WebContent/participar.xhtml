@@ -26,6 +26,7 @@
 						value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}" /></h2>				
 					<div class="entry">
 					<rich:message></rich:message>
+					
 					<h:panelGrid columns="2">
 						
 						<h:outputLabel for="nome" value="Nome" />
@@ -39,11 +40,26 @@
 						<h:outputLabel for="email" value="E-mail" />
 						<h:inputText id="email" required="true" requiredMessage="#{msg.validaEmailRequerido}"
 							value="#{participacaoMB.participacao.participante.email}" validator="validaEmail" />
-
+						
+						
+					
 					</h:panelGrid> <h:commandButton  type="reset" value="Limpar" /> <h:commandButton
 						action="#{participacaoMB.processar}" value="Inscrever-se" />					
 						</div>
+						
+									<script type="text/javascript"><!--
+				google_ad_client = "ca-pub-6756248611872365";
+				/* sorteio_banner1 */
+				google_ad_slot = "5756540655";
+				google_ad_width = 200;
+				google_ad_height = 90;
+				//-->
+				</script>
+				<script type="text/javascript"
+				src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+				</script>
 				</rich:panel>
+				
 			</h:form>
 			</div>
 
