@@ -17,23 +17,27 @@
 	<ui:composition template="/adm/template/common.xhtml">
 		<ui:define name="content">
 			<div class="post">
-			
-				<div class="entry">
+
 					
 					<h:form>						
 						<rich:panel >
+						<div ><h:messages errorClass="messages" infoClass="messagesInfo" /> </div>
 						<f:facet name="header" >
-							<h:outputText value="#{msg.alterarDadosCadastrais}"/>
+							<h:outputText value="#{msg.alterarEmail}"/>
 						</f:facet>
 						
-						<h:panelGrid >
-							ZZ
-											
-
-						</h:panelGrid>						
+						<h:panelGrid columns="2">
+							<h:outputLabel for="email" value="#{msg.email}"/>
+							<h:inputText id="email" value="#{loginMB.usuario.email}" />
+																									
+						</h:panelGrid>
+						<h:commandButton action="#{loginMB.alterarEmail}" value="#{msg.salvar}"/>						
 						</rich:panel>
+						<div style="text-align: right;"><h:link outcome="preferencias">
+					<h:outputText value="#{msg.voltar}" />
+				</h:link></div>
 					</h:form>
-				</div>
+			
 			</div>
 		</ui:define>
 	</ui:composition>
