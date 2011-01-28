@@ -20,10 +20,12 @@
 				<div class="post">
 					<rich:panel  >		
 						<f:facet name="header" >
-							<h:outputText value="#{msg.listagemSorteios}" />
-						</f:facet>
-						<div class="messagesInfo"><rich:message></rich:message> </div>
-						<rich:dataTable rows="10" id="sorteios" value="#{cadastroSorteioMB.sorteios}" var="sorteio">
+						<h:outputText value="#{msg.buscarSorteio}"/>
+					</f:facet>					
+					<h:inputText value="#{cadastroSorteioMB.termoBusca}" />
+					<h:commandLink action="#{cadastroSorteioMB.buscar}" title="#{msg.buscar}"><img src="recursos/images/lupa.png" /></h:commandLink>
+					<div > <h:messages infoClass="messagesInfo"></h:messages> </div>						
+						<rich:dataTable rendered="#{cadastroSorteioMB.temResultadoBusca}" rows="10" id="sorteios" value="#{cadastroSorteioMB.sorteios}" var="sorteio">
 							<f:facet name="header">
         						
     						</f:facet>
@@ -76,8 +78,7 @@
 							<f:facet name="footer">							
           						<rich:dataScroller  maxPages="3"></rich:dataScroller>
 							</f:facet>
-						</rich:dataTable>
-						<h:commandLink action="#{cadastroSorteioMB.preIncluir}" value="#{msg.criarSorteio}" />
+						</rich:dataTable>										
 						</rich:panel>
 						<div style="text-align: right;"><h:link outcome="index">
 					<h:outputText value="#{msg.voltar}" />

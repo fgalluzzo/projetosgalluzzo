@@ -19,8 +19,9 @@
 
 			<h:form>
 				<div class="post"><rich:panel>
-					<p>Parabéns, <h:outputText
-						value="#{participacaoMB.participacao.participante.nome} #{participacaoMB.participacao.participante.sobrenome}"></h:outputText> você está participando do sorteio e seu número da sorte é <h:outputText value="#{participacaoMB.participacao.numeroInscricao}"></h:outputText>
+					<p><h:outputText value="#{msg.parabens}"></h:outputText>, <h:outputText
+						value="#{participacaoMB.participacao.participante.nome} #{participacaoMB.participacao.participante.sobrenome}"></h:outputText>
+					<h:outputText value="#{msg.participSorteio}" ></h:outputText> 		
 					</p>
 
 				</rich:panel></div>
