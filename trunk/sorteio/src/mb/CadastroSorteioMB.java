@@ -42,8 +42,9 @@ public class CadastroSorteioMB {
 	private String enderecoSorteioEmbed;
 	private TimeZone timeZone = TimeZone.getTimeZone("America/Sao_Paulo");
 	private List<Sorteio> sorteios;
-	
-	
+	private String termoBusca;
+	private boolean temResultadoBusca;
+	private String ultimaPagina;
 	public TimeZone getTimeZone() {
 		return timeZone;
 	}
@@ -54,7 +55,12 @@ public class CadastroSorteioMB {
 
 	public CadastroSorteioMB() {		
 		sorteio = new Sorteio();
-
+		ultimaPagina = "index";
+	}
+	public String preIncluirIndex() {
+		ultimaPagina = "index";
+		sorteio = new Sorteio();
+		return "criaSorteio";
 	}
 	public String preIncluir() {
 		sorteio = new Sorteio();
@@ -86,7 +92,40 @@ public class CadastroSorteioMB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		return null;
+	}
+	public String preBusca() {
+		termoBusca = new String();
+		if(sorteios != null && !sorteios.isEmpty())
+			sorteios.clear();
+		temResultadoBusca = false;
+		return "buscarSorteio";
+	}
+	public String buscar() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		Application app = context.getApplication();
+
+		ValueExpression expression = app.getExpressionFactory().createValueExpression(context.getELContext(),
+	                            String.format("#{%s}", "loginMB"), Object.class);
+		LoginMB loginMB = (LoginMB) expression.getValue(context.getELContext());
+		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
+		sorteios = sorteioDao.buscar(termoBusca,loginMB.getUsuario().getGrupo());
+		if(sorteios!= null && !sorteios.isEmpty()){			
+			temResultadoBusca = true;
+		}else {
+			FacesMessage message = new FacesMessage();
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"nenhumResultadoEncontrado"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"nenhumResultadoEncontrado"));
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+						
+			context.addMessage(null, message);
+			temResultadoBusca = false;
+		}
+					
+			
+		ultimaPagina = "buscarSorteio";
 		return null;
 	}
 	public String excluir() {
@@ -107,6 +146,18 @@ public class CadastroSorteioMB {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	public String preListar(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		Application app = context.getApplication();
+
+		ValueExpression expression = app.getExpressionFactory().createValueExpression(context.getELContext(),
+	                            String.format("#{%s}", "loginMB"), Object.class);
+		LoginMB loginMB = (LoginMB) expression.getValue(context.getELContext());
+		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
+		sorteios = sorteioDao.findByGrupo(loginMB.getUsuario().getGrupo());
+		ultimaPagina = "listaSorteio";		
+		return "listaSorteio";
 	}
 	public String cadastrar(){
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -163,14 +214,7 @@ public class CadastroSorteioMB {
 	}
 
 	public List<Sorteio> getSorteios() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		Application app = context.getApplication();
-
-		ValueExpression expression = app.getExpressionFactory().createValueExpression(context.getELContext(),
-	                            String.format("#{%s}", "loginMB"), Object.class);
-		LoginMB loginMB = (LoginMB) expression.getValue(context.getELContext());
-		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
-		sorteios = sorteioDao.findByGrupo(loginMB.getUsuario().getGrupo());
+		
 		return sorteios;
 	}
 
@@ -183,6 +227,32 @@ public class CadastroSorteioMB {
 				getExternalContext().getRequest());
 		return "http://"+request.getLocalName()+ request.getContextPath()+"/?embed=s&sorteio="+sorteio.getCodigo();
 	}
+
+	public String getTermoBusca() {
+		return termoBusca;
+	}
+
+	public void setTermoBusca(String termoBusca) {
+		this.termoBusca = termoBusca;
+	}
+
+	public boolean isTemResultadoBusca() {
+		return temResultadoBusca;
+	}
+
+	public void setTemResultadoBusca(boolean temResultadoBusca) {
+		this.temResultadoBusca = temResultadoBusca;
+	}
+
+	public String getUltimaPagina() {
+		return ultimaPagina;
+	}
+
+	public void setUltimaPagina(String ultimaPagina) {
+		this.ultimaPagina = ultimaPagina;
+	}
+
+
 
 	
 	

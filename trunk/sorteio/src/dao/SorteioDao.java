@@ -25,7 +25,7 @@ public class SorteioDao extends AbstractDao<Sorteio> {
 	public void createSorteio(Sorteio sorteio) throws Exception {
 		try {
 			em.getTransaction().begin();
-				em.persist(sorteio);
+			em.persist(sorteio);
 			em.getTransaction().commit();
 
 		} catch (Exception e) {
@@ -33,58 +33,63 @@ public class SorteioDao extends AbstractDao<Sorteio> {
 			throw new Exception();
 		}
 	}
+
 	public Sorteio findByCodigo(String codigo) {
 		String q = "FROM Sorteio s WHERE s.codigo = :codigo";
 		Query query = em.createQuery(q);
 		query.setParameter("codigo", codigo);
-		
-		return (Sorteio) query.getSingleResult(); 
-		
-		
+
+		return (Sorteio) query.getSingleResult();
+
 	}
-	public List<Sorteio> findByGrupo(Grupo grupo){
+
+	public List<Sorteio> findByGrupo(Grupo grupo) {
 		String q = "FROM Sorteio s WHERE s.grupo.id = :grupo";
 		Query query = em.createQuery(q);
 		query.setParameter("grupo", grupo.getId());
-		
+
 		return (List<Sorteio>) query.getResultList();
-		
+
 	}
-	
-	public void update(Sorteio sorteio) throws Exception{
-		
+
+	public void update(Sorteio sorteio) throws Exception {
+
 		try {
 			em.getTransaction().begin();
-				em.merge(sorteio);
+			em.merge(sorteio);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			em.getTransaction().rollback();
 			throw new Exception();
 		}
 	}
+
 	public void excluir(Sorteio sorteio) throws Exception {
 		try {
 			em.getTransaction().begin();
-				em.remove(sorteio);
+			em.remove(sorteio);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			em.getTransaction().rollback();
 			throw new Exception();
 		}
 	}
-	public void sortearPendentes(){
-		ParticipacaoDao participacaoDao = new ParticipacaoDao(PersistenceUtil.getEntityManager());
+
+	public void sortearPendentes() {
+		ParticipacaoDao participacaoDao = new ParticipacaoDao(
+				PersistenceUtil.getEntityManager());
 		Logger log = LoggerFactory.getLogger("logInicio");
 		log.info("Iniciando verificação de sorteios pendentes");
-		
+
 		String q = "From Sorteio s WHERE s.dataFim < :agora AND s.sorteado = false";
 		Query query = em.createQuery(q);
 		query.setParameter("agora", new GregorianCalendar());
-		
-		List<Sorteio> sorteios = (List<Sorteio>)query.getResultList();
-		int i =0;
+
+		List<Sorteio> sorteios = (List<Sorteio>) query.getResultList();
+		int i = 0;
 		for (Sorteio sorteio : sorteios) {
-			List<Participante> ganhadores = participacaoDao.sorteiaParticipanteSorteio(sorteio);
+			List<Participante> ganhadores = participacaoDao
+					.sorteiaParticipanteSorteio(sorteio);
 			sorteio.setGanhadores(ganhadores);
 			sorteio.setSorteado(true);
 			try {
@@ -94,12 +99,22 @@ public class SorteioDao extends AbstractDao<Sorteio> {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
-		log.info("Foram sorteados "+ i +" sorteios pendentes");
-		log.info("Final verificação de sorteios pendentes");		
-		
+		log.info("Foram sorteados " + i + " sorteios pendentes");
+		log.info("Final verificação de sorteios pendentes");
+
 	}
-	
+
+	public List<Sorteio> buscar(String termo,Grupo grupo) {	
+		String q = "FROM Sorteio s WHERE s.grupo.id =:grupo AND " +
+				"(lower(s.nome) LIKE lower(:termo) OR lower(s.descricao)" +
+				" LIKE lower(:termo))";
+		Query query = em.createQuery(q);
+		query.setParameter("termo", "%" + termo + "%");
+		query.setParameter("grupo", grupo.getId());
+
+		return (List<Sorteio>) query.getResultList();
+	}
 
 }
