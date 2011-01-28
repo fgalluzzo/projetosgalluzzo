@@ -19,9 +19,10 @@
 			<h:form id="frmParticip" >
 				
 				<rich:panel>
-					<h2 class="title"><h:outputText
-						value="#{msg.resultado} #{cadastroSorteioMB.sorteio.nome}" /></h2>				
-					<div class="entry">					
+					<f:facet name="header" >
+						<h:outputText value="#{msg.resultado} #{cadastroSorteioMB.sorteio.nome}"/>
+					</f:facet>		
+							
 					<rich:dataTable var="ganhador"						
 						value="#{cadastroSorteioMB.sorteio.ganhadores}">
 						<f:facet name="header">
@@ -41,7 +42,7 @@
 							<h:outputText value="#{ganhador.sobrenome}"></h:outputText>
 						</h:column>																	
 					</rich:dataTable>				
-						</div>
+
 				</rich:panel>
 			</h:form>
 									
