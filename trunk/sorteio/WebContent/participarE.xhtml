@@ -19,9 +19,10 @@
 			<h:form id="frmParticip">
 				
 				<rich:panel >
-					<h2 class="title"><h:outputText
-						value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}" /></h2>				
-					<div class="entry">
+					<f:facet name="header" >
+						<h:outputText value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}"/>
+					</f:facet>				
+					
 					<rich:message></rich:message>
 					<h:panelGrid columns="2">
 						
@@ -38,8 +39,7 @@
 							value="#{participacaoMB.participacao.participante.email}" validator="validaEmail" />
 
 					</h:panelGrid> <h:commandButton  type="reset" value="Limpar" /> <h:commandButton
-						action="#{participacaoMB.processar}" value="Inscrever-se" />					
-						</div>
+						action="#{participacaoMB.processar}" value="Inscrever-se" />							
 				</rich:panel>
 				<script type="text/javascript"><!--
 							google_ad_client = "ca-pub-6756248611872365";
