@@ -25,16 +25,18 @@ import org.quartz.SchedulerFactory;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import util.CriaHash;
 import util.MessagesReader;
 import util.PersistenceUtil;
 import dao.SorteioDao;
 
-@ManagedBean(name="cadastroSorteioMB")
+@ManagedBean(name = "cadastroSorteioMB")
 @SessionScoped
 public class CadastroSorteioMB {
-	
+
 	private Sorteio sorteio;
 	private String filtroNome;
 	private SorteioDao sorteioDao;
@@ -45,6 +47,7 @@ public class CadastroSorteioMB {
 	private String termoBusca;
 	private boolean temResultadoBusca;
 	private String ultimaPagina;
+
 	public TimeZone getTimeZone() {
 		return timeZone;
 	}
@@ -53,81 +56,104 @@ public class CadastroSorteioMB {
 		this.timeZone = timeZone;
 	}
 
-	public CadastroSorteioMB() {		
+	public CadastroSorteioMB() {
 		sorteio = new Sorteio();
 		ultimaPagina = "index";
 	}
+
 	public String preIncluirIndex() {
 		ultimaPagina = "index";
 		sorteio = new Sorteio();
 		return "criaSorteio";
 	}
+
 	public String preIncluir() {
 		sorteio = new Sorteio();
 		return "criaSorteio";
 	}
-	
+
 	public String alterar() {
 		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
+		FacesMessage message = new FacesMessage();
+		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 			sorteioDao.update(sorteio);
-			SchedulerFactory sf = new StdSchedulerFactory();
-			Scheduler sched = sf.getScheduler();		
+			try {
+				SchedulerFactory sf = new StdSchedulerFactory();
+				Scheduler sched = sf.getScheduler();
 
-			JobDetail job = new JobDetail(sorteio.getId().toString(),Sortear.class);			
-			SimpleTrigger disparo = new SimpleTrigger("Disparo do sorteio"+sorteio.toString(),sorteio.getDataFimD());
-			sched.scheduleJob(job, disparo);
-			 
-			sched.start();
-			FacesMessage message = new FacesMessage();
-			message.setDetail(MessagesReader.getMessages().getProperty(
-					"infoAlteracaoSucesso"));
-			message.setSummary(MessagesReader.getMessages().getProperty(
-					"infoAlteracaoSucesso"));
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
-			
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, message);
+				JobDetail job = new JobDetail(sorteio.getId().toString(),
+						Sortear.class);
+				SimpleTrigger disparo = new SimpleTrigger("Disparo do sorteio"
+						+ sorteio.toString(), sorteio.getDataFimD());
+				sched.scheduleJob(job, disparo);
+
+				sched.start();
+				message.setDetail(MessagesReader.getMessages().getProperty(
+						"infoAlteracaoSucesso"));
+				message.setSummary(MessagesReader.getMessages().getProperty(
+						"infoAlteracaoSucesso"));
+				message.setSeverity(FacesMessage.SEVERITY_INFO);
+
+				context.addMessage(null, message);
+			} catch (Exception e) {
+				Logger log = LoggerFactory.getLogger("INFO ALTERACAO");
+				log.error("Errono agendamento do sorteio usuario :");
+				log.error("ERRO", e.getStackTrace());
+			}
+
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger log = LoggerFactory.getLogger("INFO ALTERACAO");
+			log.error("Erro ao alterar usuario :");
+			log.error("ERRO",e.getStackTrace());
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"infoAlteracaoErro"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"infoAlteracaoErro"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+
+			context.addMessage(null, message);
 		}
 		return null;
 	}
+
 	public String preBusca() {
 		termoBusca = new String();
-		if(sorteios != null && !sorteios.isEmpty())
+		if (sorteios != null && !sorteios.isEmpty())
 			sorteios.clear();
 		temResultadoBusca = false;
 		return "buscarSorteio";
 	}
+
 	public String buscar() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Application app = context.getApplication();
 
-		ValueExpression expression = app.getExpressionFactory().createValueExpression(context.getELContext(),
-	                            String.format("#{%s}", "loginMB"), Object.class);
+		ValueExpression expression = app.getExpressionFactory()
+				.createValueExpression(context.getELContext(),
+						String.format("#{%s}", "loginMB"), Object.class);
 		LoginMB loginMB = (LoginMB) expression.getValue(context.getELContext());
 		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
-		sorteios = sorteioDao.buscar(termoBusca,loginMB.getUsuario().getGrupo());
-		if(sorteios!= null && !sorteios.isEmpty()){			
+		sorteios = sorteioDao.buscar(termoBusca, loginMB.getUsuario()
+				.getGrupo());
+		if (sorteios != null && !sorteios.isEmpty()) {
 			temResultadoBusca = true;
-		}else {
+		} else {
 			FacesMessage message = new FacesMessage();
 			message.setDetail(MessagesReader.getMessages().getProperty(
 					"nenhumResultadoEncontrado"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"nenhumResultadoEncontrado"));
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
-						
+
 			context.addMessage(null, message);
 			temResultadoBusca = false;
 		}
-					
-			
+
 		ultimaPagina = "buscarSorteio";
 		return null;
 	}
+
 	public String excluir() {
 		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
 		try {
@@ -138,7 +164,7 @@ public class CadastroSorteioMB {
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"infoExclusaoSucesso"));
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
-			
+
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, message);
 		} catch (Exception e) {
@@ -147,50 +173,58 @@ public class CadastroSorteioMB {
 		}
 		return null;
 	}
-	public String preListar(){
+
+	public String preListar() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Application app = context.getApplication();
 
-		ValueExpression expression = app.getExpressionFactory().createValueExpression(context.getELContext(),
-	                            String.format("#{%s}", "loginMB"), Object.class);
+		ValueExpression expression = app.getExpressionFactory()
+				.createValueExpression(context.getELContext(),
+						String.format("#{%s}", "loginMB"), Object.class);
 		LoginMB loginMB = (LoginMB) expression.getValue(context.getELContext());
 		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
 		sorteios = sorteioDao.findByGrupo(loginMB.getUsuario().getGrupo());
-		ultimaPagina = "listaSorteio";		
+		ultimaPagina = "listaSorteio";
 		return "listaSorteio";
 	}
-	public String cadastrar(){
+
+	public String cadastrar() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Application app = context.getApplication();
 
-		ValueExpression expression = app.getExpressionFactory().createValueExpression(context.getELContext(),
-	                            String.format("#{%s}", "loginMB"), Object.class);
+		ValueExpression expression = app.getExpressionFactory()
+				.createValueExpression(context.getELContext(),
+						String.format("#{%s}", "loginMB"), Object.class);
 		LoginMB loginMB = (LoginMB) expression.getValue(context.getELContext());
 		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
-		
-		try {		
-			
+
+		try {
+
 			sorteio.setGrupo(loginMB.getUsuario().getGrupo());
 			sorteio.setInscritos(0);
 			sorteioDao.createSorteio(sorteio);
-			sorteio.setCodigo(CriaHash.SHA1(loginMB.getUsuario().getGrupo()+""+sorteio.getId()));			
+			sorteio.setCodigo(CriaHash.SHA1(loginMB.getUsuario().getGrupo()
+					+ "" + sorteio.getId()));
 			sorteioDao.update(sorteio);
 			SchedulerFactory sf = new StdSchedulerFactory();
-			Scheduler sched = sf.getScheduler();		
+			Scheduler sched = sf.getScheduler();
 
-			JobDetail job = new JobDetail(sorteio.getId().toString(),Sortear.class);			
-			SimpleTrigger disparo = new SimpleTrigger("Disparo do sorteio"+sorteio.getId().toString(),sorteio.getDataFimD());
+			JobDetail job = new JobDetail(sorteio.getId().toString(),
+					Sortear.class);
+			SimpleTrigger disparo = new SimpleTrigger("Disparo do sorteio"
+					+ sorteio.getId().toString(), sorteio.getDataFimD());
 			sched.scheduleJob(job, disparo);
-			 
+
 			sched.start();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			sorteio = new Sorteio();
 			e.printStackTrace();
 			return "index";
-		}		
+		}
 		return "sorteioCriado";
 	}
+
 	public Sorteio getSorteio() {
 		return sorteio;
 	}
@@ -200,9 +234,10 @@ public class CadastroSorteioMB {
 	}
 
 	public String getEnderecoSorteio() {
-		HttpServletRequest request = ((HttpServletRequest) FacesContext.getCurrentInstance().
-				getExternalContext().getRequest());
-		return "http://"+request.getLocalName()+ request.getContextPath()+"/?sorteio="+sorteio.getCodigo();
+		HttpServletRequest request = ((HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest());
+		return "http://" + request.getLocalName() + request.getContextPath()
+				+ "/?sorteio=" + sorteio.getCodigo();
 	}
 
 	public String getFiltroNome() {
@@ -214,7 +249,7 @@ public class CadastroSorteioMB {
 	}
 
 	public List<Sorteio> getSorteios() {
-		
+
 		return sorteios;
 	}
 
@@ -223,9 +258,10 @@ public class CadastroSorteioMB {
 	}
 
 	public String getEnderecoSorteioEmbed() {
-		HttpServletRequest request = ((HttpServletRequest) FacesContext.getCurrentInstance().
-				getExternalContext().getRequest());
-		return "http://"+request.getLocalName()+ request.getContextPath()+"/?embed=s&sorteio="+sorteio.getCodigo();
+		HttpServletRequest request = ((HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest());
+		return "http://" + request.getLocalName() + request.getContextPath()
+				+ "/?embed=s&sorteio=" + sorteio.getCodigo();
 	}
 
 	public String getTermoBusca() {
@@ -252,9 +288,4 @@ public class CadastroSorteioMB {
 		this.ultimaPagina = ultimaPagina;
 	}
 
-
-
-	
-	
-	
 }

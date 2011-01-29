@@ -69,7 +69,7 @@ public class RedirectParticipacaoMB {
 									"participar.xhtml?faces-redirect=true");
 						}
 
-					} else if (dtAtual.after(this.sorteio.getDataFimCal())) {
+					} else if (this.sorteio.isSorteado()) {
 						ValueExpression expression = app.getExpressionFactory()
 								.createValueExpression(
 										context.getELContext(),
