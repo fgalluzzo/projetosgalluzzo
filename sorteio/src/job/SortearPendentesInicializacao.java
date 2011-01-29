@@ -24,7 +24,17 @@ public class SortearPendentesInicializacao implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
-		// TODO Auto-generated method stub
+		SchedulerFactory sf = new StdSchedulerFactory();
+		Scheduler sched;
+		try {
+			sched = sf.getScheduler();
+			sched.shutdown();
+		} catch (SchedulerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 
 	}
 
@@ -46,6 +56,7 @@ public class SortearPendentesInicializacao implements ServletContextListener {
 			ct = new CronTrigger("Trigger", "grupo1", "pendentes","grupoJob1");
 			ct.setCronExpression("0 0 12pm * * ?");
 			sched.scheduleJob(job, ct);
+			sched.start();
 			logger.info("Fim do agendamento diário de sorteios pendentes");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
