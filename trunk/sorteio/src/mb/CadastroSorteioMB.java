@@ -37,6 +37,8 @@ import dao.SorteioDao;
 @SessionScoped
 public class CadastroSorteioMB {
 
+	private final static String JOBGROUP = "SorteiosWeb";
+	private final static String TRIGGER = "SorteiosWeb disparo";
 	private Sorteio sorteio;
 	private String filtroNome;
 	private SorteioDao sorteioDao;
@@ -77,18 +79,20 @@ public class CadastroSorteioMB {
 		FacesMessage message = new FacesMessage();
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-			sorteioDao.update(sorteio);
+			SchedulerFactory sf = new StdSchedulerFactory();
+			Scheduler sched = sf.getScheduler();
+
+			JobDetail job = sched.getJobDetail(sorteio.getId().toString(),
+					JOBGROUP);
+
+			sched.deleteJob(sorteio.getId().toString(), JOBGROUP);
+			
+			SimpleTrigger disparo = new SimpleTrigger(TRIGGER+sorteio.getId().toString(),JOBGROUP,sorteio.getDataFimD());
+
+			sched.scheduleJob(job, disparo);
+
 			try {
-				SchedulerFactory sf = new StdSchedulerFactory();
-				Scheduler sched = sf.getScheduler();
-
-				JobDetail job = new JobDetail(sorteio.getId().toString(),
-						Sortear.class);
-				SimpleTrigger disparo = new SimpleTrigger("Disparo do sorteio"
-						+ sorteio.toString(), sorteio.getDataFimD());
-				sched.scheduleJob(job, disparo);
-
-				sched.start();
+				sorteioDao.update(sorteio);
 				message.setDetail(MessagesReader.getMessages().getProperty(
 						"infoAlteracaoSucesso"));
 				message.setSummary(MessagesReader.getMessages().getProperty(
@@ -98,14 +102,21 @@ public class CadastroSorteioMB {
 				context.addMessage(null, message);
 			} catch (Exception e) {
 				Logger log = LoggerFactory.getLogger("INFO ALTERACAO");
-				log.error("Errono agendamento do sorteio usuario :");
+				log.error("Erro no agendamento do sorteio usuario :");
 				log.error("ERRO", e.getStackTrace());
+				message.setDetail(MessagesReader.getMessages().getProperty(
+						"infoAlteracaoErro"));
+				message.setSummary(MessagesReader.getMessages().getProperty(
+						"infoAlteracaoErro"));
+				message.setSeverity(FacesMessage.SEVERITY_ERROR);
+
 			}
 
 		} catch (Exception e) {
 			Logger log = LoggerFactory.getLogger("INFO ALTERACAO");
 			log.error("Erro ao alterar usuario :");
-			log.error("ERRO",e.getStackTrace());
+			log.error("ERRO", e.getStackTrace());
+
 			message.setDetail(MessagesReader.getMessages().getProperty(
 					"infoAlteracaoErro"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
@@ -158,6 +169,16 @@ public class CadastroSorteioMB {
 		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
 		try {
 			sorteioDao.excluir(sorteio);
+
+			try {
+				SchedulerFactory sf = new StdSchedulerFactory();
+				Scheduler sched = sf.getScheduler();
+
+				sched.deleteJob(sorteio.getId().toString(), JOBGROUP);
+
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			FacesMessage message = new FacesMessage();
 			message.setDetail(MessagesReader.getMessages().getProperty(
 					"infoExclusaoSucesso"));
@@ -171,6 +192,7 @@ public class CadastroSorteioMB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		preListar();
 		return null;
 	}
 
@@ -209,13 +231,13 @@ public class CadastroSorteioMB {
 			SchedulerFactory sf = new StdSchedulerFactory();
 			Scheduler sched = sf.getScheduler();
 
-			JobDetail job = new JobDetail(sorteio.getId().toString(),
+			JobDetail job = new JobDetail(sorteio.getId().toString(), JOBGROUP,
 					Sortear.class);
-			SimpleTrigger disparo = new SimpleTrigger("Disparo do sorteio"
-					+ sorteio.getId().toString(), sorteio.getDataFimD());
+			SimpleTrigger disparo = new SimpleTrigger(TRIGGER
+					+ sorteio.getId().toString(), JOBGROUP,
+					sorteio.getDataFimD());
 			sched.scheduleJob(job, disparo);
 
-			sched.start();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			sorteio = new Sorteio();

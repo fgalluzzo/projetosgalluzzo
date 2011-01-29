@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import util.MessagesReader;
+
 @Entity
 @Table(name="sorteio")
 public class Sorteio {
@@ -131,7 +133,7 @@ public class Sorteio {
 		this.quantidadeGanhadores = quantidadeGanhadores;
 	}
 	public String getSorteadoStr() {
-		return sorteado?"Sim":"Não";
+		return sorteado?MessagesReader.getMessages().getProperty("sim"):MessagesReader.getMessages().getProperty("nao");
 	}
 	public boolean isTemGanhadores() {
 		if(ganhadores != null && !ganhadores.isEmpty()){
