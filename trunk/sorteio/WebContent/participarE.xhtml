@@ -23,7 +23,7 @@
 						<h:outputText value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}"/>
 					</f:facet>				
 					
-					<rich:message></rich:message>
+					<rich:message></rich:message>	
 					<h:panelGrid columns="2">
 						
 						<h:outputLabel for="nome" value="Nome" />
@@ -37,7 +37,7 @@
 						<h:outputLabel for="email" value="E-mail" />
 						<h:inputText id="email" required="true" requiredMessage="#{msg.validaEmailRequerido}"
 							value="#{participacaoMB.participacao.participante.email}" validator="validaEmail" />
-
+	
 					</h:panelGrid> <h:commandButton  type="reset" value="Limpar" /> <h:commandButton
 						action="#{participacaoMB.processar}" value="Inscrever-se" />							
 				</rich:panel>

@@ -36,7 +36,8 @@ import dao.SorteioDao;
 @ManagedBean(name = "cadastroSorteioMB")
 @SessionScoped
 public class CadastroSorteioMB {
-
+	public final String EMBED = "e";
+	public final String NOTEMBED = "n";
 	private final static String JOBGROUP = "SorteiosWeb";
 	private final static String TRIGGER = "SorteiosWeb disparo";
 	private Sorteio sorteio;

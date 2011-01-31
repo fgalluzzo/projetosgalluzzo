@@ -25,7 +25,7 @@ public class SortearPendentesInicializacao implements ServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		SchedulerFactory sf = new StdSchedulerFactory();
-		Scheduler sched;
+		Scheduler sched;		
 		try {
 			sched = sf.getScheduler();
 			sched.shutdown();
@@ -33,6 +33,7 @@ public class SortearPendentesInicializacao implements ServletContextListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 		
 
