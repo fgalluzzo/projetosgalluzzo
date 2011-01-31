@@ -50,34 +50,36 @@ public class RedirectParticipacaoMB {
 
 				if (this.sorteio != null) {
 					temSorteio = true;
-
+					ValueExpression expression = app
+							.getExpressionFactory()
+							.createValueExpression(
+									context.getELContext(),
+									String.format("#{%s}", "cadastroSorteioMB"),
+									Object.class);
+					CadastroSorteioMB csMB = (CadastroSorteioMB) expression
+							.getValue(context.getELContext());
 					if (dtAtual.after(this.sorteio.getDataInicioCal())
 							&& dtAtual.before(this.sorteio.getDataFimCal())) {
-						ValueExpression expression = app.getExpressionFactory()
+						expression = app.getExpressionFactory()
 								.createValueExpression(context.getELContext(),
 										String.format("#{%s}", "sorteioDTOMB"),
 										Object.class);
 						SorteioDTOMB sorteioDTOMB = (SorteioDTOMB) expression
 								.getValue(context.getELContext());
 						sorteioDTOMB.setSorteio(this.sorteio);
-						
+
 						if (embed != null && !embed.isEmpty()) {
+							csMB.setUltimaPagina(csMB.EMBED);
 							nh.handleNavigation(context, null,
 									"participarE.xhtml?faces-redirect=true");
 						} else {
+							csMB.setUltimaPagina(csMB.NOTEMBED);
 							nh.handleNavigation(context, null,
 									"participar.xhtml?faces-redirect=true");
 						}
 
 					} else if (this.sorteio.isSorteado()) {
-						ValueExpression expression = app.getExpressionFactory()
-								.createValueExpression(
-										context.getELContext(),
-										String.format("#{%s}",
-												"cadastroSorteioMB"),
-										Object.class);
-						CadastroSorteioMB csMB =  (CadastroSorteioMB) expression
-						.getValue(context.getELContext());
+
 						csMB.setSorteio(this.sorteio);
 						if (embed != null && !embed.isEmpty()) {
 							nh.handleNavigation(context, null,
@@ -88,7 +90,7 @@ public class RedirectParticipacaoMB {
 						}
 					}
 
-				} else{
+				} else {
 					if (embed != null && !embed.isEmpty()) {
 						nh.handleNavigation(context, null,
 								"indexE.xhtml?faces-redirect=true");
@@ -102,7 +104,7 @@ public class RedirectParticipacaoMB {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 
 	public String getSorteioId() {
