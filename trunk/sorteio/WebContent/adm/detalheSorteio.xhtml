@@ -22,6 +22,7 @@
 						<h:outputText
 							value="#{msg.sorteio} #{cadastroSorteioMB.sorteio.nome}"></h:outputText>
 					</f:facet>
+					<div > <h:messages infoClass="messagesInfo" errorClass="messages"></h:messages> </div>
 					<h:panelGrid columns="2">
 
 						<h:outputText value="#{msg.nome}"></h:outputText>
@@ -86,6 +87,10 @@
 							<h:outputText value="#{ganhador.email}"></h:outputText>
 						</h:column>
 					</rich:dataTable>
+					<br />
+					<h:commandButton  onclick="if (!confirm('#{msg.desejaSortearSorteio}')) return false"
+						 rendered="#{cadastroSorteioMB.sorteio.temGanhadores}"
+						 action="#{cadastroSorteioMB.resortear}" value="#{msg.resortear}"></h:commandButton>
 				</rich:panel>
 				<div style="text-align: right;"><h:link outcome="#{cadastroSorteioMB.ultimaPagina}">
 					<h:outputText value="#{msg.voltar}" />
