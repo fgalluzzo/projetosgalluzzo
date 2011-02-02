@@ -17,6 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import job.Sortear;
+import modelo.Participante;
 import modelo.Sorteio;
 
 import org.quartz.JobDetail;
@@ -31,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import util.CriaHash;
 import util.MessagesReader;
 import util.PersistenceUtil;
+import dao.ParticipacaoDao;
 import dao.SorteioDao;
 
 @ManagedBean(name = "cadastroSorteioMB")
@@ -87,8 +89,10 @@ public class CadastroSorteioMB {
 					JOBGROUP);
 
 			sched.deleteJob(sorteio.getId().toString(), JOBGROUP);
-			
-			SimpleTrigger disparo = new SimpleTrigger(TRIGGER+sorteio.getId().toString(),JOBGROUP,sorteio.getDataFimD());
+
+			SimpleTrigger disparo = new SimpleTrigger(TRIGGER
+					+ sorteio.getId().toString(), JOBGROUP,
+					sorteio.getDataFimD());
 
 			sched.scheduleJob(job, disparo);
 
@@ -246,6 +250,36 @@ public class CadastroSorteioMB {
 			return "index";
 		}
 		return "sorteioCriado";
+	}
+
+	public String resortear() {
+		ParticipacaoDao participacaoDao = new ParticipacaoDao(
+				PersistenceUtil.getEntityManager());
+		List<Participante> ganhadores = participacaoDao
+				.sorteiaParticipanteSorteio(sorteio);
+		sorteio.setGanhadores(ganhadores);
+		sorteio.setSorteado(true);
+		FacesMessage message = new FacesMessage();
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			sorteioDao.update(sorteio);
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"infoResorteioSucesso"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"infoResorteioSucesso"));
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+
+			context.addMessage(null, message);
+		} catch (Exception e) {
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"erroResorteioSucesso"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"erroResorteioSucesso"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+
+			context.addMessage(null, message);
+		}
+		return null;
 	}
 
 	public Sorteio getSorteio() {
