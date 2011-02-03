@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -77,19 +78,29 @@ public class ParticipacaoDao extends AbstractDao<Participacao> {
 		Query countQuery = em.createQuery(q);
 		countQuery.setParameter("sorteio", sorteio);
 		long count = (Long) countQuery.getSingleResult();
-
+		List<Participante> ganhadores = new ArrayList<Participante>();
 		if (count > 0) {
-			Random random = new Random();
-			Integer number = random.nextInt((int) count);
+			for(int i = 0;i<sorteio.getQuantidadeGanhadores();i++) {
+				Random random = new Random();
+				Integer number = random.nextInt((int) count);
+				
+				q = "SELECT pa FROM Participacao p JOIN p.participante pa "
+						+ "WHERE p.sorteio = :sorteio";
+				Query query = em.createQuery(q);
+				query.setParameter("sorteio", sorteio);
+				query.setMaxResults(1);
+				query.setFirstResult(number);
+				Participante p = (Participante) query.getSingleResult(); 
+				if(!ganhadores.contains(p)) {
+					ganhadores.add(p);
+				} else {
+					i--;
+				}
+					
+				
+			}
 
-			q = "SELECT pa FROM Participacao p JOIN p.participante pa "
-					+ "WHERE p.sorteio = :sorteio";
-			Query query = em.createQuery(q);
-			query.setParameter("sorteio", sorteio);
-
-			query.setFirstResult(number);
-			query.setMaxResults(sorteio.getQuantidadeGanhadores());
-			return (List<Participante>) query.getResultList();
+			return ganhadores;
 
 		}
 		return null;
