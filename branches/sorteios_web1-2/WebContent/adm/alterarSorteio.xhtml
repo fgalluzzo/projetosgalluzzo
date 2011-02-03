@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:composition template="/adm/template/common.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<div class="post"><rich:panel>
+					<f:facet name="header">
+						<h:outputText value="#{msg.criarSorteio}" />
+					</f:facet>
+					<div><h:messages infoClass="messagesInfo" errorClass="messages" /> </div>
+					<h:inputHidden value="#{cadastroSorteioMB.sorteio.id}"></h:inputHidden>
+					<h:panelGrid columns="2">
+
+						<h:outputLabel for="nome" value="#{msg.nome}*" />
+						<h:inputText requiredMessage="#{msg.validaNomeRequerido}"
+							required="true" id="nome"
+							value="#{cadastroSorteioMB.sorteio.nome}" />
+
+						<h:outputLabel for="desc" value="#{msg.descricao}*" />
+						<h:inputTextarea required="true"
+							requiredMessage="#{msg.validaDescricaoRequerida}" id="desc"
+							value="#{cadastroSorteioMB.sorteio.descricao}" />
+
+
+						<h:outputLabel for="premios" value="#{msg.qntPremios}" />
+						<rich:inputNumberSpinner minValue="1" id="premios"
+							value="#{cadastroSorteioMB.sorteio.quantidadeGanhadores}"></rich:inputNumberSpinner>
+
+						<h:outputLabel for="dtInicio" value="#{msg.dtInicio}*" />
+						<rich:calendar required="true"
+							requiredMessage="#{msg.validaDataInicioRequerida}"
+							timeZone="#{cadastroSorteioMB.timeZone}"
+							datePattern="dd/MM/yyyy HH:mm" locale="BR" showApplyButton="true"
+							id="dtInicio" value="#{cadastroSorteioMB.sorteio.dataInicioD}">
+						</rich:calendar>
+
+						<h:outputLabel for="dtFim" value="#{msg.dtFim}*" />
+						<rich:calendar required="true"
+							requiredMessage="#{msg.validaDataFimRequerida}"
+							timeZone="#{cadastroSorteioMB.timeZone}" locale="BR"
+							datePattern="dd/MM/yyyy HH:mm" showApplyButton="true" id="dtFim"
+							value="#{cadastroSorteioMB.sorteio.dataFimD}">
+						</rich:calendar>
+
+					</h:panelGrid>					
+					<h:commandButton action="#{cadastroSorteioMB.alterar}" value="#{msg.salvar}"  /> 
+				</rich:panel>
+				<div style="text-align : right;">
+							<h:link outcome="listaSorteio" >
+								<h:outputText value="#{msg.voltar}" />
+							</h:link>
+						</div>
+				</div>						
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>
