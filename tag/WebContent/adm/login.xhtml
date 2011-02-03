@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:composition template="/adm/template/common.xhtml">
+		<ui:define name="content">
+			<div class="post">
+			
+			
+					
+					<h:form>						
+						<rich:panel >
+						<f:facet name="header" >
+							<h:outputText value="#{msg.administracao}"/>
+						</f:facet>
+						<div class="messages">
+							<rich:message></rich:message>
+						</div>
+						<h:panelGrid>
+							<h:outputLabel for="login" value="#{msg.usuario}"/>
+							<h:inputText required="true" requiredMessage="#{msg.usuarioRequerido}" id="login" value="#{loginMB.usuario.apelido}"/>
+							
+							<h:outputLabel for="senha" value="#{msg.senha}"/>
+							<h:inputSecret requiredMessage="#{msg.senhaRequerida}" required="true" id="senha" value="#{loginMB.usuario.senha}" />							
+
+						</h:panelGrid>
+						<h:commandButton action="#{loginMB.entrar}" value="#{msg.entrar}"/>
+						</rich:panel>
+					</h:form>
+				
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>

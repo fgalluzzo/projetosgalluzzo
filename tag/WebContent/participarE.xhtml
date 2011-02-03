@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+<f:loadBundle basename="message" var="msg"/>
+			<div class="post"><!-- há Sorteio --> 
+			<h:form id="frmParticip">
+				
+				<rich:panel >
+					<f:facet name="header" >
+						<h:outputText value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}"/>
+					</f:facet>				
+					
+					<rich:message></rich:message>	
+					<h:panelGrid columns="2">
+						
+						<h:outputLabel for="nome" value="Nome" />
+						<h:inputText required="true" validator="validaNome" requiredMessage="#{msg.validaNomeRequerido}" id="nome"
+							 value="#{participacaoMB.participacao.participante.nome}" />	
+							 					
+						<h:outputLabel for="sobrenome"  value="Sobrenome" />
+						<h:inputText id="sobrenome" validator="validaSobrenome" required="true" requiredMessage="#{msg.validaSobrenomeRequerido}"
+							value="#{participacaoMB.participacao.participante.sobrenome}" />
+
+						<h:outputLabel for="email" value="E-mail" />
+						<h:inputText id="email" required="true" requiredMessage="#{msg.validaEmailRequerido}"
+							value="#{participacaoMB.participacao.participante.email}" validator="validaEmail" />
+	
+					</h:panelGrid> <h:commandButton  type="reset" value="Limpar" /> <h:commandButton
+						action="#{participacaoMB.processar}" value="Inscrever-se" />							
+				</rich:panel>
+				<script type="text/javascript"><!--
+							google_ad_client = "ca-pub-6756248611872365";
+							/* Anúncio para sorteios web */
+							google_ad_slot = "0552043043";
+							google_ad_width = 234;
+							google_ad_height = 60;
+							//-->
+							</script>
+							<script type="text/javascript"
+							src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+							</script>
+			</h:form>
+			</div>
+
+</h:body>
+
+
+</html>

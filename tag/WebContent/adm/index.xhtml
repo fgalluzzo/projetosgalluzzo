@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:composition template="/adm/template/common.xhtml">
+		<ui:define name="content">
+			<h:form>
+			<div class="post">
+				
+				<rich:panel>
+				
+					<f:facet name="header" >
+						<h:outputText value="#{msg.administracao}"/>
+					</f:facet>
+					
+					<ul>
+						<li><h:commandLink action="#{cadastroSorteioMB.preIncluirIndex}" value="#{msg.criarSorteio}"></h:commandLink> </li>
+						<li><h:commandLink action="#{cadastroSorteioMB.preListar}" value="#{msg.listaSorteios}"></h:commandLink> </li>
+						<li><h:commandLink  value="#{msg.buscarSorteio}" action="#{cadastroSorteioMB.preBusca}"></h:commandLink></li>
+					
+					</ul>
+					
+				</rich:panel>
+			</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>
