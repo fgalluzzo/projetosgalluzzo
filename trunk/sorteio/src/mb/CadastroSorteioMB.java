@@ -1,21 +1,14 @@
 package mb;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Random;
 import java.util.TimeZone;
 
 import javax.el.ValueExpression;
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpServletRequest;
 
 import job.Sortear;
@@ -26,7 +19,6 @@ import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
 import org.quartz.SimpleTrigger;
-import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,8 +39,7 @@ public class CadastroSorteioMB {
 	private Sorteio sorteio;
 	private String filtroNome;
 	private SorteioDao sorteioDao;
-	private String enderecoSorteio;
-	private String enderecoSorteioEmbed;
+
 	private TimeZone timeZone = TimeZone.getTimeZone("America/Sao_Paulo");
 	private List<Sorteio> sorteios;
 	private String termoBusca;
@@ -184,7 +175,15 @@ public class CadastroSorteioMB {
 				sched.deleteJob(sorteio.getId().toString(), JOBGROUP);
 
 			} catch (Exception e) {
-				// TODO: handle exception
+				FacesMessage message = new FacesMessage();
+				message.setDetail(MessagesReader.getMessages().getProperty(
+						"erroExclusao"));
+				message.setSummary(MessagesReader.getMessages().getProperty(
+						"erroExclusao"));
+				message.setSeverity(FacesMessage.SEVERITY_ERROR);
+
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, message);
 			}
 			FacesMessage message = new FacesMessage();
 			message.setDetail(MessagesReader.getMessages().getProperty(
@@ -196,7 +195,15 @@ public class CadastroSorteioMB {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, message);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			FacesMessage message = new FacesMessage();
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"erroExclusao"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"erroExclusao"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, message);
 			e.printStackTrace();
 		}
 		preListar();
@@ -245,11 +252,18 @@ public class CadastroSorteioMB {
 					sorteio.getDataFimD());
 			sched.scheduleJob(job, disparo);
 
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {			
 			sorteio = new Sorteio();
+			FacesMessage message = new FacesMessage();
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"erroCadastroSorteio"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"erroCadastroSorteio"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			 
+			context.addMessage(null, message);
 			e.printStackTrace();
-			return "index";
+			return null;
 		}
 		return "sorteioCriado";
 	}
