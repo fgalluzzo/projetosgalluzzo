@@ -22,10 +22,17 @@
 			<h:form id="frmParticip">
 				
 				<rich:panel>
-					<h2 class="title"><h:outputText
-						value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}" /></h2>				
+					<f:facet name="header" >
+						<h:outputText value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}   "/>
+						
+						<h:commandLink disabled="true" id="descMais">		
+							<h:graphicImage  url="recursos/images/mais.png"  width="16" height="16" ></h:graphicImage>																														
+							<rich:tooltip styleClass="tooltip-text" value="#{participacaoMB.sorteio.descricao}">								
+							</rich:tooltip>
+						</h:commandLink>
+					</f:facet>				
 					<div class="entry">
-					<rich:message></rich:message>
+					<rich:message></rich:message>	
 					
 					<h:panelGrid columns="2">
 						

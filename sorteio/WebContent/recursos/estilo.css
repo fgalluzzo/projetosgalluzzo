@@ -1,10 +1,8 @@
-
 /*
 Design by Free CSS Templates
 http://www.freecsstemplates.org
 Released for free under a Creative Commons Attribution 2.5 License
 */
-
 body {
 	margin: 0;
 	padding: 0;
@@ -14,7 +12,7 @@ body {
 	color: #A19D9A;
 }
 
-h1, h2, h3 {
+h1,h2,h3 {
 	margin: 0;
 	padding: 0;
 	font-weight: normal;
@@ -33,17 +31,22 @@ h3 {
 	font-size: 1.6em;
 }
 
-p, ul, ol {
+p,ul,ol {
 	margin-top: 0;
 	line-height: 180%;
 }
 
-ul, ol {
+ul,ol {
+	
 }
 
 a {
 	text-decoration: underline;
 	color: #FFD4F4;
+}
+
+img {
+	border: 0;
 }
 
 a:hover {
@@ -56,7 +59,6 @@ a:hover {
 }
 
 /* Header */
-
 #header-wrapper {
 	height: 125px;
 }
@@ -68,7 +70,6 @@ a:hover {
 }
 
 /* Logo */
-
 #logo {
 	float: left;
 	width: 350px;
@@ -77,7 +78,8 @@ a:hover {
 	color: #000000;
 }
 
-#logo h1, #logo p {
+#logo h1,#logo p {
+	
 }
 
 #logo h1 {
@@ -94,6 +96,7 @@ a:hover {
 }
 
 #logo h1 span {
+	
 }
 
 #logo p {
@@ -102,7 +105,7 @@ a:hover {
 	font: normal 14px Georgia, "Times New Roman", Times, serif;
 	font-style: italic;
 	color: #FFFFFF;
-} 
+}
 
 #logo a {
 	border: none;
@@ -112,7 +115,6 @@ a:hover {
 }
 
 /* Search */
-
 #search {
 	float: right;
 	width: 280px;
@@ -152,7 +154,6 @@ a:hover {
 }
 
 /* Menu */
-
 #menu {
 	float: right;
 	width: 450px;
@@ -185,16 +186,16 @@ a:hover {
 	border: none;
 }
 
-#menu a:hover, #menu .current_page_item a {
+#menu a:hover,#menu .current_page_item a {
 	background: #451739;
 	text-decoration: none;
 }
 
 #menu .current_page_item a {
+	
 }
 
 /* Page */
-
 #page {
 	width: 980px;
 	margin: 0 auto;
@@ -204,16 +205,17 @@ a:hover {
 #page-bgtop {
 	padding: 20px 0px;
 }
-/* Content */
 
+/* Content */
 #content {
 	float: left;
 	width: 650px;
 	padding: 0px 0px 0px 0px;
-	min-height: 465px;	
+	min-height: 465px;
 }
 
 .post {
+	
 }
 
 .post .title {
@@ -263,7 +265,7 @@ a:hover {
 
 .links {
 	height: 50px;
-	background: url(images/img04.jpg) no-repeat  left top;
+	background: url(images/img04.jpg) no-repeat left top;
 	padding: 15px 30px 0px 0px;
 	text-align: right;
 	font-size: 12px;
@@ -275,7 +277,6 @@ a:hover {
 }
 
 /* Sidebar */
-
 #sidebar {
 	float: right;
 	width: 280px;
@@ -347,8 +348,8 @@ a:hover {
 }
 
 /* Calendar */
-
 #calendar {
+	
 }
 
 #calendar_wrap {
@@ -368,7 +369,6 @@ a:hover {
 }
 
 /* Footer */
-
 #footer {
 	height: 50px;
 	margin: 0 auto;
@@ -391,3 +391,6 @@ a:hover {
 	color: #FFFFFF;
 }
 
+.tooltip-text {
+	
+}

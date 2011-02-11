@@ -20,7 +20,14 @@
 				
 				<rich:panel >
 					<f:facet name="header" >
-						<h:outputText value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}"/>
+						<h:outputText value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}   "/>
+						
+						<h:commandLink disabled="true" id="descMais">		
+							<h:graphicImage  url="recursos/images/mais.png"  width="16" height="16" ></h:graphicImage>																														
+							<rich:tooltip styleClass="tooltip-text" >
+								<h:outputText value="#{participacaoMB.sorteio.descricao}"></h:outputText>
+							</rich:tooltip>
+						</h:commandLink>
 					</f:facet>				
 					
 					<rich:message></rich:message>	
