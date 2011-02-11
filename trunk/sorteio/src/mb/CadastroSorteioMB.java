@@ -77,10 +77,14 @@ public class CadastroSorteioMB {
 		try {
 			SchedulerFactory sf = new StdSchedulerFactory();
 			Scheduler sched = sf.getScheduler();
-
+			
+			
 			JobDetail job = sched.getJobDetail(sorteio.getId().toString(),
 					JOBGROUP);
-
+			if(job==null) {
+				job = new JobDetail(sorteio.getId().toString(),
+					JOBGROUP,Sorteio.class);
+			}
 			sched.deleteJob(sorteio.getId().toString(), JOBGROUP);
 
 			SimpleTrigger disparo = new SimpleTrigger(TRIGGER
@@ -100,8 +104,11 @@ public class CadastroSorteioMB {
 				context.addMessage(null, message);
 			} catch (Exception e) {
 				Logger log = LoggerFactory.getLogger("INFO ALTERACAO");
-				log.error("Erro no agendamento do sorteio usuario :");
-				log.error("ERRO", e.getStackTrace());
+				log.error("Erro ao alterar sorteio :");
+				log.error("ERRO "+e.getMessage());
+				log.error("CAUSA "+e.getCause());
+				
+				
 				message.setDetail(MessagesReader.getMessages().getProperty(
 						"infoAlteracaoErro"));
 				message.setSummary(MessagesReader.getMessages().getProperty(
@@ -112,9 +119,9 @@ public class CadastroSorteioMB {
 
 		} catch (Exception e) {
 			Logger log = LoggerFactory.getLogger("INFO ALTERACAO");
-			log.error("Erro ao alterar usuario :");
-			log.error("ERRO", e.getStackTrace());
-
+			log.error("Erro no agendamento do sorteio usuario :");
+			log.error("ERRO "+e.getMessage());
+			log.error("CAUSA "+e.getCause());
 			message.setDetail(MessagesReader.getMessages().getProperty(
 					"infoAlteracaoErro"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
