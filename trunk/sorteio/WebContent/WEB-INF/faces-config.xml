@@ -18,4 +18,8 @@
 		<validator-id>validaSobrenome</validator-id>
 		<validator-class>validadores.SobrenomeValidator</validator-class>
 	</validator>
+	<validator>
+		<validator-id>validaDataFim</validator-id>
+		<validator-class>validadores.DataValidator</validator-class>
+	</validator>
 </faces-config>

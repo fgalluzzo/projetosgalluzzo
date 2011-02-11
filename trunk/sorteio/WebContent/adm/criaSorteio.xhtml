@@ -16,7 +16,7 @@
 <h:body>
 	<ui:composition template="/adm/template/common.xhtml">
 		<ui:define name="content">
-			<h:form>
+			<h:form prependId="false">
 				<div class="post"><rich:panel>
 					<f:facet name="header">
 						<h:outputText value="#{msg.criarSorteio}" />
@@ -52,7 +52,7 @@
 							requiredMessage="#{msg.validaDataFimRequerida}"
 							timeZone="#{cadastroSorteioMB.timeZone}" locale="BR"
 							datePattern="dd/MM/yyyy HH:mm" showApplyButton="true" id="dtFim"
-							value="#{cadastroSorteioMB.sorteio.dataFimD}">
+							value="#{cadastroSorteioMB.sorteio.dataFimD}" validator="validaDataFim">
 						</rich:calendar>
 
 					</h:panelGrid>
