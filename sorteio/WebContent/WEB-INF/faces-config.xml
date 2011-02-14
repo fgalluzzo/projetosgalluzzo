@@ -22,4 +22,8 @@
 		<validator-id>validaDataFim</validator-id>
 		<validator-class>validadores.DataValidator</validator-class>
 	</validator>
+	<validator>
+		<validator-id>validaHora</validator-id>
+		<validator-class>validadores.HoraValidator</validator-class>
+	</validator>
 </faces-config>

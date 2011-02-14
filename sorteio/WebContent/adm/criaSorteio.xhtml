@@ -3,8 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+	xmlns:p="http://primefaces.prime.com.tr/ui">
 
 <h:head>
 	<title></title>
@@ -17,11 +16,11 @@
 	<ui:composition template="/adm/template/common.xhtml">
 		<ui:define name="content">
 			<h:form prependId="false">
-				<div class="post"><rich:panel>
+				<div class="post"><p:panel>
 					<f:facet name="header">
 						<h:outputText value="#{msg.criarSorteio}" />
 					</f:facet>
-					<div class="messages"><rich:message></rich:message></div>
+					<div class="messages"><p:messages></p:messages></div>
 					<h:panelGrid columns="2">
 
 						<h:outputLabel for="nome" value="#{msg.nome}*" />
@@ -36,35 +35,42 @@
 
 
 						<h:outputLabel for="premios" value="#{msg.qntPremios}" />
-						<rich:inputNumberSpinner minValue="1" id="premios"
-							value="#{cadastroSorteioMB.sorteio.quantidadeGanhadores}"></rich:inputNumberSpinner>
+						<p:spinner id="premios" min="1"
+							value="#{cadastroSorteioMB.sorteio.quantidadeGanhadores}" />
+
 
 						<h:outputLabel for="dtInicio" value="#{msg.dtInicio}*" />
-						<rich:calendar required="true"
+						<p:calendar required="true"
 							requiredMessage="#{msg.validaDataInicioRequerida}"
-							timeZone="#{cadastroSorteioMB.timeZone}"
-							datePattern="dd/MM/yyyy HH:mm" locale="BR" showApplyButton="true"
-							id="dtInicio" value="#{cadastroSorteioMB.sorteio.dataInicioD}">
-						</rich:calendar>
-
+							timeZone="#{cadastroSorteioMB.timeZone}" pattern="dd/MM/yyyy"
+							locale="BR" showButtonPanel="true" id="dtInicio"
+							value="#{cadastroSorteioMB.sorteio.dataInicioD}" />
+							
+						<h:outputLabel for="hrInicio" value="#{msg.hrInicio}" />						
+						<p:inputMask mask="99:99" required="true"  requiredMessage="#{msg.validaHoraInicioRequerida}" id="hrInicio" value="#{cadastroSorteioMB.horaInicio}" maxlength="5">
+							<f:validateRegex pattern="([1-9]|[0-1][0-9]|2[0-3]):([0-5][0-9])"></f:validateRegex>
+						</p:inputMask>
+						
 						<h:outputLabel for="dtFim" value="#{msg.dtFim}*" />
-						<rich:calendar required="true"
+						<p:calendar required="true"
 							requiredMessage="#{msg.validaDataFimRequerida}"
-							timeZone="#{cadastroSorteioMB.timeZone}" locale="BR"
-							datePattern="dd/MM/yyyy HH:mm" showApplyButton="true" id="dtFim"
-							value="#{cadastroSorteioMB.sorteio.dataFimD}" validator="validaDataFim">
-						</rich:calendar>
-
+							timeZone="#{cadastroSorteioMB.timeZone}" pattern="dd/MM/yyyy"
+							locale="pt_BR" showButtonPanel="true" id="dtFim"
+							value="#{cadastroSorteioMB.sorteio.dataFimD}"  validator="validaDataFim"/>
+							
+						<h:outputLabel for="hrFim" value="#{msg.hrFim}" />						
+						<p:inputMask mask="99:99" required="true" requiredMessage="#{msg.validaHoraFimRequerida}" id="hrFim" value="#{cadastroSorteioMB.horaFim}" maxlength="5">
+							<f:validateRegex pattern="([1-9]|[0-1][0-9]|2[0-3]):([0-5][0-9])"></f:validateRegex>
+						</p:inputMask>
 					</h:panelGrid>
 					<h:commandButton action="#{cadastroSorteioMB.cadastrar}"
 						value="#{msg.cadastrar}" />
-				</rich:panel>
-				<div style="text-align : right;">
-							<h:link outcome="#{cadastroSorteioMB.ultimaPagina}" >
-								<h:outputText value="#{msg.voltar}" />
-							</h:link>
-						</div>
-				</div>						
+				</p:panel>
+				<div style="text-align: right;"><h:link
+					outcome="#{cadastroSorteioMB.ultimaPagina}">
+					<h:outputText value="#{msg.voltar}" />
+				</h:link></div>
+				</div>
 			</h:form>
 		</ui:define>
 	</ui:composition>

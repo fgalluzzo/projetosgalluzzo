@@ -3,8 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+	xmlns:p="http://primefaces.prime.com.tr/ui">
 
 <h:head>
 	<title></title>
@@ -18,7 +17,7 @@
 		<ui:define name="content">
 			<h:form>
 				
-				<div class="post"><rich:panel>
+				<div class="post"><p:panel>
 					<p> <h:outputText
 						value="#{msg.acessoEndNormal} #{cadastroSorteioMB.enderecoSorteio}">
 						</h:outputText> 
@@ -28,7 +27,7 @@
 						</h:outputText> 
 					</p>
 
-				</rich:panel></div>
+				</p:panel></div>
 				<h:commandLink action="index" value="#{msg.voltarInicio}"></h:commandLink>
 
 			</h:form>

@@ -3,8 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+	xmlns:p="http://primefaces.prime.com.tr/ui">
 
 <h:head>
 	<title></title>
@@ -17,20 +16,18 @@
 <f:loadBundle basename="message" var="msg"/>
 			<div class="post"><!-- há Sorteio --> 
 			<h:form id="frmParticip">
-				
-				<rich:panel >
+				<p:tooltip global="true"  styleClass="tooltip-text" />
+				<p:panel >
 					<f:facet name="header" >
 						<h:outputText value="#{msg.inscrevase} #{participacaoMB.sorteio.nome}   "/>
 						
-						<h:commandLink disabled="true" id="descMais">		
+						<h:commandLink title="#{participacaoMB.sorteio.descricao}" disabled="true" id="descMais">		
 							<h:graphicImage  url="recursos/images/mais.png"  width="16" height="16" ></h:graphicImage>																														
-							<rich:tooltip styleClass="tooltip-text" >
-								<h:outputText value="#{participacaoMB.sorteio.descricao}"></h:outputText>
-							</rich:tooltip>
+							
 						</h:commandLink>
 					</f:facet>				
 					
-					<rich:message></rich:message>	
+					<p:messages />
 					<h:panelGrid columns="2">
 						
 						<h:outputLabel for="nome" value="Nome" />
@@ -47,7 +44,7 @@
 	
 					</h:panelGrid> <h:commandButton  type="reset" value="Limpar" /> <h:commandButton
 						action="#{participacaoMB.processar}" value="Inscrever-se" />							
-				</rich:panel>
+				</p:panel>
 				<script type="text/javascript"><!--
 							google_ad_client = "ca-pub-6756248611872365";
 							/* Anúncio para sorteios web */

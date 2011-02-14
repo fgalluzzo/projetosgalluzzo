@@ -1,23 +1,17 @@
 package mb;
 
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.el.ValueExpression;
 import javax.faces.application.Application;
-import javax.faces.application.NavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.ajax4jsf.model.KeepAlive;
-
 import modelo.Participacao;
-import modelo.Participante;
 import modelo.Sorteio;
 import util.PersistenceUtil;
 import dao.ParticipacaoDao;

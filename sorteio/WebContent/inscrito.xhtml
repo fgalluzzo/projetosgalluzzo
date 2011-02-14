@@ -3,8 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+	xmlns:p="http://primefaces.prime.com.tr/ui">
 
 <h:head>
 	<title></title>
@@ -18,13 +17,13 @@
 		<ui:define name="content">
 
 			<h:form>
-				<div class="post"><rich:panel>
+				<div class="post"><p:panel>
 					<p><h:outputText value="#{msg.parabens}"></h:outputText>, <h:outputText
 						value="#{participacaoMB.participacao.participante.nome} #{participacaoMB.participacao.participante.sobrenome}"></h:outputText>
 					<h:outputText value="#{msg.participSorteio}" ></h:outputText> 		
 					</p>
 
-				</rich:panel></div>
+				</p:panel></div>
 				<!-- Não há sorteio -->
 
 			</h:form>

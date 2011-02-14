@@ -3,8 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+	xmlns:p="http://primefaces.prime.com.tr/ui">
 
 <h:head>
 	<title></title>
@@ -16,37 +15,35 @@
 <h:body>
 	<ui:composition template="/template/common.xhtml">
 		<ui:define name="content">
-
+	
 
 			<div class="post"><!-- há Sorteio --> 
 			<h:form id="frmParticip" >
-				
-				<rich:panel>
+				<p:tooltip global="true"  styleClass="tooltip-text" />
+				<p:panel>
 					<f:facet name="header" >
-						<h:outputText value="#{msg.resultado} #{cadastroSorteioMB.sorteio.nome}"/>
+						<h:outputText value="#{msg.resultado} #{cadastroSorteioMB.sorteio.nome} "/>
+						<h:commandLink title="#{participacaoMB.sorteio.descricao}" disabled="true" >		
+							<h:graphicImage id="descMais" url="recursos/images/mais.png"  width="16" height="16" ></h:graphicImage>																														
+							
+						</h:commandLink>
 					</f:facet>				
-					<div class="entry">					
-					<rich:dataTable var="ganhador"						
+					
+					<p:dataTable var="ganhador"						
 						value="#{cadastroSorteioMB.sorteio.ganhadores}">
 						<f:facet name="header">
 							<h:outputText value="#{msg.ganhadores}"></h:outputText>
 						</f:facet>
 
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{msg.nome}"></h:outputText>
-							</f:facet>
+						<p:column headerText="#{msg.nome}">							
 							<h:outputText value="#{ganhador.nome}"></h:outputText>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{msg.sobrenome}"></h:outputText>
-							</f:facet>
+						</p:column>
+						<p:column headerText="#{msg.sobrenome}">							
 							<h:outputText value="#{ganhador.sobrenome}"></h:outputText>
-						</h:column>																	
-					</rich:dataTable>				
-						</div>
-				</rich:panel>
+						</p:column>																	
+					</p:dataTable>				
+					
+				</p:panel>
 			</h:form>
 									
 			</div>
