@@ -9,6 +9,8 @@ import modelo.Sorteio;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import util.PersistenceUtil;
 import dao.ParticipacaoDao;
@@ -26,7 +28,9 @@ public class Sortear implements Job{
 		List<Participante> ganhadores = participacaoDao.sorteiaParticipanteSorteio(sorteio);				
 		sorteio.setGanhadores(ganhadores);
 		sorteio.setSorteado(true);
-		try {
+		Logger log = LoggerFactory.getLogger("INFO SORTEIO");
+		log.error("SORTEANDO :" + sorteio.getNome());
+				try {
 			sorteioDao.update(sorteio);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

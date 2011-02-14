@@ -1,5 +1,7 @@
 package mb;
 
+import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -31,7 +33,7 @@ import dao.SorteioDao;
 
 @ManagedBean(name = "cadastroSorteioMB")
 @SessionScoped
-public class CadastroSorteioMB {
+public class CadastroSorteioMB implements Serializable {
 	public final String EMBED = "e";
 	public final String NOTEMBED = "n";
 	private final static String JOBGROUP = "SorteiosWeb";
@@ -39,6 +41,8 @@ public class CadastroSorteioMB {
 	private Sorteio sorteio;
 	private String filtroNome;
 	private SorteioDao sorteioDao;
+	private String horaInicio;
+	private String horaFim;
 
 	private TimeZone timeZone = TimeZone.getTimeZone("America/Sao_Paulo");
 	private List<Sorteio> sorteios;
@@ -58,15 +62,41 @@ public class CadastroSorteioMB {
 		sorteio = new Sorteio();
 		ultimaPagina = "index";
 	}
-
+	public String preAlterar() {		
+		Integer minuto;
+		Integer hora;
+		String min;
+		hora = sorteio.getDataInicio().get(Calendar.HOUR_OF_DAY);
+		minuto = sorteio.getDataInicio().get(Calendar.MINUTE);
+		if(minuto < 10) {
+			min = "0"+minuto.toString();
+		} else {
+			min = minuto.toString();
+		}
+		horaInicio = hora.toString() +":" +min;
+		
+		hora = sorteio.getDataFim().get(Calendar.HOUR_OF_DAY);
+		minuto = sorteio.getDataFim().get(Calendar.MINUTE);
+		if(minuto < 10) {
+			min = "0"+minuto.toString();
+		} else {
+			min = minuto.toString();
+		}
+		horaFim =  hora.toString() +":" +min;
+		return "alterarSorteio";
+	}
 	public String preIncluirIndex() {
 		ultimaPagina = "index";
 		sorteio = new Sorteio();
+		horaInicio = new String();
+		horaFim = new String();
 		return "criaSorteio";
 	}
 
 	public String preIncluir() {
 		sorteio = new Sorteio();
+		horaInicio = new String();
+		horaFim = new String();
 		return "criaSorteio";
 	}
 
@@ -74,16 +104,27 @@ public class CadastroSorteioMB {
 		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
 		FacesMessage message = new FacesMessage();
 		FacesContext context = FacesContext.getCurrentInstance();
+		sorteio.getDataInicio().set(sorteio.getDataInicio().get(Calendar.YEAR),
+				sorteio.getDataInicio().get(Calendar.MONTH),
+				sorteio.getDataInicio().get(Calendar.DAY_OF_MONTH),
+				Integer.parseInt(horaInicio.substring(0, 2)),
+				Integer.parseInt(horaInicio.substring(3)));
+		
+		sorteio.getDataFim().set(sorteio.getDataFim().get(Calendar.YEAR),
+				sorteio.getDataFim().get(Calendar.MONTH),
+				sorteio.getDataFim().get(Calendar.DAY_OF_MONTH),
+				Integer.parseInt(horaFim.substring(0, 2)),
+				Integer.parseInt(horaFim.substring(3)));
 		try {
 			SchedulerFactory sf = new StdSchedulerFactory();
 			Scheduler sched = sf.getScheduler();
-			
-			
+
 			JobDetail job = sched.getJobDetail(sorteio.getId().toString(),
 					JOBGROUP);
-			if(job==null) {
-				job = new JobDetail(sorteio.getId().toString(),
-					JOBGROUP,Sorteio.class);
+			if (job == null) {
+
+				job = new JobDetail(sorteio.getId().toString(), JOBGROUP,
+						Sortear.class);
 			}
 			sched.deleteJob(sorteio.getId().toString(), JOBGROUP);
 
@@ -92,7 +133,7 @@ public class CadastroSorteioMB {
 					sorteio.getDataFimD());
 
 			sched.scheduleJob(job, disparo);
-
+			
 			try {
 				sorteioDao.update(sorteio);
 				message.setDetail(MessagesReader.getMessages().getProperty(
@@ -105,10 +146,9 @@ public class CadastroSorteioMB {
 			} catch (Exception e) {
 				Logger log = LoggerFactory.getLogger("INFO ALTERACAO");
 				log.error("Erro ao alterar sorteio :");
-				log.error("ERRO "+e.getMessage());
-				log.error("CAUSA "+e.getCause());
-				
-				
+				log.error("ERRO " + e.getMessage());
+				log.error("CAUSA " + e.getCause());
+
 				message.setDetail(MessagesReader.getMessages().getProperty(
 						"infoAlteracaoErro"));
 				message.setSummary(MessagesReader.getMessages().getProperty(
@@ -120,8 +160,8 @@ public class CadastroSorteioMB {
 		} catch (Exception e) {
 			Logger log = LoggerFactory.getLogger("INFO ALTERACAO");
 			log.error("Erro no agendamento do sorteio usuario :");
-			log.error("ERRO "+e.getMessage());
-			log.error("CAUSA "+e.getCause());
+			log.error("ERRO " + e.getMessage());
+			log.error("CAUSA " + e.getCause());
 			message.setDetail(MessagesReader.getMessages().getProperty(
 					"infoAlteracaoErro"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
@@ -228,7 +268,7 @@ public class CadastroSorteioMB {
 		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
 		sorteios = sorteioDao.findByGrupo(loginMB.getUsuario().getGrupo());
 		ultimaPagina = "listaSorteio";
-		return "listaSorteio";
+		return "listaSorteio?faces-redirect=true";
 	}
 
 	public String cadastrar() {
@@ -245,6 +285,19 @@ public class CadastroSorteioMB {
 
 			sorteio.setGrupo(loginMB.getUsuario().getGrupo());
 			sorteio.setInscritos(0);
+			sorteio.setSorteado(false);
+			sorteio.getDataInicio().set(sorteio.getDataInicio().get(Calendar.YEAR),
+					sorteio.getDataInicio().get(Calendar.MONTH),
+					sorteio.getDataInicio().get(Calendar.DAY_OF_MONTH),
+					Integer.parseInt(horaInicio.substring(0, 2)),
+					Integer.parseInt(horaInicio.substring(3)));
+			
+			sorteio.getDataFim().set(sorteio.getDataFim().get(Calendar.YEAR),
+					sorteio.getDataFim().get(Calendar.MONTH),
+					sorteio.getDataFim().get(Calendar.DAY_OF_MONTH),
+					Integer.parseInt(horaFim.substring(0, 2)),
+					Integer.parseInt(horaFim.substring(3)));
+			
 			sorteioDao.createSorteio(sorteio);
 			sorteio.setCodigo(CriaHash.SHA1(loginMB.getUsuario().getGrupo()
 					+ "" + sorteio.getId()));
@@ -259,7 +312,7 @@ public class CadastroSorteioMB {
 					sorteio.getDataFimD());
 			sched.scheduleJob(job, disparo);
 
-		} catch (Exception e) {			
+		} catch (Exception e) {
 			sorteio = new Sorteio();
 			FacesMessage message = new FacesMessage();
 			message.setDetail(MessagesReader.getMessages().getProperty(
@@ -267,7 +320,7 @@ public class CadastroSorteioMB {
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"erroCadastroSorteio"));
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-			 
+
 			context.addMessage(null, message);
 			e.printStackTrace();
 			return null;
@@ -304,7 +357,6 @@ public class CadastroSorteioMB {
 		}
 		return null;
 	}
-
 
 	public Sorteio getSorteio() {
 		return sorteio;
@@ -367,6 +419,22 @@ public class CadastroSorteioMB {
 
 	public void setUltimaPagina(String ultimaPagina) {
 		this.ultimaPagina = ultimaPagina;
+	}
+
+	public String getHoraInicio() {
+		return horaInicio;
+	}
+
+	public void setHoraInicio(String horaInicio) {
+		this.horaInicio = horaInicio;
+	}
+
+	public String getHoraFim() {
+		return horaFim;
+	}
+
+	public void setHoraFim(String horaFim) {
+		this.horaFim = horaFim;
 	}
 
 }
