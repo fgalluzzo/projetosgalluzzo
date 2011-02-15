@@ -9,21 +9,18 @@
 	<title></title>
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
-	<link href="recursos/estilo.css" rel="stylesheet" type="text/css"
-		media="screen" />
+	<!-- <link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+		media="screen" /> -->
 </h:head>
 <h:body>
 <f:loadBundle basename="message" var="msg"/>
-			<h:form rendered="#{redirectMB.temSorteio}">
-				<f:viewParam name="sorteio" value="#{redirectMB.sorteioId}"/>
-			</h:form>
-			<!-- Não há sorteio -->
-			<h:form rendered="#{not redirectMB.temSorteio}">
-				<p:panel>
+			<h:form >
+				<p:panel rendered="#{not redirectMB.temSorteio}">
 					<p><h:outputText value="#{msg.naoHaSorteio}"/></p>
 
 				</p:panel>
 			</h:form>
+		
 			
 </h:body>
 

@@ -115,6 +115,8 @@ public class CadastroSorteioMB implements Serializable {
 				sorteio.getDataFim().get(Calendar.DAY_OF_MONTH),
 				Integer.parseInt(horaFim.substring(0, 2)),
 				Integer.parseInt(horaFim.substring(3)));
+		sorteio.getDataInicio().setTimeZone(timeZone);
+		sorteio.getDataFim().setTimeZone(timeZone);
 		try {
 			SchedulerFactory sf = new StdSchedulerFactory();
 			Scheduler sched = sf.getScheduler();
@@ -286,6 +288,8 @@ public class CadastroSorteioMB implements Serializable {
 			sorteio.setGrupo(loginMB.getUsuario().getGrupo());
 			sorteio.setInscritos(0);
 			sorteio.setSorteado(false);
+			sorteio.getDataInicio().setTimeZone(timeZone);
+			sorteio.getDataFim().setTimeZone(timeZone);
 			sorteio.getDataInicio().set(sorteio.getDataInicio().get(Calendar.YEAR),
 					sorteio.getDataInicio().get(Calendar.MONTH),
 					sorteio.getDataInicio().get(Calendar.DAY_OF_MONTH),
@@ -297,6 +301,7 @@ public class CadastroSorteioMB implements Serializable {
 					sorteio.getDataFim().get(Calendar.DAY_OF_MONTH),
 					Integer.parseInt(horaFim.substring(0, 2)),
 					Integer.parseInt(horaFim.substring(3)));
+			
 			
 			sorteioDao.createSorteio(sorteio);
 			sorteio.setCodigo(CriaHash.SHA1(loginMB.getUsuario().getGrupo()

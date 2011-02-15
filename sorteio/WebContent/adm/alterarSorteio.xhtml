@@ -42,7 +42,7 @@
 						<p:calendar required="true"
 							requiredMessage="#{msg.validaDataInicioRequerida}"
 							timeZone="#{cadastroSorteioMB.timeZone}" pattern="dd/MM/yyyy"
-							locale="BR" showButtonPanel="true" id="dtInicio"
+							locale="pt_BR" showButtonPanel="true" id="dtInicio" readOnlyInputText="true"
 							value="#{cadastroSorteioMB.sorteio.dataInicioD}" />
 							
 						<h:outputLabel for="hrInicio" value="#{msg.hrInicio}" />						
@@ -53,7 +53,7 @@
 						<p:calendar required="true"
 							requiredMessage="#{msg.validaDataFimRequerida}"
 							timeZone="#{cadastroSorteioMB.timeZone}" pattern="dd/MM/yyyy"
-							locale="pt_BR" showButtonPanel="true" id="dtFim"
+							locale="pt_BR" showButtonPanel="true" id="dtFim" readOnlyInputText="true"
 							value="#{cadastroSorteioMB.sorteio.dataFimD}"  validator="validaDataFim"/>
 							
 						<h:outputLabel for="hrFim" value="#{msg.hrFim}" />						
