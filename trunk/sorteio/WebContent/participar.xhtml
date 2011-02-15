@@ -18,7 +18,7 @@
 
 
 			<div class="post"><!-- há Sorteio --> 
-			<h:form id="frmParticip">
+			<h:form prependId="false" id="frmParticip">
 				<p:tooltip global="true"  styleClass="tooltip-text" />
 				<p:panel>
 					<f:facet name="header" >
@@ -33,9 +33,9 @@
 						
 					</f:facet>				
 					<div class="entry">
-					<p:messages />
+					<p:messages showDetail="false" showSummary="true"/>
 					
-					<h:panelGrid columns="2">
+					<h:panelGrid  columns="2">
 						
 						<h:outputLabel for="nome" value="Nome" />
 						<h:inputText required="true" validator="validaNome" requiredMessage="#{msg.validaNomeRequerido}" id="nome"
@@ -49,9 +49,9 @@
 						<h:inputText id="email" required="true" requiredMessage="#{msg.validaEmailRequerido}"
 							value="#{participacaoMB.participacao.participante.email}" validator="validaEmail" />
 						
-						
-					
-					</h:panelGrid> <h:commandButton  type="reset" value="Limpar" /> <h:commandButton
+					</h:panelGrid>
+					<p:captcha label="Captcha"  required="true" language="pt" requiredMessage="#{msg.preenchaCap}"></p:captcha> 
+					<h:commandButton  type="reset" value="Limpar" /> <h:commandButton
 						action="#{participacaoMB.processar}" value="Inscrever-se" />					
 						</div>
 						

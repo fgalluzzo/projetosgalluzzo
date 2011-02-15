@@ -15,7 +15,7 @@
 <h:body>
 <f:loadBundle basename="message" var="msg"/>
 			<div class="post"><!-- há Sorteio --> 
-			<h:form id="frmParticip">
+			<h:form prependId="false" id="frmParticip">
 				<p:tooltip global="true"  styleClass="tooltip-text" />
 				<p:panel >
 					<f:facet name="header" >
@@ -27,7 +27,7 @@
 						</h:commandLink>
 					</f:facet>				
 					
-					<p:messages />
+					<p:messages showDetail="false" showSummary="true"/>
 					<h:panelGrid columns="2">
 						
 						<h:outputLabel for="nome" value="Nome" />
@@ -41,8 +41,12 @@
 						<h:outputLabel for="email" value="E-mail" />
 						<h:inputText id="email" required="true" requiredMessage="#{msg.validaEmailRequerido}"
 							value="#{participacaoMB.participacao.participante.email}" validator="validaEmail" />
+							
+					
 	
-					</h:panelGrid> <h:commandButton  type="reset" value="Limpar" /> <h:commandButton
+					</h:panelGrid>
+					<p:captcha label="Captcha"  required="true" language="pt" requiredMessage="#{msg.preenchaCap}"></p:captcha> 
+					<h:commandButton  type="reset" value="Limpar" /> <h:commandButton
 						action="#{participacaoMB.processar}" value="Inscrever-se" />							
 				</p:panel>
 				<script type="text/javascript"><!--

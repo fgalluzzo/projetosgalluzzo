@@ -1,5 +1,6 @@
 package mb;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.el.ValueExpression;
@@ -95,8 +96,8 @@ public class ParticipacaoMB {
 				return "naoInscrito";
 			}
 		}
-		
-		if (!cookieValue.equals(sorteio.getId().toString())) {
+		Calendar dtAtual = new GregorianCalendar();
+		if (!cookieValue.equals(sorteio.getId().toString()) && dtAtual.before(sorteio.getDataFim())) {
 
 			HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext
 					.getCurrentInstance().getExternalContext().getResponse();
