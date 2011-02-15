@@ -17,13 +17,14 @@
 		<ui:define name="content">
 			<h:form>
 			<div class="post">
-				
-				<p:panel>
+		
+				<p:panel  >
 				
 					<f:facet name="header" >
 						<h:outputText value="#{msg.administracao}"/>
 					</f:facet>
-					<p:menu type="sliding" backLabel="#{msg.voltar}">
+					
+					<p:menu  type="sliding" backLabel="#{msg.voltar}">
 						<p:submenu label="#{msg.sorteios}">
 							<p:menuitem>
 								<h:commandLink action="#{cadastroSorteioMB.preIncluirIndex}" value="#{msg.criarSorteio}"></h:commandLink>
@@ -43,9 +44,14 @@
 								<h:commandLink action="alterarEmail" value="#{msg.alterarEmail}"></h:commandLink>
 							</p:menuitem>
 						</p:submenu>
-					</p:menu>					
+					</p:menu>		
+					<h:outputText value="#{msg.apresentacao}"></h:outputText>
+						
+				
 				</p:panel>
 				
+				
+			
 			</div>
 			</h:form>
 		</ui:define>
