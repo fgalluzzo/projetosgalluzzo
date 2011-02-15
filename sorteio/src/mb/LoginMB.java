@@ -165,10 +165,10 @@ public class LoginMB {
 			email.setHostName("smtp.gmail.com");
 			email.setAuthenticator(new DefaultAuthenticator("sorteiosweb",
 					"sorteios2011"));			
-			email.setSSL(true);
-			email.setFrom("sorteiosweb@gmail.com");
+			email.setSSL(true);			
+			email.setFrom("sorteiosweb@gmail.com", "Sorteios Web");
 			email.setSubject(MessagesReader.getMessages().getProperty("recuperarSenha"));
-			email.setMsg(MessagesReader.getMessages().getProperty("novaSenhaMSG")+ novaSenha);
+			email.setMsg(MessagesReader.getMessages().getProperty("novaSenhaMSG")+" " + senhaNova);
 			email.addTo(usuario.getEmail());
 			email.send();
 			message.setDetail(MessagesReader.getMessages().getProperty(
@@ -177,6 +177,7 @@ public class LoginMB {
 					"emailSenhaEnviado"));
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
 			context.addMessage(null, message);
+			usuario = new Usuario();
 
 		} catch (NoResultException e) {
 			usuario.setApelido(null);
