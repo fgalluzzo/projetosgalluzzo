@@ -88,6 +88,15 @@ public class RedirectParticipacaoMB {
 							nh.handleNavigation(context, null,
 									"resultado.xhtml?faces-redirect=true");
 						}
+					} else {
+						temSorteio = false;
+						if (embed != null && !embed.isEmpty()) {
+							nh.handleNavigation(context, null,
+									"indexE.xhtml?faces-redirect=true");
+						} else {
+							nh.handleNavigation(context, null,
+									"index.xhtml?faces-redirect=true");
+						}
 					}
 
 				} else {
@@ -96,7 +105,7 @@ public class RedirectParticipacaoMB {
 								"indexE.xhtml?faces-redirect=true");
 					} else {
 						nh.handleNavigation(context, null,
-								"indexE.xhtml?faces-redirect=true");
+								"index.xhtml?faces-redirect=true");
 					}
 
 				}

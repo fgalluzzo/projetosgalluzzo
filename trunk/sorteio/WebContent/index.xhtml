@@ -17,16 +17,17 @@
 		<ui:define name="content">
 
 
-			<h:form rendered="#{redirectMB.temSorteio}">
-				<f:viewParam name="sorteio" value="#{redirectMB.sorteioId}"/>
-			</h:form>
-			<!-- Não há sorteio -->
-			<h:form rendered="#{not redirectMB.temSorteio}">
-				<p:panel>
+			<h:form >
+				<!-- <f:viewParam name="sorteio" value="#{redirectMB.sorteioId}"/> -->
+				<p:panel rendered="#{not redirectMB.temSorteio}">
 					<p><h:outputText value="#{msg.naoHaSorteio}"/></p>
 
 				</p:panel>
 			</h:form>
+			<!-- Não há sorteio -->
+			
+				
+			
 			
 		</ui:define>
 	</ui:composition>
