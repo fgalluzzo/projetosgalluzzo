@@ -2,21 +2,24 @@ package mb;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.NoResultException;
 
+import modelo.Usuario;
+
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.SimpleEmail;
+
 import util.CriaHash;
 import util.MessagesReader;
 import util.PersistenceUtil;
-
 import dao.UsuarioDao;
-
-import modelo.Usuario;
 
 @ManagedBean(name = "loginMB")
 @SessionScoped
@@ -43,7 +46,7 @@ public class LoginMB {
 		} catch (NoResultException e) {
 			System.out.println("e");
 			usuario.setApelido(null);
-			usuario.setSenha(null);			
+			usuario.setSenha(null);
 			FacesMessage message = new FacesMessage();
 			message.setDetail(MessagesReader.getMessages().getProperty(
 					"usuarioSenhaNaoConfere"));
@@ -64,82 +67,140 @@ public class LoginMB {
 			return null;
 		}
 	}
-	public String alterarEmail(){
+
+	public String alterarEmail() {
 		FacesMessage message = new FacesMessage();
-		try{
+		try {
 			usuarioDao.update(usuario);
 			message.setDetail(MessagesReader.getMessages().getProperty(
-			"emailAtualizado"));
+					"emailAtualizado"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"emailAtualizado"));
-			message.setSeverity(FacesMessage.SEVERITY_INFO);	
-			
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+
 		} catch (Exception e) {
 			message.setDetail(MessagesReader.getMessages().getProperty(
-			"problemaSistema"));
+					"problemaSistema"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"problemaSistema"));
-			message.setSeverity(FacesMessage.SEVERITY_ERROR);	
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 		}
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, message);
 		return null;
 	}
-	public String alterarSenha(){
+
+	public String alterarSenha() {
 		FacesMessage message = new FacesMessage();
 		try {
-			if(!usuario.getSenha().equals(CriaHash.SHA1(senhaAtual))){				
+			if (!usuario.getSenha().equals(CriaHash.SHA1(senhaAtual))) {
 				message.setDetail(MessagesReader.getMessages().getProperty(
 						"senhaAtualNaoConfere"));
 				message.setSummary(MessagesReader.getMessages().getProperty(
 						"senhaAtualNaoConfere"));
 				message.setSeverity(FacesMessage.SEVERITY_ERROR);
-				
-				
-			}else if(!novaSenha.equals(confirmaNovaSenha)){				
+
+			} else if (!novaSenha.equals(confirmaNovaSenha)) {
 				message.setDetail(MessagesReader.getMessages().getProperty(
 						"senhasDevemSerIguais"));
 				message.setSummary(MessagesReader.getMessages().getProperty(
 						"senhasDevemSerIguais"));
 				message.setSeverity(FacesMessage.SEVERITY_ERROR);
-					
+
 			} else {
 				usuario.setSenha(CriaHash.SHA1(novaSenha));
-				usuarioDao.update(usuario);			
+				usuarioDao.update(usuario);
 				message.setDetail(MessagesReader.getMessages().getProperty(
 						"senhaAtualizada"));
 				message.setSummary(MessagesReader.getMessages().getProperty(
 						"senhaAtualizada"));
 				message.setSeverity(FacesMessage.SEVERITY_INFO);
-				
+
 			}
-			
+
 		} catch (NoSuchAlgorithmException e) {
 			message.setDetail(MessagesReader.getMessages().getProperty(
-			"problemaSistema"));
+					"problemaSistema"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"problemaSistema"));
-			message.setSeverity(FacesMessage.SEVERITY_ERROR);			
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
 			message.setDetail(MessagesReader.getMessages().getProperty(
-			"problemaSistema"));
+					"problemaSistema"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"problemaSistema"));
-			message.setSeverity(FacesMessage.SEVERITY_ERROR);	
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			e.printStackTrace();
 		} catch (Exception e) {
 			message.setDetail(MessagesReader.getMessages().getProperty(
-			"problemaSistema"));
+					"problemaSistema"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"problemaSistema"));
-			message.setSeverity(FacesMessage.SEVERITY_ERROR);	
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			e.printStackTrace();
 		}
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, message);
 		return null;
 	}
+
+	public String preRecuperarSenha() {
+		usuario = new Usuario();
+		return "recuperarSenha?faces-redirect=true";
+	}
+
+	public void recuperarSenha() {
+		FacesMessage message = new FacesMessage();
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			usuarioDao = new UsuarioDao(PersistenceUtil.getEntityManager());
+			usuario = usuarioDao.findByUsuarioEmail(usuario);
+			Random rand = new Random();
+			
+			String senhaNova ="sw"+ ((Integer)rand.nextInt()).toString();
+			usuario.setSenha(CriaHash.SHA1(senhaNova));
+			usuarioDao.update(usuario);
+			Email email = new SimpleEmail();
+			email.setHostName("smtp.gmail.com");
+			email.setAuthenticator(new DefaultAuthenticator("sorteiosweb",
+					"sorteios2011"));			
+			email.setSSL(true);
+			email.setFrom("sorteiosweb@gmail.com");
+			email.setSubject(MessagesReader.getMessages().getProperty("recuperarSenha"));
+			email.setMsg(MessagesReader.getMessages().getProperty("novaSenhaMSG")+ novaSenha);
+			email.addTo(usuario.getEmail());
+			email.send();
+			message.setDetail(MessagesReader.getMessages().getProperty(
+			"emailSenhaEnviado"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"emailSenhaEnviado"));
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			context.addMessage(null, message);
+
+		} catch (NoResultException e) {
+			usuario.setApelido(null);
+			usuario.setEmail(null);
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"usuarioInexistente"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"usuarioInexistente"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			context.addMessage(null, message);
+		} catch (Exception e) {
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			context.addMessage(null, message);			
+			usuario.setApelido(null);
+			usuario.setEmail(null);
+
+		}
+
+	}
+
 	public String sair() {
 		usuario = new Usuario();
 		logado = false;

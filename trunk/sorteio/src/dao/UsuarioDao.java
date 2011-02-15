@@ -23,7 +23,7 @@ public class UsuarioDao extends AbstractDao<Usuario>{
 		}
 		
 	}
-	public Usuario findByLoginSenha(Usuario usuario){
+	public Usuario findByLoginSenha(Usuario usuario) throws NoResultException{
 		String q = "FROM Usuario u WHERE u.apelido = :apelido AND u.senha = :senha";
 		Query query = em.createQuery(q);
 		query.setParameter("apelido", usuario.getApelido());
@@ -35,5 +35,17 @@ public class UsuarioDao extends AbstractDao<Usuario>{
 			throw new NoResultException();
 		}			
 				
+	}
+	public Usuario findByUsuarioEmail(Usuario usuario) throws NoResultException {
+		String q = "FROM Usuario u WHERE u.apelido = :apelido AND u.email = :email";
+		Query query = em.createQuery(q);
+		query.setParameter("apelido", usuario.getApelido());
+		query.setParameter("email", usuario.getEmail());
+		try{
+			Usuario usuLogin = (Usuario) query.getSingleResult();
+			return usuLogin;
+		} catch (NoResultException e) {
+			throw new NoResultException();
+		}			
 	}
 }
