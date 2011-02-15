@@ -19,25 +19,24 @@
 			
 			
 					
-					<h:form>						
+					<h:form id="frmRec">						
 						<p:panel >
 						<f:facet name="header" >
-							<h:outputText value="#{msg.administracao}"/>
+							<h:outputText value="#{msg.recuperarSenha}"/>
 						</f:facet>
 						<div class="messages">
 							<p:messages />
 						</div>
-						<h:panelGrid>
+						<h:panelGrid columns="2">
 							<h:outputLabel for="login" value="#{msg.usuario}"/>
-							<h:inputText required="true" requiredMessage="#{msg.usuarioRequerido}" id="login" value="#{loginMB.usuario.apelido}"/>
+							<p:inputText required="true" requiredMessage="#{msg.usuarioRequerido}" id="login" value="#{loginMB.usuario.apelido}"/>
 							
-							<h:outputLabel for="senha" value="#{msg.senha}"/>
-							<h:inputSecret requiredMessage="#{msg.senhaRequerida}" required="true" id="senha" value="#{loginMB.usuario.senha}" />							
-
+							<h:outputLabel for="email" value="#{msg.email}"/>
+							<p:inputText requiredMessage="#{msg.emailRequerido}" required="true" id="email" value="#{loginMB.usuario.email}" />							
+							
 						</h:panelGrid>
-						
-						<h:commandButton action="#{loginMB.entrar}" value="#{msg.entrar}"/>						
-						<h:commandButton rendered="false" immediate="true" action="#{loginMB.preRecuperarSenha}" value="#{msg.recuperarSenha}"></h:commandButton>
+												
+						<p:commandButton update="frmRec" action="#{loginMB.recuperarSenha}" value="#{msg.recuperar}" />
 						</p:panel>
 					</h:form>
 				

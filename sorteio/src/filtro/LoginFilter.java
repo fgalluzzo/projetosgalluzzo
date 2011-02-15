@@ -17,7 +17,8 @@ public class LoginFilter implements PhaseListener {
 	public void afterPhase(PhaseEvent event) {
 		 FacesContext context = event.getFacesContext();
 		   boolean isAdm = context.getViewRoot().getViewId().contains("adm");
-	       boolean pagesWL = context.getViewRoot().getViewId().lastIndexOf("login") > -1? true:false;	  
+	       boolean pagesWL = context.getViewRoot().getViewId().lastIndexOf("login") > -1? true:false;	 
+	       boolean pageRec = context.getViewRoot().getViewId().contains("recuperar");
 	       String view = context.getViewRoot().getViewId();
 	       // pegar o managed bean de sessão
 	       Application app = context.getApplication();
@@ -27,7 +28,7 @@ public class LoginFilter implements PhaseListener {
 
 	       LoginMB loginMB = (LoginMB) expression.getValue(context.getELContext());
 	       //descomentar depois q criar os usuários no banco
-	       if(isAdm && !( pagesWL) && loginMB.getUsuario().getApelido()== null ) {
+	       if(isAdm && !pageRec && !( pagesWL) && loginMB.getUsuario().getApelido()== null ) {
 	           NavigationHandler nh = app.getNavigationHandler();
 	           nh.handleNavigation(context, null, "login");
 	       }else if(pagesWL && loginMB.getUsuario().getApelido()!= null) {
