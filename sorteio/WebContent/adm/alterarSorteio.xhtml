@@ -25,12 +25,12 @@
 					<h:panelGrid columns="2">
 
 						<h:outputLabel for="nome" value="#{msg.nome}*" />
-						<h:inputText requiredMessage="#{msg.validaNomeRequerido}"
+						<p:inputText requiredMessage="#{msg.validaNomeRequerido}"
 							required="true" id="nome"
 							value="#{cadastroSorteioMB.sorteio.nome}" />
 
 						<h:outputLabel for="desc" value="#{msg.descricao}*" />
-						<h:inputTextarea required="true"
+						<p:inputTextarea  effectDuration="2" autoResize="true" required="true"
 							requiredMessage="#{msg.validaDescricaoRequerida}" id="desc"
 							value="#{cadastroSorteioMB.sorteio.descricao}" />
 
@@ -45,7 +45,7 @@
 							locale="pt_BR" showButtonPanel="true" id="dtInicio" readOnlyInputText="true"
 							value="#{cadastroSorteioMB.sorteio.dataInicioD}" />
 							
-						<h:outputLabel for="hrInicio" value="#{msg.hrInicio}" />						
+						<h:outputLabel for="hrInicio" value="#{msg.hrInicio}*" />						
 						<p:inputMask validator="validaHora" mask="99:99" required="true"  requiredMessage="#{msg.validaHoraInicioRequerida}" id="hrInicio" value="#{cadastroSorteioMB.horaInicio}" maxlength="5">							
 						</p:inputMask>
 						
@@ -56,7 +56,7 @@
 							locale="pt_BR" showButtonPanel="true" id="dtFim" readOnlyInputText="true"
 							value="#{cadastroSorteioMB.sorteio.dataFimD}"  validator="validaDataFim"/>
 							
-						<h:outputLabel for="hrFim" value="#{msg.hrFim}" />						
+						<h:outputLabel for="hrFim" value="#{msg.hrFim}*" />						
 						<p:inputMask validator="validaHora" mask="99:99" required="true" requiredMessage="#{msg.validaHoraFimRequerida}" id="hrFim" value="#{cadastroSorteioMB.horaFim}" maxlength="5">							
 						</p:inputMask>						
 

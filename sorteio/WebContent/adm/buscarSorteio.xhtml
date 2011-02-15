@@ -21,7 +21,7 @@
 						<f:facet name="header" >
 						<h:outputText value="#{msg.buscarSorteio}"/>
 					</f:facet>					
-					<h:inputText value="#{cadastroSorteioMB.termoBusca}" />
+					<p:inputText value="#{cadastroSorteioMB.termoBusca}" />
 					<h:commandLink action="#{cadastroSorteioMB.buscar}" title="#{msg.buscar}"><img src="recursos/images/lupa.png" /></h:commandLink>
 					<div > <p:messages /> </div>
 						<p:dataTable  rendered="#{cadastroSorteioMB.temResultadoBusca}"
