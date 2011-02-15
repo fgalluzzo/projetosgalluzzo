@@ -65,24 +65,35 @@ public class CadastroSorteioMB implements Serializable {
 	public String preAlterar() {		
 		Integer minuto;
 		Integer hora;
+		String h;
 		String min;
 		hora = sorteio.getDataInicio().get(Calendar.HOUR_OF_DAY);
 		minuto = sorteio.getDataInicio().get(Calendar.MINUTE);
+		if(hora <10) {
+			h = "0"+hora.toString();
+		} else {
+			h = hora.toString();
+		}
 		if(minuto < 10) {
 			min = "0"+minuto.toString();
 		} else {
 			min = minuto.toString();
 		}
-		horaInicio = hora.toString() +":" +min;
+		horaInicio = h +":" +min;
 		
 		hora = sorteio.getDataFim().get(Calendar.HOUR_OF_DAY);
 		minuto = sorteio.getDataFim().get(Calendar.MINUTE);
+		if(hora <10) {
+			h = "0"+hora.toString();
+		} else {
+			h = hora.toString();
+		}
 		if(minuto < 10) {
 			min = "0"+minuto.toString();
 		} else {
 			min = minuto.toString();
 		}
-		horaFim =  hora.toString() +":" +min;
+		horaFim =  h +":" +min;
 		return "alterarSorteio";
 	}
 	public String preIncluirIndex() {
@@ -104,6 +115,8 @@ public class CadastroSorteioMB implements Serializable {
 		sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
 		FacesMessage message = new FacesMessage();
 		FacesContext context = FacesContext.getCurrentInstance();
+		sorteio.getDataInicio().setTimeZone(timeZone);
+		sorteio.getDataFim().setTimeZone(timeZone);
 		sorteio.getDataInicio().set(sorteio.getDataInicio().get(Calendar.YEAR),
 				sorteio.getDataInicio().get(Calendar.MONTH),
 				sorteio.getDataInicio().get(Calendar.DAY_OF_MONTH),
@@ -115,8 +128,7 @@ public class CadastroSorteioMB implements Serializable {
 				sorteio.getDataFim().get(Calendar.DAY_OF_MONTH),
 				Integer.parseInt(horaFim.substring(0, 2)),
 				Integer.parseInt(horaFim.substring(3)));
-		sorteio.getDataInicio().setTimeZone(timeZone);
-		sorteio.getDataFim().setTimeZone(timeZone);
+		
 		try {
 			SchedulerFactory sf = new StdSchedulerFactory();
 			Scheduler sched = sf.getScheduler();
