@@ -21,4 +21,13 @@
     <param-name>primefaces.THEME</param-name>
     <param-value>smoothness</param-value>
   </context-param>
+   <context-param>
+    <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+    <param-value>6Ld4jcESAAAAAK8PfPzAUKa2xxPtviauBXGDpkin</param-value>
+  </context-param>
+   <context-param>
+    <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+    <param-value>6Ld4jcESAAAAAGCsJC96jjm92mIveTYcQaXQBact</param-value>
+  </context-param>
+  
 </web-app>
