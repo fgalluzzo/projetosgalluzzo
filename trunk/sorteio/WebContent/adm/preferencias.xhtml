@@ -20,15 +20,20 @@
 					<f:facet name="header">
 						<h:outputText value="#{msg.preferencia}" />
 					</f:facet>
-
-
-					<ul>
-						<li><h:commandLink action="alterarSenha"
-							value="#{msg.alterarSenha}" /></li>
-						<li><h:commandLink action="alterarEmail"
-							value="#{msg.alterarEmail}" /></li>
-
-					</ul>
+					
+					<p:menu >
+						<p:submenu label="#{msg.dadosCadast}">							
+							<p:menuitem>
+								<h:commandLink action="alterarSenha"
+							value="#{msg.alterarSenha}" />
+							</p:menuitem>
+							<p:menuitem>
+								<h:commandLink action="alterarEmail"
+							value="#{msg.alterarEmail}" />
+							</p:menuitem>
+						</p:submenu>
+					</p:menu>
+					
 
 
 				</p:panel>

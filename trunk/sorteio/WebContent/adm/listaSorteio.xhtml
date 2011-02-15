@@ -15,7 +15,7 @@
 <h:body>
 	<ui:composition template="/adm/template/common.xhtml">
 		<ui:define name="content">
-			<h:form>
+			<h:form id="listaSorteios">
 				<div class="post">
 					<p:panel>		
 						<f:facet name="header" >
@@ -45,20 +45,26 @@
 								<h:outputText value="#{sorteio.inscritos}">									
 								</h:outputText>
 							</p:column>								
-							<p:column headerText="#{msg.opcoes}" colspan="2" >
+							<p:column headerText="#{msg.opcoes}" colspan="3" >
 								
 								<h:commandLink action="#{cadastroSorteioMB.preAlterar}" title="#{msg.alterar}" rendered="#{not sorteio.sorteado}">
 									<img width="16" height="16" src="recursos/images/alterar.jpg" />
 									<f:setPropertyActionListener value="#{sorteio}" target="#{cadastroSorteioMB.sorteio}"></f:setPropertyActionListener>
 								</h:commandLink>
-								
-								<h:commandLink id="sbtLink" action="#{cadastroSorteioMB.excluir}" onclick="if (!confirm('#{msg.desejaExcluirSorteio}')) return false" title="#{msg.excluir}">
+																
+								<p:commandLink id="sbtLink"  onclick="confirma.show()" title="#{msg.excluir}">
 									<img width="16" height="16" src="recursos/images/lixeira.png" />
 									<f:setPropertyActionListener value="#{sorteio}" target="#{cadastroSorteioMB.sorteio}"></f:setPropertyActionListener>									
-								</h:commandLink>
+								</p:commandLink>
+								
 							</p:column>		
 											
-						</p:dataTable>						
+						</p:dataTable>	
+						<p:confirmDialog modal="true" widgetVar="confirma"  message="#{msg.desejaExcluirSorteio}">
+							<p:commandButton  value="#{msg.excluir}" oncomplete="confirma.hide()"  update="listaSorteios" title="#{msg.excluir}" action="#{cadastroSorteioMB.excluir}" >								
+							</p:commandButton>
+							<p:commandButton value="#{msg.cancelar}" onclick="confirma.hide()" type="button"></p:commandButton>
+						</p:confirmDialog>					
 						<h:commandLink action="#{cadastroSorteioMB.preIncluir}" value="#{msg.criarSorteio}" />
 						</p:panel>
 						<div style="text-align: right;"><h:link outcome="index">
