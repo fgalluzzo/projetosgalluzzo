@@ -50,7 +50,7 @@
 				<p:panel>
 					<h:commandLink  immediate="true" action="#{loginMB.preRecuperarSenha}" value="#{msg.esqueciSenha}"></h:commandLink>
 					<br />
-					<h:commandLink disabled="true"  immediate="true"  value="#{msg.esqueciUsuario}"></h:commandLink>
+					<h:commandLink action="#{loginMB.preRecuperarUsuario}"  immediate="true"  value="#{msg.esqueciUsuario}"></h:commandLink>
 				</p:panel>
 			</h:form>
 		</ui:define>

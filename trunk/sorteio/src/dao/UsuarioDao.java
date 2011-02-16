@@ -48,4 +48,15 @@ public class UsuarioDao extends AbstractDao<Usuario>{
 			throw new NoResultException();
 		}			
 	}
+	public Usuario findByEmail(Usuario usuario)  throws NoResultException {
+		String q = "FROM Usuario u WHERE u.email = :email";
+		Query query = em.createQuery(q);
+		query.setParameter("email", usuario.getEmail());
+		try{
+			Usuario usuLogin = (Usuario) query.getSingleResult();
+			return usuLogin;
+		} catch (NoResultException e) {
+			throw new NoResultException();
+		}			
+	}
 }
