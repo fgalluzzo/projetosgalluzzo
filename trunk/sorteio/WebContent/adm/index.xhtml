@@ -16,45 +16,38 @@
 	<ui:composition template="/adm/template/common.xhtml">
 		<ui:define name="content">
 			<h:form>
-			<div class="post">
-		
-				<p:panel  >
-				
-					<f:facet name="header" >
-						<h:outputText value="#{msg.administracao}"/>
-					</f:facet>
-					
-					<p:menu  type="sliding" backLabel="#{msg.voltar}">
-						<p:submenu label="#{msg.sorteios}">
-							<p:menuitem>
-								<h:commandLink action="#{cadastroSorteioMB.preIncluirIndex}" value="#{msg.criarSorteio}"></h:commandLink>
-							</p:menuitem>
-							<p:menuitem >
-								<h:commandLink action="#{cadastroSorteioMB.preListar}" value="#{msg.listaSorteios}"></h:commandLink>
-							</p:menuitem>
-							<p:menuitem >
-								<h:commandLink  value="#{msg.buscarSorteio}" action="#{cadastroSorteioMB.preBusca}"></h:commandLink>
-							</p:menuitem>
-						</p:submenu>
-						<p:submenu label="#{msg.preferencia}">
-							<p:menuitem >
-								<h:commandLink action="alterarSenha" value="#{msg.alterarSenha}"></h:commandLink>
-							</p:menuitem>
-							<p:menuitem>
-								<h:commandLink action="alterarEmail" value="#{msg.alterarEmail}"></h:commandLink>
-							</p:menuitem>
-						</p:submenu>
-					</p:menu>		
-					<h:outputText value="#{msg.apresentacao}"></h:outputText>
-						
-				
-				</p:panel>
-				
-				
-			
+			<div class="cont">
+			<p:menu type="sliding" backLabel="#{msg.voltar}">
+				<p:submenu label="#{msg.sorteios}">
+					<p:menuitem>
+						<h:commandLink action="#{cadastroSorteioMB.preIncluirIndex}" value="#{msg.criarSorteio}"></h:commandLink>
+					</p:menuitem>
+					<p:menuitem >
+						<h:commandLink action="#{cadastroSorteioMB.preListar}" value="#{msg.listaSorteios}"></h:commandLink>
+					</p:menuitem>
+					<p:menuitem >
+						<h:commandLink  value="#{msg.buscarSorteio}" action="#{cadastroSorteioMB.preBusca}"></h:commandLink>
+					</p:menuitem>
+				</p:submenu>
+				<p:submenu label="#{msg.preferencia}">
+					<p:menuitem >
+						<h:commandLink action="alterarSenha" value="#{msg.alterarSenha}"></h:commandLink>
+					</p:menuitem>
+					<p:menuitem>
+						<h:commandLink action="alterarEmail" value="#{msg.alterarEmail}"></h:commandLink>
+					</p:menuitem>
+				</p:submenu>
+			</p:menu>			
+			</div>														
+			<div class="cont2">
+				<h3><h:outputText value="#{msg.administracao}"></h:outputText></h3>
+				<p:separator></p:separator>
+				<h:outputText value="#{msg.apresentacaoADM}"></h:outputText>
 			</div>
 			</h:form>
+			
 		</ui:define>
+		
 	</ui:composition>
 </h:body>
 

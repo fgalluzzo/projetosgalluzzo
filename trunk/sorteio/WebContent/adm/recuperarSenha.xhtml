@@ -37,6 +37,7 @@
 						</h:panelGrid>
 												
 						<p:commandButton update="frmRec" action="#{loginMB.recuperarSenha}" value="#{msg.recuperar}" />
+						<p:commandButton immediate="true" action="login?faces-redirect=true" value="#{msg.voltar}" />
 						</p:panel>
 					</h:form>
 				

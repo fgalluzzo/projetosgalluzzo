@@ -82,9 +82,10 @@
 						 rendered="#{cadastroSorteioMB.sorteio.temGanhadores}"
 						 action="#{cadastroSorteioMB.resortear}" value="#{msg.resortear}"></h:commandButton>
 				</p:panel>
-				<div style="text-align: right;"><h:link outcome="#{cadastroSorteioMB.ultimaPagina}">
-					<h:outputText value="#{msg.voltar}" />
-				</h:link></div>
+				<br />
+				<div style="text-align: right;"><p:button value="#{msg.voltar}"
+					outcome="#{cadastroSorteioMB.ultimaPagina}" />
+				</div>
 				</div>
 			</h:form>
 		</ui:define>
