@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import modelo.Sorteio;
 import util.PersistenceUtil;
+import config.Config;
 import dao.SorteioDao;
 
 @ManagedBean(name = "redirectMB")
@@ -69,11 +70,11 @@ public class RedirectParticipacaoMB {
 						sorteioDTOMB.setSorteio(this.sorteio);
 
 						if (embed != null && !embed.isEmpty()) {
-							csMB.setUltimaPagina(csMB.EMBED);
+							csMB.setUltimaPagina(Config.EMBED);
 							nh.handleNavigation(context, null,
 									"participarE.xhtml?faces-redirect=true");
 						} else {
-							csMB.setUltimaPagina(csMB.NOTEMBED);
+							csMB.setUltimaPagina(Config.NOTEMBED);
 							nh.handleNavigation(context, null,
 									"participar.xhtml?faces-redirect=true");
 						}

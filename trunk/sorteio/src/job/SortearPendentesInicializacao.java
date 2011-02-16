@@ -1,10 +1,12 @@
 package job;
 
 import java.text.ParseException;
+import java.util.List;
 
-import javax.print.attribute.standard.Chromaticity;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+
+import modelo.Sorteio;
 
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
@@ -17,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import util.PersistenceUtil;
-
+import config.Config;
 import dao.SorteioDao;
 
 public class SortearPendentesInicializacao implements ServletContextListener {
@@ -45,23 +47,22 @@ public class SortearPendentesInicializacao implements ServletContextListener {
 
 		try {
 			Logger logger = LoggerFactory.getLogger("agendamento de sorteios pendentes");
-			logger.info("Início do agendamento diário de sorteios pendentes");
+			logger.info("Início do agendamento de sorteios pendentes");
 			SchedulerFactory sf = new StdSchedulerFactory();
 			Scheduler sched = sf.getScheduler();
 			
-			
-			
-			JobDetail job = new JobDetail("pendentes","grupoJob1",
-					SortearPendentesDiario.class);
-			CronTrigger ct;
-			ct = new CronTrigger("Trigger", "grupo1", "pendentes","grupoJob1");
-			ct.setCronExpression("0 0 12pm * * ?");
-			sched.scheduleJob(job, ct);
+			SorteioDao sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
+			List<Sorteio> sorteios = (List<Sorteio>) sorteioDao.findAll(Sorteio.class);
+			for (Sorteio sorteio : sorteios) {
+				JobDetail job = new JobDetail(sorteio.getId().toString(), Config.JOBGROUP,
+						Sortear.class);
+				SimpleTrigger disparo = new SimpleTrigger(Config.TRIGGER
+						+ sorteio.getId().toString(), Config.JOBGROUP,
+						sorteio.getDataFimD());
+				sched.scheduleJob(job, disparo);
+			}					
 			sched.start();
-			logger.info("Fim do agendamento diário de sorteios pendentes");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info("Fim do agendamento de sorteios pendentes");
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

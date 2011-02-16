@@ -28,16 +28,15 @@ import org.slf4j.LoggerFactory;
 import util.CriaHash;
 import util.MessagesReader;
 import util.PersistenceUtil;
+import config.Config;
 import dao.ParticipacaoDao;
 import dao.SorteioDao;
 
 @ManagedBean(name = "cadastroSorteioMB")
 @SessionScoped
 public class CadastroSorteioMB implements Serializable {
-	public final String EMBED = "e";
-	public final String NOTEMBED = "n";
-	private final static String JOBGROUP = "SorteiosWeb";
-	private final static String TRIGGER = "SorteiosWeb disparo";
+	
+	
 	private Sorteio sorteio;
 	private String filtroNome;
 	private SorteioDao sorteioDao;
@@ -134,16 +133,16 @@ public class CadastroSorteioMB implements Serializable {
 			Scheduler sched = sf.getScheduler();
 
 			JobDetail job = sched.getJobDetail(sorteio.getId().toString(),
-					JOBGROUP);
+					Config.JOBGROUP);
 			if (job == null) {
 
-				job = new JobDetail(sorteio.getId().toString(), JOBGROUP,
+				job = new JobDetail(sorteio.getId().toString(), Config.JOBGROUP,
 						Sortear.class);
 			}
-			sched.deleteJob(sorteio.getId().toString(), JOBGROUP);
+			sched.deleteJob(sorteio.getId().toString(), Config.JOBGROUP);
 
-			SimpleTrigger disparo = new SimpleTrigger(TRIGGER
-					+ sorteio.getId().toString(), JOBGROUP,
+			SimpleTrigger disparo = new SimpleTrigger(Config.TRIGGER
+					+ sorteio.getId().toString(), Config.JOBGROUP,
 					sorteio.getDataFimD());
 
 			sched.scheduleJob(job, disparo);
@@ -233,7 +232,7 @@ public class CadastroSorteioMB implements Serializable {
 				SchedulerFactory sf = new StdSchedulerFactory();
 				Scheduler sched = sf.getScheduler();
 
-				sched.deleteJob(sorteio.getId().toString(), JOBGROUP);
+				sched.deleteJob(sorteio.getId().toString(), Config.JOBGROUP);
 
 			} catch (Exception e) {
 				FacesMessage message = new FacesMessage();
@@ -322,10 +321,10 @@ public class CadastroSorteioMB implements Serializable {
 			SchedulerFactory sf = new StdSchedulerFactory();
 			Scheduler sched = sf.getScheduler();
 
-			JobDetail job = new JobDetail(sorteio.getId().toString(), JOBGROUP,
+			JobDetail job = new JobDetail(sorteio.getId().toString(), Config.JOBGROUP,
 					Sortear.class);
-			SimpleTrigger disparo = new SimpleTrigger(TRIGGER
-					+ sorteio.getId().toString(), JOBGROUP,
+			SimpleTrigger disparo = new SimpleTrigger(Config.TRIGGER
+					+ sorteio.getId().toString(), Config.JOBGROUP,
 					sorteio.getDataFimD());
 			sched.scheduleJob(job, disparo);
 
