@@ -22,7 +22,7 @@ public class AbstractDao<T> {
 	@SuppressWarnings("unchecked")
 	public Collection<T> findAll(Class<T> clazz) {
 		try {
-			String entityName = clazz.getAnnotation(Entity.class).name();
+			String entityName = clazz.getName();
 			Query query = em.createQuery("FROM " + entityName);
 			Collection<T> result = (Collection<T>) query.getResultList();
 			return result;

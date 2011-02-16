@@ -116,5 +116,13 @@ public class SorteioDao extends AbstractDao<Sorteio> {
 
 		return (List<Sorteio>) query.getResultList();
 	}
+	public List<Sorteio> findSorteiosASortear() {
+		String q = "FROM Sorteio s WHERE s.dataFim > :agora AND s.sorteado = false";		
+		Query query = em.createQuery(q);
+		query.setParameter("agora", new GregorianCalendar());
+
+		List<Sorteio> sorteios = (List<Sorteio>) query.getResultList();
+		return sorteios;
+	}
 
 }
