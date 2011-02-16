@@ -145,6 +145,9 @@ public class LoginMB {
 		}
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, message);
+		senhaAtual = null;
+		novaSenha = null;
+		confirmaNovaSenha = null;
 		return null;
 	}
 
