@@ -18,7 +18,7 @@ h1, h2, h3 {
 	margin: 0;
 	padding: 0;
 	font-weight: normal;
-	color: #FF3000;
+	color: #5c4747;;
 }
 
 h1 {
@@ -276,6 +276,21 @@ img {
 .links a {
 	color: #FFFFFF;
 }
+/*Conteudo duplo dentro do content*/
+.cont {
+	float:left;
+
+}
+.cont2 {	
+	position:absolute;
+	width:550px;
+	font-size:13px;
+	color: #504b4b;
+	margin-left:200px;
+	
+}
+
+	
 
 /* Sidebar */
 

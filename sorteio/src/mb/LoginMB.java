@@ -16,6 +16,8 @@ import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.SimpleEmail;
 
+import config.Config;
+
 import util.CriaHash;
 import util.MessagesReader;
 import util.PersistenceUtil;
@@ -42,7 +44,7 @@ public class LoginMB {
 			usuario.setSenha(CriaHash.SHA1(usuario.getSenha()));
 			usuario = usuarioDao.findByLoginSenha(usuario);
 			logado = true;
-			return "index";
+			return "index?faces-redirect=true";
 		} catch (NoResultException e) {
 			System.out.println("e");
 			usuario.setApelido(null);
@@ -163,12 +165,12 @@ public class LoginMB {
 			usuarioDao.update(usuario);
 			Email email = new SimpleEmail();
 			email.setHostName("smtp.gmail.com");
-			email.setAuthenticator(new DefaultAuthenticator("sorteiosweb",
-					"sorteios2011"));			
+			email.setAuthenticator(new DefaultAuthenticator(Config.ADM,
+					Config.SENHA_EMAIL_ADM));			
 			email.setSSL(true);			
-			email.setFrom("sorteiosweb@gmail.com", "Sorteios Web");
+			email.setFrom(Config.EMAIL_ADM, "Sorteios Web");
 			email.setSubject(MessagesReader.getMessages().getProperty("recuperarSenha"));
-			email.setMsg(MessagesReader.getMessages().getProperty("novaSenhaMSG")+" " + senhaNova);
+			email.setMsg(MessagesReader.getMessages().getProperty("novaSenshaMSG")+" " + senhaNova);
 			email.addTo(usuario.getEmail());
 			email.send();
 			message.setDetail(MessagesReader.getMessages().getProperty(

@@ -41,11 +41,12 @@
 											
 	
 						</h:panelGrid>
-						<h:commandButton value="#{msg.salvar}" action="#{loginMB.alterarSenha}"/>
+						<p:commandButton ajax="false" value="#{msg.salvar}" action="#{loginMB.alterarSenha}"/>
 						</p:panel>
-						<div style="text-align: right;"><h:link outcome="preferencias">
-						<h:outputText value="#{msg.voltar}" />
-					</h:link></div>
+						<br />
+						<div style="text-align: right;"><p:button value="#{msg.voltar}"
+					outcome="#{cadastroSorteioMB.ultimaPagina}" />
+					</div>
 					</h:form>
 			</div>
 		</ui:define>

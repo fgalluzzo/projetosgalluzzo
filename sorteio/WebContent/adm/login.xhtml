@@ -15,33 +15,44 @@
 <h:body>
 	<ui:composition template="/adm/template/common.xhtml">
 		<ui:define name="content">
-			<div class="post">
-			
-			
-					
-					<h:form>						
-						<p:panel >
-						<f:facet name="header" >
-							<h:outputText value="#{msg.administracao}"/>
-						</f:facet>
-						<div class="messages">
-							<p:messages />
-						</div>
-						<h:panelGrid>
-							<h:outputLabel for="login" value="#{msg.usuario}"/>
-							<h:inputText required="true" requiredMessage="#{msg.usuarioRequerido}" id="login" value="#{loginMB.usuario.apelido}"/>
-							
-							<h:outputLabel for="senha" value="#{msg.senha}"/>
-							<h:inputSecret requiredMessage="#{msg.senhaRequerida}" required="true" id="senha" value="#{loginMB.usuario.senha}" />							
-
-						</h:panelGrid>
-						
-						<h:commandButton action="#{loginMB.entrar}" value="#{msg.entrar}"/>						
-						<h:commandButton  immediate="true" action="#{loginMB.preRecuperarSenha}" value="#{msg.recuperarSenha}"></h:commandButton>
-						</p:panel>
-					</h:form>
-				
+			<div>
+				<h1><h:outputText value="#{msg.automatize}"></h:outputText> </h1>
+				<h2><h:outputText value="#{msg.facilite}"></h:outputText> </h2>			
+				<p:separator></p:separator>									
+				<h:outputText value="#{msg.txtDescricao}"></h:outputText>
 			</div>
+		</ui:define>
+		<ui:define name="sidebar">
+			<h:form>						
+				<p:panel >
+				<f:facet name="header" >
+					<h:outputText value="#{msg.entrar}"/>
+				</f:facet>
+				<div class="messages">
+					<p:messages />
+				</div>
+				<h:panelGrid>
+					<h:outputLabel for="login" value="#{msg.usuario}"/>
+					<p:inputText required="true" requiredMessage="#{msg.usuarioRequerido}" id="login" value="#{loginMB.usuario.apelido}"/>
+					
+					<h:outputLabel for="senha" value="#{msg.senha}"/>
+					<p:password feedback="false" requiredMessage="#{msg.senhaRequerida}" required="true" id="senha" value="#{loginMB.usuario.senha}" />							
+
+				</h:panelGrid>
+				
+				<p:commandButton ajax="false" action="#{loginMB.entrar}" value="#{msg.entrar}"/>	
+				<br />											
+				
+				</p:panel>
+				<br />
+				<p:separator ></p:separator>
+				<br />
+				<p:panel>
+					<h:commandLink  immediate="true" action="#{loginMB.preRecuperarSenha}" value="#{msg.esqueciSenha}"></h:commandLink>
+					<br />
+					<h:commandLink disabled="true"  immediate="true"  value="#{msg.esqueciUsuario}"></h:commandLink>
+				</p:panel>
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </h:body>

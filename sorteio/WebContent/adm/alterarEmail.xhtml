@@ -30,11 +30,11 @@
 							<p:inputText id="email" value="#{loginMB.usuario.email}" />
 																									
 						</h:panelGrid>
-						<h:commandButton action="#{loginMB.alterarEmail}" value="#{msg.salvar}"/>						
+						<p:commandButton ajax="false" action="#{loginMB.alterarEmail}" value="#{msg.salvar}"/>						
 						</p:panel>
-						<div style="text-align: right;"><h:link outcome="preferencias">
-					<h:outputText value="#{msg.voltar}" />
-				</h:link></div>
+						<br />
+						<div style="text-align: right;"><p:button value="#{msg.voltar}"
+					outcome="#{cadastroSorteioMB.ultimaPagina}" /></div>
 					</h:form>
 			
 			</div>
