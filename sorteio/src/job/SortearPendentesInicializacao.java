@@ -52,7 +52,8 @@ public class SortearPendentesInicializacao implements ServletContextListener {
 			Scheduler sched = sf.getScheduler();
 			
 			SorteioDao sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
-			List<Sorteio> sorteios = (List<Sorteio>) sorteioDao.findAll(Sorteio.class);
+			List<Sorteio> sorteios = (List<Sorteio>) sorteioDao.findSorteiosASortear();
+			int i =0;
 			for (Sorteio sorteio : sorteios) {
 				JobDetail job = new JobDetail(sorteio.getId().toString(), Config.JOBGROUP,
 						Sortear.class);
@@ -60,8 +61,10 @@ public class SortearPendentesInicializacao implements ServletContextListener {
 						+ sorteio.getId().toString(), Config.JOBGROUP,
 						sorteio.getDataFimD());
 				sched.scheduleJob(job, disparo);
+				i++;
 			}					
 			sched.start();
+			logger.info("Foram agendados "+i+" sorteios");
 			logger.info("Fim do agendamento de sorteios pendentes");
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block
