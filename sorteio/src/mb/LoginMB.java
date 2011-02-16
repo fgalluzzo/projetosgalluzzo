@@ -19,6 +19,7 @@ import org.apache.commons.mail.SimpleEmail;
 import config.Config;
 
 import util.CriaHash;
+import util.EnviaEmail;
 import util.MessagesReader;
 import util.PersistenceUtil;
 import dao.UsuarioDao;
@@ -163,27 +164,20 @@ public class LoginMB {
 			String senhaNova ="sw"+ ((Integer)rand.nextInt()).toString();
 			usuario.setSenha(CriaHash.SHA1(senhaNova));
 			usuarioDao.update(usuario);
-			Email email = new SimpleEmail();
-			email.setHostName("smtp.gmail.com");
-			email.setAuthenticator(new DefaultAuthenticator(Config.ADM,
-					Config.SENHA_EMAIL_ADM));			
-			email.setSSL(true);			
-			email.setFrom(Config.EMAIL_ADM, "Sorteios Web");
-			email.setSubject(MessagesReader.getMessages().getProperty("recuperarSenha"));
-			email.setMsg(MessagesReader.getMessages().getProperty("novaSenshaMSG")+" " + senhaNova);
-			email.addTo(usuario.getEmail());
-			email.send();
+			EnviaEmail.enviar(MessagesReader.getMessages().getProperty("recuperarSenha")
+					, MessagesReader.getMessages().getProperty("novaSenshaMSG")+" " + senhaNova
+					, usuario.getEmail()
+					, usuario.getNome());			
 			message.setDetail(MessagesReader.getMessages().getProperty(
 			"emailSenhaEnviado"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"emailSenhaEnviado"));
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
 			context.addMessage(null, message);
-			usuario = new Usuario();
+			
 
 		} catch (NoResultException e) {
-			usuario.setApelido(null);
-			usuario.setEmail(null);
+
 			message.setDetail(MessagesReader.getMessages().getProperty(
 					"usuarioInexistente"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
@@ -197,13 +191,54 @@ public class LoginMB {
 					"problemaSistema"));
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			context.addMessage(null, message);			
-			usuario.setApelido(null);
-			usuario.setEmail(null);
+	
 
 		}
-
+		usuario = new Usuario();
 	}
+	
+	public String preRecuperarUsuario() {
+		usuario = new Usuario();
+		return "recuperarLogin?faces-redirect=true";
+	}
+	
+	public void recuperaUsuario() {
+		FacesMessage message = new FacesMessage();
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			usuarioDao = new UsuarioDao(PersistenceUtil.getEntityManager());
+			usuario = usuarioDao.findByEmail(usuario);
+			
+			EnviaEmail.enviar(MessagesReader.getMessages().getProperty("recuperarUsuario")
+					, MessagesReader.getMessages().getProperty("seuUsuario")+" " + usuario.getApelido()
+					, usuario.getEmail()
+					, usuario.getNome());			
+			message.setDetail(MessagesReader.getMessages().getProperty(
+			"emailUsuarioEnviado"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"emailUsuarioEnviado"));
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			context.addMessage(null, message);
+			
+		} catch (NoResultException e) {
 
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"usuarioInexistente"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"usuarioInexistente"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			context.addMessage(null, message);
+		} catch (Exception e) {
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			context.addMessage(null, message);			
+	
+
+		}
+	}
 	public String sair() {
 		usuario = new Usuario();
 		logado = false;
