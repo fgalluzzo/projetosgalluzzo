@@ -41,8 +41,8 @@
 							
 						</h:panelGrid>
 												
-						<p:commandButton update="frmRec" action="#{loginMB.recuperarUsuario}" value="#{msg.recuperar}" />
-						<p:commandButton immediate="true" action="login?faces-redirect=true" value="#{msg.voltar}" />
+						<p:commandButton update="frmRec" action="#{loginMB.recuperaUsuario}" value="#{msg.recuperar}" />
+						<p:commandButton immediate="true" ajax="false" action="login?faces-redirect=true" value="#{msg.voltar}" />
 						</p:panel>
 					</h:form>
 				

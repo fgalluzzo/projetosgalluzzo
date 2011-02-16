@@ -238,6 +238,7 @@ public class LoginMB {
 	
 
 		}
+		usuario = new Usuario();
 	}
 	public String sair() {
 		usuario = new Usuario();

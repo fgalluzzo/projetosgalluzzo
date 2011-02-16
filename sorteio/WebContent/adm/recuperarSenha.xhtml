@@ -18,14 +18,15 @@
 			<div class="post">
 			
 			
+					
+					<h:form id="frmRec">	
 					<p:ajaxStatus onstart="statusDialog.show();"
                                  onsuccess="statusDialog.hide();" />
 
                          <p:dialog modal="true" widgetVar="statusDialog" header="Status"
                                  draggable="false" closable="false" resizable="false">
                                  <h:outputText value="#{msg.processando}"/>
-                         </p:dialog>
-					<h:form id="frmRec">						
+                         </p:dialog>					
 						<p:panel >
 						<f:facet name="header" >
 							<h:outputText value="#{msg.recuperarSenha}"/>
@@ -43,7 +44,7 @@
 						</h:panelGrid>
 												
 						<p:commandButton update="frmRec" action="#{loginMB.recuperarSenha}" value="#{msg.recuperar}" />
-						<p:commandButton immediate="true" action="login?faces-redirect=true" value="#{msg.voltar}" />
+						<p:commandButton immediate="true" ajax="false" action="login?faces-redirect=true" value="#{msg.voltar}" />
 						</p:panel>
 					</h:form>
 				
