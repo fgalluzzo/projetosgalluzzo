@@ -12,6 +12,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import config.Config;
+
 import modelo.Participacao;
 import modelo.Sorteio;
 import util.PersistenceUtil;
@@ -83,14 +85,14 @@ public class ParticipacaoMB {
 			}
 		}
 		if (temEmailCadastradoSorteio) {
-			if(csMB.getUltimaPagina().equals(csMB.EMBED)){
+			if(csMB.getUltimaPagina().equals(Config.EMBED)){
 				return "naoInscritoE";
 			} else {
 				return "naoInscrito";
 			}
 		}
 		if (temIpCadastradoNoSorteio && temNomeSobrenomeCadastrado) {
-			if(csMB.getUltimaPagina().equals(csMB.EMBED)){
+			if(csMB.getUltimaPagina().equals(Config.EMBED)){
 				return "naoInscritoE";
 			} else {
 				return "naoInscrito";
@@ -116,7 +118,7 @@ public class ParticipacaoMB {
 				participanteDao.createParticipante(participacao
 						.getParticipante());
 				participacaoDao.createParticipacao(participacao);
-				if(csMB.getUltimaPagina().equals(csMB.EMBED)){
+				if(csMB.getUltimaPagina().equals(Config.EMBED)){
 					return "inscritoE";
 				} else {
 					return "inscrito";
@@ -126,7 +128,7 @@ public class ParticipacaoMB {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				if(csMB.getUltimaPagina().equals(csMB.EMBED)){
+				if(csMB.getUltimaPagina().equals(Config.EMBED)){
 					return "naoInscritoE";
 				} else {
 					return "naoInscrito";
@@ -136,7 +138,7 @@ public class ParticipacaoMB {
 			}
 
 		} else
-			if(csMB.getUltimaPagina().equals(csMB.EMBED)){
+			if(csMB.getUltimaPagina().equals(Config.EMBED)){
 				return "naoInscritoE";
 			} else {
 				return "naoInscrito";
