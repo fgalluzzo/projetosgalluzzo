@@ -18,7 +18,13 @@
 			<div class="post">
 			
 			
-					
+					<p:ajaxStatus onstart="statusDialog.show();"
+                                 onsuccess="statusDialog.hide();" />
+
+                         <p:dialog modal="true" widgetVar="statusDialog" header="Status"
+                                 draggable="false" closable="false" resizable="false">
+                                 <h:outputText value="#{msg.processando}"/>
+                         </p:dialog>
 					<h:form id="frmRec">						
 						<p:panel >
 						<f:facet name="header" >

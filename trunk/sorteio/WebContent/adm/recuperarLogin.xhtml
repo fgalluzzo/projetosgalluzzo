@@ -16,9 +16,17 @@
 	<ui:composition template="/adm/template/common.xhtml">
 		<ui:define name="content">
 			<div class="post">
-			
+				
 					
-					<h:form id="frmRec">						
+					<h:form id="frmRec">	
+						<p:ajaxStatus onstart="statusDialog.show();"
+                                 onsuccess="statusDialog.hide();" />
+
+                         <p:dialog modal="true" widgetVar="statusDialog" header="Status"
+                                 draggable="false" closable="false" resizable="false">
+                                 <h:outputText value="#{msg.processando}"/>
+                         </p:dialog>
+											
 						<p:panel >
 						<f:facet name="header" >
 							<h:outputText value="#{msg.recuperarUsuario}"/>
