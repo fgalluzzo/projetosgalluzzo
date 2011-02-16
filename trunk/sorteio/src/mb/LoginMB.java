@@ -165,7 +165,7 @@ public class LoginMB {
 			usuario.setSenha(CriaHash.SHA1(senhaNova));
 			usuarioDao.update(usuario);
 			EnviaEmail.enviar(MessagesReader.getMessages().getProperty("recuperarSenha")
-					, MessagesReader.getMessages().getProperty("novaSenshaMSG")+" " + senhaNova
+					, MessagesReader.getMessages().getProperty("novaSenhaMSG")+" " + senhaNova
 					, usuario.getEmail()
 					, usuario.getNome());			
 			message.setDetail(MessagesReader.getMessages().getProperty(
