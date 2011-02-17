@@ -33,6 +33,8 @@ public class LoginMB {
 	private String senhaAtual;
 	private String novaSenha;
 	private String confirmaNovaSenha;
+	private String assunto;
+	private String contato;
 
 	public LoginMB() {
 		logado = false;
@@ -243,6 +245,28 @@ public class LoginMB {
 		}
 		usuario = new Usuario();
 	}
+	
+	public void contatar() {
+		FacesMessage message = new FacesMessage();
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			EnviaEmail.enviar(assunto, contato, Config.EMAIL_ADM, Config.ADM);
+			message.setDetail(MessagesReader.getMessages().getProperty(
+			"emailContatoEnviado"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"emailContatoEnviado"));
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			context.addMessage(null, message);
+		} catch (Exception e) {
+			message.setDetail(MessagesReader.getMessages().getProperty(
+			"problemaSistema"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			context.addMessage(null, message);			
+		}
+	}
+	
 	public String sair() {
 		usuario = new Usuario();
 		logado = false;
@@ -287,6 +311,22 @@ public class LoginMB {
 
 	public void setConfirmaNovaSenha(String confirmaNovaSenha) {
 		this.confirmaNovaSenha = confirmaNovaSenha;
+	}
+
+	public String getAssunto() {
+		return assunto;
+	}
+
+	public void setAssunto(String assunto) {
+		this.assunto = assunto;
+	}
+
+	public String getContato() {
+		return contato;
+	}
+
+	public void setContato(String contato) {
+		this.contato = contato;
 	}
 
 }
