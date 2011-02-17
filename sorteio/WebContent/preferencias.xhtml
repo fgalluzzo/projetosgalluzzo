@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:composition template="/adm/template/common.xhtml">
+		<ui:define name="content">
+			<div class="post"><h:form>
+				<p:panel>
+					<f:facet name="header">
+						<h:outputText value="#{msg.preferencia}" />
+					</f:facet>
+					
+					<p:menu >
+						<p:submenu label="#{msg.dadosCadast}">							
+							<p:menuitem>
+								<h:commandLink action="alterarSenha"
+							value="#{msg.alterarSenha}" />
+							</p:menuitem>
+							<p:menuitem>
+								<h:commandLink action="alterarEmail"
+							value="#{msg.alterarEmail}" />
+							</p:menuitem>
+						</p:submenu>
+					</p:menu>
+					
+
+
+				</p:panel>
+				<div style="text-align: right;"><h:link outcome="index">
+					<h:outputText value="#{msg.voltar}" />
+				</h:link></div>
+			</h:form></div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>
