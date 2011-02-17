@@ -13,7 +13,7 @@
 		media="screen" />
 </h:head>
 <h:body>
-	<ui:composition template="/adm/template/common.xhtml">
+	<ui:composition template="template/common.xhtml">
 		<ui:define name="content">
 			<h:form>
 			<div class="cont">
@@ -35,6 +35,14 @@
 					</p:menuitem>
 					<p:menuitem>
 						<h:commandLink action="alterarEmail" value="#{msg.alterarEmail}"></h:commandLink>
+					</p:menuitem>
+				</p:submenu>
+				<p:submenu label="#{msg.ajuda}">
+					<p:menuitem >
+						<h:commandLink disabled="true" action="faq" value="#{msg.faq}"></h:commandLink>
+					</p:menuitem>
+					<p:menuitem>
+						<h:commandLink disabled="true" action="contato" value="#{msg.contatoADM}"></h:commandLink>
 					</p:menuitem>
 				</p:submenu>
 			</p:menu>			
