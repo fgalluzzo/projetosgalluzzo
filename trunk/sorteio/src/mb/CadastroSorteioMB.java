@@ -386,7 +386,7 @@ public class CadastroSorteioMB implements Serializable {
 		HttpServletRequest request = ((HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest());
 		return "http://" + request.getLocalName() + request.getContextPath()
-				+ "/?sorteio=" + sorteio.getCodigo();
+				+ "/participar/?sorteio=" + sorteio.getCodigo();
 	}
 
 	public String getFiltroNome() {
@@ -410,7 +410,7 @@ public class CadastroSorteioMB implements Serializable {
 		HttpServletRequest request = ((HttpServletRequest) FacesContext
 				.getCurrentInstance().getExternalContext().getRequest());
 		return "http://" + request.getLocalName() + request.getContextPath()
-				+ "/?embed=s&sorteio=" + sorteio.getCodigo();
+				+ "/participar/?embed=s&sorteio=" + sorteio.getCodigo();
 	}
 
 	public String getTermoBusca() {
