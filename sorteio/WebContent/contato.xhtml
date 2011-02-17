@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:composition template="template/common.xhtml">
+		<ui:define name="content">
+			<div class="post">
+				
+					
+					<h:form id="frmRec">	
+						<p:ajaxStatus onstart="statusDialog.show();"
+                                 onsuccess="statusDialog.hide();" />
+
+                         <p:dialog modal="true" widgetVar="statusDialog" header="Status"
+                                 draggable="false" closable="false" resizable="false">
+                                 <h:outputText value="#{msg.processando}"/>
+                         </p:dialog>
+											
+						<p:panel >
+						<f:facet name="header" >
+							<h:outputText value="#{msg.recuperarUsuario}"/>
+						</f:facet>
+						<div class="messages">
+							<p:messages />
+						</div>
+						<h:panelGrid columns="2">							
+							
+							<h:outputLabel for="assunto" value="#{msg.assunto}"/>
+							<p:inputText required="true"  requiredMessage="#{msg.validaDescricaoRequerida}"
+							 id="assunto" value="#{loginMB.assunto}" />							
+							
+							<h:outputLabel for="msg" value="#{msg.msg}" />
+							<p:inputTextarea effectDuration="2" autoResize="true"  required="true"
+							requiredMessage="#{msg.validaMSGRequerida}" id="msg"
+							value="#{loginMB.contato}"  />
+						</h:panelGrid>
+												
+						<p:commandButton update="frmRec" action="#{loginMB.contatar}" value="#{msg.recuperar}" />
+						<p:commandButton immediate="true" ajax="false" action="login?faces-redirect=true" value="#{msg.voltar}" />
+						</p:panel>
+					</h:form>
+				
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>
