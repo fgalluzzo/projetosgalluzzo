@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<!-- <link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+		media="screen" /> -->
+</h:head>
+<h:body>
+<f:loadBundle basename="message" var="msg"/>
+			<h:form >
+				<p:panel rendered="#{not redirectMB.temSorteio}">
+					<p><h:outputText value="#{msg.naoHaSorteio}"/></p>
+
+				</p:panel>
+			</h:form>
+		
+			
+</h:body>
+
+
+</html>
