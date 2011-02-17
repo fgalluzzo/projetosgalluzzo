@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:composition template="/adm/template/common.xhtml">
+		<ui:define name="content">
+			<h:form id="listaSorteios">
+				<div class="post">
+					<p:panel>		
+						<f:facet name="header" >
+							<h:outputText value="#{msg.listagemSorteios}" />
+						</f:facet>
+						<div class="messagesInfo"><p:messages /> </div>
+						<p:dataTable emptyMessage="#{msg.semRegistros}" rows="10" id="sorteios"  paginator="true" paginatorAlwaysVisible="false" value="#{cadastroSorteioMB.sorteios}"  
+						var="sorteio" >													
+    						<p:column sortBy="#{sorteio.nome}" headerText="#{msg.nome}"  >							
+								<h:commandLink action="detalheSorteio" value="#{sorteio.nome}">
+									<f:setPropertyActionListener value="#{sorteio}" target="#{cadastroSorteioMB.sorteio}"></f:setPropertyActionListener>
+								</h:commandLink> 
+						
+							</p:column>
+							<p:column headerText="#{msg.dtHoraInicio}" sortBy="#{sorteio.dataInicioD}">								
+								<h:outputText value="#{sorteio.dataInicioD}">
+									<f:convertDateTime timeStyle="short" timeZone="America/Sao_Paulo" locale="BR" type="both" ></f:convertDateTime>
+								</h:outputText>
+							</p:column>
+							
+							<p:column headerText="#{msg.dtHoraFim}" sortBy="#{sorteio.dataFimD}">						
+								<h:outputText value="#{sorteio.dataFimD}">
+									<f:convertDateTime timeStyle="short" timeZone="America/Sao_Paulo" locale="BR"   type="both"   ></f:convertDateTime>
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{msg.inscritos}" sortBy="#{sorteio.inscritos}">								
+								<h:outputText value="#{sorteio.inscritos}">									
+								</h:outputText>
+							</p:column>								
+							<p:column headerText="#{msg.opcoes}" colspan="3" >
+								
+								<h:commandLink action="#{cadastroSorteioMB.preAlterar}" title="#{msg.alterar}" rendered="#{not sorteio.sorteado}">
+									<img width="16" height="16" src="recursos/images/alterar.jpg" />
+									<f:setPropertyActionListener value="#{sorteio}" target="#{cadastroSorteioMB.sorteio}"></f:setPropertyActionListener>
+								</h:commandLink>
+																
+								<p:commandLink id="sbtLink"  onclick="confirma.show()" title="#{msg.excluir}">
+									<img width="16" height="16" src="recursos/images/lixeira.png" />
+									<f:setPropertyActionListener value="#{sorteio}" target="#{cadastroSorteioMB.sorteio}"></f:setPropertyActionListener>									
+								</p:commandLink>
+								
+							</p:column>		
+											
+						</p:dataTable>	
+						<p:confirmDialog modal="true" widgetVar="confirma"  message="#{msg.desejaExcluirSorteio}">
+							<p:commandButton  value="#{msg.excluir}" oncomplete="confirma.hide()"  update="listaSorteios" title="#{msg.excluir}" action="#{cadastroSorteioMB.excluir}" >								
+							</p:commandButton>
+							<p:commandButton value="#{msg.cancelar}" onclick="confirma.hide()" type="button"></p:commandButton>
+						</p:confirmDialog>					
+						<h:commandLink action="#{cadastroSorteioMB.preIncluir}" value="#{msg.criarSorteio}" />
+						</p:panel>
+						<br />
+						<div style="text-align: right;"><p:button value="#{msg.voltar}"
+					outcome="index" /></div>
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>

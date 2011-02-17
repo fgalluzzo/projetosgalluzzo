@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:composition template="/adm/template/common.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<div class="post"><p:panel>
+					<f:facet name="header">
+						<h:outputText value="#{msg.criarSorteio}" />
+					</f:facet>
+					<div><p:messages /> </div>
+					<h:inputHidden value="#{cadastroSorteioMB.sorteio.id}"></h:inputHidden>
+					<h:panelGrid columns="2">
+
+						<h:outputLabel for="nome" value="#{msg.nome}*" />
+						<p:inputText requiredMessage="#{msg.validaNomeRequerido}"
+							required="true" id="nome"
+							value="#{cadastroSorteioMB.sorteio.nome}" />
+
+						<h:outputLabel for="desc" value="#{msg.descricao}*" />
+						<p:inputTextarea  effectDuration="2" autoResize="true" required="true"
+							requiredMessage="#{msg.validaDescricaoRequerida}" id="desc"
+							value="#{cadastroSorteioMB.sorteio.descricao}" />
+
+
+						<h:outputLabel for="premios" value="#{msg.qntPremios}" />
+						<p:spinner id="premios" min="1" value="#{cadastroSorteioMB.sorteio.quantidadeGanhadores}"/>						
+
+						<h:outputLabel for="dtInicio" value="#{msg.dtInicio}*" />
+						<p:calendar required="true"
+							requiredMessage="#{msg.validaDataInicioRequerida}"
+							timeZone="#{cadastroSorteioMB.timeZone}" pattern="dd/MM/yyyy"
+							locale="pt_BR" showButtonPanel="true" id="dtInicio" readOnlyInputText="true"
+							value="#{cadastroSorteioMB.sorteio.dataInicioD}" />
+							
+						<h:outputLabel for="hrInicio" value="#{msg.hrInicio}*" />						
+						<p:inputMask validator="validaHora" mask="99:99" required="true"  requiredMessage="#{msg.validaHoraInicioRequerida}" id="hrInicio" value="#{cadastroSorteioMB.horaInicio}" maxlength="5">							
+						</p:inputMask>
+						
+						<h:outputLabel for="dtFim" value="#{msg.dtFim}*" />
+						<p:calendar required="true"
+							requiredMessage="#{msg.validaDataFimRequerida}"
+							timeZone="#{cadastroSorteioMB.timeZone}" pattern="dd/MM/yyyy"
+							locale="pt_BR" showButtonPanel="true" id="dtFim" readOnlyInputText="true"
+							value="#{cadastroSorteioMB.sorteio.dataFimD}"  validator="validaDataFim"/>
+							
+						<h:outputLabel for="hrFim" value="#{msg.hrFim}*" />						
+						<p:inputMask validator="validaHora" mask="99:99" required="true" requiredMessage="#{msg.validaHoraFimRequerida}" id="hrFim" value="#{cadastroSorteioMB.horaFim}" maxlength="5">							
+						</p:inputMask>						
+
+					</h:panelGrid>					
+					<h:commandButton action="#{cadastroSorteioMB.alterar}" value="#{msg.salvar}"  /> 
+				</p:panel>
+				<div style="text-align : right;">
+							<h:link outcome="listaSorteio" >
+								<h:outputText value="#{msg.voltar}" />
+							</h:link>
+						</div>
+				</div>						
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>
