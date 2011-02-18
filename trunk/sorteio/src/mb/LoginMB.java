@@ -245,12 +245,16 @@ public class LoginMB {
 		}
 		usuario = new Usuario();
 	}
-	
+	public String preContato() {
+		assunto = new String();
+		contato = new String();
+		return "contato?faces-redirect=true";
+	}
 	public void contatar() {
 		FacesMessage message = new FacesMessage();
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-			EnviaEmail.enviar(assunto, contato, Config.EMAIL_ADM, Config.ADM);
+			EnviaEmail.enviar(assunto, contato, Config.EMAIL_ADM, usuario.getNome()+"-"+usuario.getEmail());
 			message.setDetail(MessagesReader.getMessages().getProperty(
 			"emailContatoEnviado"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
