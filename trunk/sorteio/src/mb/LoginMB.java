@@ -254,7 +254,7 @@ public class LoginMB {
 		FacesMessage message = new FacesMessage();
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-			contato = "Remetente: "+ usuario.getNome()+"Email: usuario.getEmail() "+"\n" +contato;
+			contato += "\n Remetente: "+ usuario.getNome()+"\n Email: "+usuario.getEmail() ;
 			EnviaEmail.enviar(assunto, contato, Config.EMAIL_ADM, Config.ADM);
 			message.setDetail(MessagesReader.getMessages().getProperty(
 			"emailContatoEnviado"));
