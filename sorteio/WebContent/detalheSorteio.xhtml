@@ -15,7 +15,7 @@
 <h:body>
 	<ui:composition template="template/common.xhtml">
 		<ui:define name="content">
-			<h:form>
+			<h:form id="detalhe">
 				<div class="post"><p:panel>
 					<f:facet name="header">
 						<h:outputText
@@ -61,7 +61,7 @@
 
 					</h:panelGrid>					
 					<p:dataTable 
-						rendered="#{cadastroSorteioMB.sorteio.temGanhadores}"
+						rendered="#{cadastroSorteioMB.sorteio.temGanhadores}" id="ganhadores"
 						value="#{cadastroSorteioMB.sorteio.ganhadores}" var="ganhador" >
 						<f:facet name="header">
 							<h:outputText value="#{msg.ganhadores}"></h:outputText>
@@ -78,10 +78,14 @@
 						</p:column>
 					</p:dataTable>
 					<br />
-					<h:commandButton  onclick="if (!confirm('#{msg.desejaSortearSorteio}')) return false"
-						 rendered="#{cadastroSorteioMB.sorteio.temGanhadores}"
-						 action="#{cadastroSorteioMB.resortear}" value="#{msg.resortear}"></h:commandButton>
+					<p:commandButton onclick="confirma.show()"  rendered="#{cadastroSorteioMB.sorteio.temGanhadores}"
+						  value="#{msg.resortear}"></p:commandButton>
 				</p:panel>
+				<p:confirmDialog modal="true" widgetVar="confirma"  message="#{msg.desejaSortearSorteio}">
+					<p:commandButton ajax="false"  value="#{msg.confirmar}" oncomplete="confirma.hide()"  update="detalhe" title="#{msg.confirmar}" action="#{cadastroSorteioMB.resortear}" >								
+					</p:commandButton>
+					<p:commandButton value="#{msg.cancelar}" onclick="confirma.hide()" type="button"></p:commandButton>
+				</p:confirmDialog>		
 				<br />
 				<div style="text-align: right;"><p:button value="#{msg.voltar}"
 					outcome="#{cadastroSorteioMB.ultimaPagina}" />

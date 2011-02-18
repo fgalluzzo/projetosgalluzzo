@@ -64,8 +64,9 @@
 							<p:commandButton  value="#{msg.excluir}" oncomplete="confirma.hide()"  update="listaSorteios" title="#{msg.excluir}" action="#{cadastroSorteioMB.excluir}" >								
 							</p:commandButton>
 							<p:commandButton value="#{msg.cancelar}" onclick="confirma.hide()" type="button"></p:commandButton>
-						</p:confirmDialog>					
-						<h:commandLink action="#{cadastroSorteioMB.preIncluir}" value="#{msg.criarSorteio}" />
+						</p:confirmDialog>		
+						<br />			
+						<p:commandLink ajax="false" action="#{cadastroSorteioMB.preIncluir}" value="#{msg.criarSorteio}" />
 						</p:panel>
 						<br />
 						<div style="text-align: right;"><p:button value="#{msg.voltar}"

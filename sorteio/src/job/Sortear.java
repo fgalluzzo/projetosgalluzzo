@@ -28,8 +28,8 @@ public class Sortear implements Job{
 		List<Participante> ganhadores = participacaoDao.sorteiaParticipanteSorteio(sorteio);				
 		sorteio.setGanhadores(ganhadores);
 		sorteio.setSorteado(true);
-		Logger log = LoggerFactory.getLogger("INFO SORTEIO");
-		log.error("SORTEANDO :" + sorteio.getNome());
+		Logger log = LoggerFactory.getLogger("SORTEIO");
+		log.info("SORTEANDO :" + sorteio.getNome());
 				try {
 			sorteioDao.update(sorteio);
 		} catch (Exception e) {
