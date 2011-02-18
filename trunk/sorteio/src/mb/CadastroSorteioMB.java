@@ -344,7 +344,7 @@ public class CadastroSorteioMB implements Serializable {
 		return "sorteioCriado";
 	}
 
-	public String resortear() {
+	public void resortear() {
 		ParticipacaoDao participacaoDao = new ParticipacaoDao(
 				PersistenceUtil.getEntityManager());
 		List<Participante> ganhadores = participacaoDao
@@ -371,7 +371,7 @@ public class CadastroSorteioMB implements Serializable {
 
 			context.addMessage(null, message);
 		}
-		return null;
+
 	}
 
 	public Sorteio getSorteio() {
