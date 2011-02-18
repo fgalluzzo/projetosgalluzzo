@@ -29,7 +29,7 @@
 											
 						<p:panel >
 						<f:facet name="header" >
-							<h:outputText value="#{msg.recuperarUsuario}"/>
+							<h:outputText value="#{msg.contatoADM}"/>
 						</f:facet>
 						<div class="messages">
 							<p:messages />
@@ -46,9 +46,11 @@
 							value="#{loginMB.contato}"  />
 						</h:panelGrid>
 												
-						<p:commandButton update="frmRec" action="#{loginMB.contatar}" value="#{msg.recuperar}" />
-						<p:commandButton immediate="true" ajax="false" action="login?faces-redirect=true" value="#{msg.voltar}" />
+						<p:commandButton update="frmRec" action="#{loginMB.contatar}" value="#{msg.enviar}" />						
+						
 						</p:panel>
+						<br />
+						<div style="text-align: right;"><p:commandButton immediate="true" ajax="false" action="index?faces-redirect=true" value="#{msg.voltar}" /></div>
 					</h:form>
 				
 			</div>
