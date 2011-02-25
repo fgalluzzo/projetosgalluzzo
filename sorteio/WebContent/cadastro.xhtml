@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:composition template="template/common.xhtml">
+		<ui:define name="content">
+			<h:form id="frmCadast">
+				<p:wizard>
+					<p:tab id="dadosPessoais" title="#{msg.dadosPessoais}">
+						<p:panel>
+							<p:messages></p:messages>
+							
+							<h:panelGrid columns="2">
+							
+								<h:outputLabel for="nome" value="#{msg.nome}"/>
+								<p:inputText id="nome" required="true"  requiredMessage="#{msg.validaNomeRequerido}" value="#{usuarioMB.usuario.nome}"></p:inputText>
+								
+								<h:outputLabel for="email" value="#{msg.email}"/>
+								<p:inputText id="email" validator="validaEmailExistente" required="true" requiredMessage="#{msg.validaEmailRequerido}" value="#{usuarioMB.usuario.email}"></p:inputText>	
+								
+								<h:outputLabel for="dtNascimento" value="#{msg.dtNascimento}" />
+								<p:calendar navigator="true" required="true"
+								requiredMessage="#{msg.validaDataNascimentoRequerida}"
+								timeZone="#{usuarioMB.timeZone}" pattern="dd/MM/yyyy"
+								locale="pt_BR" showButtonPanel="true" id="dtNascimento" readOnlyInputText="true"  yearRange="1900:now"
+								value="#{usuarioMB.usuario.dt_nascimento}"  />
+								</h:panelGrid>
+							
+						</p:panel>						
+					</p:tab>
+					<p:tab id="dadosUsuario" title="#{msg.dadosUsuario}">
+						<p:panel>
+							<p:messages></p:messages>
+																					
+							<h:panelGrid columns="2">
+								<h:outputLabel for="login" value="#{msg.usuario}"/>
+								<p:inputText required="true" requiredMessage="#{msg.usuarioRequerido}" id="login" value="#{usuarioMB.usuario.apelido}"/>
+					
+								<h:outputLabel for="senha" value="#{msg.senha}"/>
+								<p:password feedback="true" requiredMessage="#{msg.senhaRequerida}"
+									 weakLabel="#{msg.senhaFraca}" strongLabel="#{msg.senhaForte}" goodLabel="#{msg.senhaBoa}"
+									  required="true" id="senha" value="#{usuarioMB.usuario.senha}" />
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+					<p:tab id="grupo" title="#{msg.dadosGrupo}">
+						<p:panel>
+							<p:messages></p:messages>
+							<h:panelGrid columns="2">
+								<h:outputLabel for="nomeGrupo" value="#{msg.nome}" />
+								<p:inputText id="nomeGrupo"></p:inputText>
+								
+														
+							</h:panelGrid>
+							<p:separator></p:separator>
+							<h:outputText value="#{msg.msgGrupo}"/>		
+							<h:outputText value="#{msg.msgGrupo2}"/>	
+							<h:outputText value="#{msg.msgGrupo3}"/>	
+						</p:panel>
+					</p:tab>
+					<p:tab id="confima" title="#{msg.confirmacao}">
+					 	<p:panel>
+					 		<h:panelGrid columns="2">
+					 			<h:outputText  value="#{msg.nome}"/>
+								<h:outputText value="#{usuarioMB.usuario.nome}" />
+								
+								<h:outputText value="#{msg.email}"/>
+								<h:outputText  value="#{usuarioMB.usuario.email}" />	
+								
+								<h:outputText value="#{msg.dtNascimento}" />
+								<h:outputText value="#{usuarioMB.usuario.dt_nascimento}"/>
+					 		</h:panelGrid>
+					 		
+					 	</p:panel>  
+					 	<p:commandButton  style="text-align: right;" disabled="true" value="#{msg.enviar}"></p:commandButton>
+					 </p:tab>
+					
+				</p:wizard>
+			
+			</h:form>
+			
+		</ui:define>
+		
+	</ui:composition>
+</h:body>
+
+
+</html>

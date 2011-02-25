@@ -16,7 +16,8 @@ public class LoginFilter implements PhaseListener {
 	@Override
 	public void afterPhase(PhaseEvent event) {
 		 FacesContext context = event.getFacesContext();
-		   boolean isParticipacao = context.getViewRoot().getViewId().contains("participar");
+		   boolean isParticipacaoOuCadastro = context.getViewRoot().getViewId().contains("participar") ||
+		   context.getViewRoot().getViewId().contains("cadastro");
 	       boolean pagesWL = context.getViewRoot().getViewId().lastIndexOf("login") > -1? true:false;	 
 	       boolean pageRec = context.getViewRoot().getViewId().contains("recuperar");
 	       String view = context.getViewRoot().getViewId();
@@ -28,7 +29,7 @@ public class LoginFilter implements PhaseListener {
 
 	       LoginMB loginMB = (LoginMB) expression.getValue(context.getELContext());
 	       //descomentar depois q criar os usuários no banco
-	       if(!isParticipacao && !pageRec && !( pagesWL) && loginMB.getUsuario().getApelido()== null ) {
+	       if(!isParticipacaoOuCadastro && !pageRec && !( pagesWL) && loginMB.getUsuario().getApelido()== null ) {
 	           NavigationHandler nh = app.getNavigationHandler();
 	           nh.handleNavigation(context, null, "login");
 	       }else if(pagesWL && loginMB.getUsuario().getApelido()!= null) {
