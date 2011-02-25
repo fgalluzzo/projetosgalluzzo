@@ -15,12 +15,16 @@
 <h:body>
 	<ui:composition template="template/common.xhtml">
 		<ui:define name="content">
-			<div>
-				<h1><h:outputText value="#{msg.automatize}"></h:outputText> </h1>
-				<h2><h:outputText value="#{msg.facilite}"></h:outputText> </h2>			
-				<p:separator></p:separator>									
-				<h:outputText value="#{msg.txtDescricao}"></h:outputText>
-			</div>
+			<h:form>		
+				<div>
+					<h1><h:outputText value="#{msg.automatize}"></h:outputText> </h1>
+					<h2><h:outputText value="#{msg.facilite}"></h:outputText> </h2>			
+					<p:separator></p:separator>									
+					<h:outputText value="#{msg.txtDescricao}"></h:outputText>
+					<p:separator></p:separator>
+					<p:commandLink action="#{usuarioMB.preCadast}" value="#{msg.cadastrese}"></p:commandLink>
+				</div>
+			</h:form>
 		</ui:define>
 		<ui:define name="sidebar">
 			<h:form>						

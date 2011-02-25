@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -30,7 +31,7 @@ public class Usuario {
 	private String senha;
 
 	@Column(name = "data_nascimento")
-	private Date dt_nascimento;
+	private Calendar dt_nascimento;
 
 	@Column(name = "email", unique = true)
 	private String email;
@@ -70,14 +71,6 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	public Date getDt_nascimento() {
-		return dt_nascimento;
-	}
-
-	public void setDt_nascimento(Date dt_nascimento) {
-		this.dt_nascimento = dt_nascimento;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -92,5 +85,13 @@ public class Usuario {
 
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
+	}
+
+	public Calendar getDt_nascimento() {
+		return dt_nascimento;
+	}
+
+	public void setDt_nascimento(Calendar dt_nascimento) {
+		this.dt_nascimento = dt_nascimento;
 	}
 }

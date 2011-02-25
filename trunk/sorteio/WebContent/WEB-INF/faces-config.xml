@@ -15,6 +15,10 @@
 		<validator-class>validadores.EmailValidator</validator-class>
 	</validator>
 	<validator>
+		<validator-id>validaEmailExistente</validator-id>
+		<validator-class>validadores.EmailExistenteValidator</validator-class>
+	</validator>
+	<validator>
 		<validator-id>validaNome</validator-id>
 		<validator-class>validadores.NomeValidator</validator-class>
 	</validator>
