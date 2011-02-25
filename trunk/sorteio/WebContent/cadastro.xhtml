@@ -16,7 +16,7 @@
 	<ui:composition template="template/common.xhtml">
 		<ui:define name="content">
 			<h:form id="frmCadast">
-				<p:wizard>
+				<p:wizard nextLabel="#{msg.proximo}" backLabel="#{msg.anterior}"  showStepStatus="true">
 					<p:tab id="dadosPessoais" title="#{msg.dadosPessoais}">
 						<p:panel>
 							<p:messages></p:messages>
@@ -34,7 +34,7 @@
 								requiredMessage="#{msg.validaDataNascimentoRequerida}"
 								timeZone="#{usuarioMB.timeZone}" pattern="dd/MM/yyyy"
 								locale="pt_BR" showButtonPanel="true" id="dtNascimento" readOnlyInputText="true"  yearRange="1900:now"
-								value="#{usuarioMB.usuario.dt_nascimento}"  />
+								value="#{usuarioMB.usuario.dt_nascimentoD}"  />
 								</h:panelGrid>
 							
 						</p:panel>						
@@ -45,10 +45,10 @@
 																					
 							<h:panelGrid columns="2">
 								<h:outputLabel for="login" value="#{msg.usuario}"/>
-								<p:inputText required="true" requiredMessage="#{msg.usuarioRequerido}" id="login" value="#{usuarioMB.usuario.apelido}"/>
+								<p:inputText required="true" validator="validaUsuarioExistente" requiredMessage="#{msg.usuarioRequerido}" id="login" value="#{usuarioMB.usuario.apelido}"/>
 					
 								<h:outputLabel for="senha" value="#{msg.senha}"/>
-								<p:password feedback="true" requiredMessage="#{msg.senhaRequerida}"
+								<p:password  requiredMessage="#{msg.senhaRequerida}"
 									 weakLabel="#{msg.senhaFraca}" strongLabel="#{msg.senhaForte}" goodLabel="#{msg.senhaBoa}"
 									  required="true" id="senha" value="#{usuarioMB.usuario.senha}" />
 							</h:panelGrid>
@@ -59,9 +59,10 @@
 							<p:messages></p:messages>
 							<h:panelGrid columns="2">
 								<h:outputLabel for="nomeGrupo" value="#{msg.nome}" />
-								<p:inputText id="nomeGrupo"></p:inputText>
+								<p:inputText id="nomeGrupo" value="#{usuarioMB.usuario.grupo.nome}"></p:inputText>
 								
-														
+								<h:outputLabel for="codGrupo" value="#{msg.codigo}"/>
+								<h:inputText id="codGrupo" value="#{usuarioMB.codigoGrupo}" validator="validaCodigoGrupo"/>						
 							</h:panelGrid>
 							<p:separator></p:separator>
 							<h:outputText value="#{msg.msgGrupo}"/>		
@@ -70,7 +71,8 @@
 						</p:panel>
 					</p:tab>
 					<p:tab id="confima" title="#{msg.confirmacao}">
-					 	<p:panel>
+					 	<p:panel id="pConfirma">
+					 		<p:messages></p:messages>
 					 		<h:panelGrid columns="2">
 					 			<h:outputText  value="#{msg.nome}"/>
 								<h:outputText value="#{usuarioMB.usuario.nome}" />
@@ -79,11 +81,22 @@
 								<h:outputText  value="#{usuarioMB.usuario.email}" />	
 								
 								<h:outputText value="#{msg.dtNascimento}" />
-								<h:outputText value="#{usuarioMB.usuario.dt_nascimento}"/>
+								<h:outputText value="#{usuarioMB.usuario.dt_nascimentoD}"/>
+								
+								<h:outputText value="#{msg.usuario}"/>
+								<h:outputText value="#{usuarioMB.usuario.apelido}"/>
+								
+								<h:outputText value="#{msg.dadosGrupo}"/>
+								<h:outputText value="#{usuarioMB.usuario.grupo.nome}"/>
+								
+								<h:outputText value="#{msg.codigo}"/>
+								<h:outputText value="#{usuarioMB.codigoGrupo}"/>
+								
 					 		</h:panelGrid>
-					 		
+					 		<br />
+					 		<p:commandButton update="pConfirma"  action="#{usuarioMB.cadastrar}" value="#{msg.enviar}"></p:commandButton>	
 					 	</p:panel>  
-					 	<p:commandButton  style="text-align: right;" disabled="true" value="#{msg.enviar}"></p:commandButton>
+					 	
 					 </p:tab>
 					
 				</p:wizard>

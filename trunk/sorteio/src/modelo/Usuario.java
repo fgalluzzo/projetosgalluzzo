@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="usuario")
@@ -32,6 +34,9 @@ public class Usuario {
 
 	@Column(name = "data_nascimento")
 	private Calendar dt_nascimento;
+	
+	@Transient
+	private Date dt_nascimentoD;
 
 	@Column(name = "email", unique = true)
 	private String email;
@@ -93,5 +98,18 @@ public class Usuario {
 
 	public void setDt_nascimento(Calendar dt_nascimento) {
 		this.dt_nascimento = dt_nascimento;
+	}
+	public Date getDt_nascimentoD() {
+		if(dt_nascimento!= null ) {
+			return dt_nascimento.getTime();
+		} else
+			return null;
+	}
+	public void setDt_nascimentoD(Date dt_nascimentoD) {
+		if(this.dt_nascimento ==null) {
+			this.dt_nascimento = new GregorianCalendar();
+			
+		} 
+		this.dt_nascimento.setTime(dt_nascimentoD);
 	}
 }

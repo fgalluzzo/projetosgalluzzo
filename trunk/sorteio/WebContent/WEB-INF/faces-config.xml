@@ -34,4 +34,13 @@
 		<validator-id>validaHora</validator-id>
 		<validator-class>validadores.HoraValidator</validator-class>
 	</validator>
+	<validator>
+		<validator-id>validaCodigoGrupo</validator-id>
+		<validator-class>validadores.CodigoGrupoValidator</validator-class>
+	</validator>
+	<validator>
+		<validator-id>validaUsuarioExistente</validator-id>
+		<validator-class>validadores.UsuarioExistenteValidator</validator-class>
+	</validator>
+	
 </faces-config>

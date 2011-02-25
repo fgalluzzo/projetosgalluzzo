@@ -12,6 +12,16 @@ public class UsuarioDao extends AbstractDao<Usuario>{
 		super(em);
 		// TODO Auto-generated constructor stub
 	}
+	public void create(Usuario usuario) throws Exception {
+		try {
+			em.getTransaction().begin();
+				em.persist(usuario);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			throw new Exception();
+		}
+	}
 	public void update(Usuario usuario) throws Exception {
 		try {
 			em.getTransaction().begin();
@@ -22,6 +32,17 @@ public class UsuarioDao extends AbstractDao<Usuario>{
 			throw new Exception();
 		}
 		
+	}
+	public boolean verificaLoginExistente(String apelido)  {
+		String q = "FROM Usuario u WHERE u.apelido = :apelido ";
+		Query query = em.createQuery(q);
+		query.setParameter("apelido", apelido);
+		
+		if (query.getResultList().size() > 0) {
+			return true;
+		}
+
+		return false;
 	}
 	public Usuario findByLoginSenha(Usuario usuario) throws NoResultException{
 		String q = "FROM Usuario u WHERE u.apelido = :apelido AND u.senha = :senha";
