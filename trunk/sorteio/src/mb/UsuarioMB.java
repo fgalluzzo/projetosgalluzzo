@@ -58,6 +58,8 @@ public class UsuarioMB {
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"usuarioCriadoSucesso"));
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			usuario = new Usuario();
+			codigoGrupo = new String();
 		} catch (NoSuchAlgorithmException e) {
 			message.setDetail(MessagesReader.getMessages().getProperty(
 					"problemaSistema"));
@@ -77,6 +79,7 @@ public class UsuarioMB {
 					"problemaSistema"));
 			message.setSeverity(FacesMessage.SEVERITY_FATAL);
 		}
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, message);
 	}
