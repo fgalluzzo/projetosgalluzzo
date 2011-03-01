@@ -44,14 +44,16 @@ public class UsuarioMB {
 			if (codigoGrupo != null && !codigoGrupo.trim().equals("")) {
 				Grupo grupo = grupoDao.findByCodigo(codigoGrupo);
 				usuario.setGrupo(grupo);
-			} else {
+			} else if(usuario.getGrupo().getNome() != null && !usuario.getGrupo().getNome().trim().equals("")){
 				String codigoGrupo;
 
 				codigoGrupo = CriaHash.SHA1(usuario.getGrupo().getNome());
 				usuario.getGrupo().setCodigo(codigoGrupo);
 				grupoDao.createGrupo(usuario.getGrupo());
+			} else {
+				usuario.setGrupo(null);
 			}
-
+			usuario.setSenha(CriaHash.SHA1(usuario.getSenha()));
 			usuarioDao.create(usuario);
 			message.setDetail(MessagesReader.getMessages().getProperty(
 					"usuarioCriadoSucesso"));

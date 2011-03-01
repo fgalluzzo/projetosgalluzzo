@@ -16,7 +16,7 @@
 	<ui:composition template="template/common.xhtml">
 		<ui:define name="content">
 			<h:form id="frmCadast">
-				<p:wizard nextLabel="#{msg.proximo}" backLabel="#{msg.anterior}"  showStepStatus="true">
+				<p:wizard widgetVar="wiz"  nextLabel="#{msg.proximo}" backLabel="#{msg.anterior}"  showStepStatus="true">
 					<p:tab id="dadosPessoais" title="#{msg.dadosPessoais}">
 						<p:panel>
 							<p:messages></p:messages>
@@ -48,7 +48,7 @@
 								<p:inputText required="true" validator="validaUsuarioExistente" requiredMessage="#{msg.usuarioRequerido}" id="login" value="#{usuarioMB.usuario.apelido}"/>
 					
 								<h:outputLabel for="senha" value="#{msg.senha}"/>
-								<p:password  requiredMessage="#{msg.senhaRequerida}"
+								<p:password inline="true"  promptLabel="#{msg.entreComSenha}" requiredMessage="#{msg.senhaRequerida}"
 									 weakLabel="#{msg.senhaFraca}" strongLabel="#{msg.senhaForte}" goodLabel="#{msg.senhaBoa}"
 									  required="true" id="senha" value="#{usuarioMB.usuario.senha}" />
 							</h:panelGrid>
@@ -62,7 +62,7 @@
 								<p:inputText id="nomeGrupo" value="#{usuarioMB.usuario.grupo.nome}"></p:inputText>
 								
 								<h:outputLabel for="codGrupo" value="#{msg.codigo}"/>
-								<h:inputText id="codGrupo" value="#{usuarioMB.codigoGrupo}" validator="validaCodigoGrupo"/>						
+								<p:inputText id="codGrupo" value="#{usuarioMB.codigoGrupo}" validator="validaCodigoGrupo"/>						
 							</h:panelGrid>
 							<p:separator></p:separator>
 							<h:outputText value="#{msg.msgGrupo}"/>		

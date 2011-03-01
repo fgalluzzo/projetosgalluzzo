@@ -31,10 +31,10 @@ public class LoginFilter implements PhaseListener {
 	       //descomentar depois q criar os usuários no banco
 	       if(!isParticipacaoOuCadastro && !pageRec && !( pagesWL) && loginMB.getUsuario().getApelido()== null ) {
 	           NavigationHandler nh = app.getNavigationHandler();
-	           nh.handleNavigation(context, null, "login");
+	           nh.handleNavigation(context, null, "login?faces-redirect=true");
 	       }else if(pagesWL && loginMB.getUsuario().getApelido()!= null) {
 	    	   NavigationHandler nh = app.getNavigationHandler();
-	           nh.handleNavigation(context, null,"index");
+	           nh.handleNavigation(context, null,"index?faces-redirect=true");
 	       }
 		
 	}
