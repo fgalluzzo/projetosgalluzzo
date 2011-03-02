@@ -42,5 +42,9 @@
 		<validator-id>validaUsuarioExistente</validator-id>
 		<validator-class>validadores.UsuarioExistenteValidator</validator-class>
 	</validator>
+	<validator>
+		<validator-id>validaGrupoExistente</validator-id>
+		<validator-class>validadores.GrupoExistenteValidator</validator-class>
+	</validator>
 	
 </faces-config>

@@ -47,7 +47,7 @@ public class UsuarioMB {
 			} else if(usuario.getGrupo().getNome() != null && !usuario.getGrupo().getNome().trim().equals("")){
 				String codigoGrupo;
 
-				codigoGrupo = CriaHash.SHA1(usuario.getGrupo().getNome());
+				codigoGrupo = CriaHash.SHA1(Math.random()+usuario.getGrupo().getNome());
 				usuario.getGrupo().setCodigo(codigoGrupo);
 				grupoDao.createGrupo(usuario.getGrupo());
 			} else {
