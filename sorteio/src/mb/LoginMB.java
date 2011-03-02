@@ -30,6 +30,7 @@ public class LoginMB {
 	private Usuario usuario;
 	private UsuarioDao usuarioDao;
 	private boolean logado;
+	private boolean temGrupo;
 	private String senhaAtual;
 	private String novaSenha;
 	private String confirmaNovaSenha;
@@ -47,6 +48,11 @@ public class LoginMB {
 			usuario.setSenha(CriaHash.SHA1(usuario.getSenha()));
 			usuario = usuarioDao.findByLoginSenha(usuario);
 			logado = true;
+			if(usuario.getGrupo()!=null) {
+				temGrupo = true;
+			} else {
+				temGrupo = false;
+			}
 			return "index?faces-redirect=true";
 		} catch (NoResultException e) {
 			System.out.println("e");
@@ -270,8 +276,7 @@ public class LoginMB {
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			context.addMessage(null, message);			
 		}
-	}
-	
+	}	
 	public String sair() {
 		usuario = new Usuario();
 		logado = false;
@@ -332,6 +337,14 @@ public class LoginMB {
 
 	public void setContato(String contato) {
 		this.contato = contato;
+	}
+
+	public boolean isTemGrupo() {
+		return temGrupo;
+	}
+
+	public void setTemGrupo(boolean temGrupo) {
+		this.temGrupo = temGrupo;
 	}
 
 }

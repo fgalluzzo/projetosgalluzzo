@@ -59,7 +59,7 @@
 							<p:messages></p:messages>
 							<h:panelGrid columns="2">
 								<h:outputLabel for="nomeGrupo" value="#{msg.nome}" />
-								<p:inputText id="nomeGrupo" value="#{usuarioMB.usuario.grupo.nome}"></p:inputText>
+								<p:inputText id="nomeGrupo" validator="validaGrupoExistente" value="#{usuarioMB.usuario.grupo.nome}"></p:inputText>
 								
 								<h:outputLabel for="codGrupo" value="#{msg.codigo}"/>
 								<p:inputText id="codGrupo" value="#{usuarioMB.codigoGrupo}" validator="validaCodigoGrupo"/>						

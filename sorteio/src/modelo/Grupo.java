@@ -20,7 +20,8 @@ public class Grupo {
 	@GeneratedValue(strategy=GenerationType.AUTO,generator="grupo_seq")	
 	private Long id;
 	
-	@Column(name="nome")
+	
+	@Column(name="nome",unique=true)
 	private String nome;
 	
 	@Column(name="codigo",unique=true)
