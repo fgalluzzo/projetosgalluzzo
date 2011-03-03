@@ -19,23 +19,19 @@
 			
 					
 					<h:form>						
-						<p:panel >
-						<div ><p:messages /> </div>
+						<p:panel rendered="#{!loginMB.temGrupo}" >
+						<div ><p:messages id="msg" /> </div>
 						<f:facet name="header" >
-							<h:outputText value="#{msg.meuGrupo}"/>
+							<h:outputText value="#{msg.criarGrupo}"/>
 						</f:facet>
-						
-						<h:panelGrid rendered="#{loginMB.temGrupo}"  columns="2">
-							<h:outputLabel for="nome" value="#{msg.grupo}"></h:outputLabel>							
-							<h:outputText value="#{loginMB.usuario.grupo.nome}" ></h:outputText>											
-							
-							<h:outputLabel for="codigo" value="#{msg.codigo}"></h:outputLabel>							
-							<h:outputText value="#{loginMB.usuario.grupo.codigo}" ></h:outputText>
-	
-						</h:panelGrid>			
-						
-						<h:outputText rendered="#{not loginMB.temGrupo}" value="#{msg.naoTemGrupo} "></h:outputText>
-						<p:commandLink rendered="#{not loginMB.temGrupo}" ajax="false" action="criaGrupo?faces-redirect=true" value="#{msg.cliqueAqui}"></p:commandLink>				
+							<h:panelGrid columns="2">
+								<h:outputLabel for="nomeGrupo" value="#{msg.nome}" />
+								<p:inputText required="true" requiredMessage="#{msg.validaNomeRequerido}" id="nomeGrupo" validator="validaGrupoExistente" value="#{loginMB.nomeGrupo}"></p:inputText>
+																					
+							</h:panelGrid>								
+							<br />
+							<p:commandButton update="msg" action="#{loginMB.criaGrupo}" value="#{msg.enviar}"></p:commandButton>
+										
 						</p:panel>
 						<br />
 						<div style="text-align: right;"><p:button value="#{msg.voltar}"

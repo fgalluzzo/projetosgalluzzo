@@ -10,18 +10,14 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.NoResultException;
 
+import modelo.Grupo;
 import modelo.Usuario;
-
-import org.apache.commons.mail.DefaultAuthenticator;
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.SimpleEmail;
-
-import config.Config;
-
 import util.CriaHash;
 import util.EnviaEmail;
 import util.MessagesReader;
 import util.PersistenceUtil;
+import config.Config;
+import dao.GrupoDao;
 import dao.UsuarioDao;
 
 @ManagedBean(name = "loginMB")
@@ -36,6 +32,7 @@ public class LoginMB {
 	private String confirmaNovaSenha;
 	private String assunto;
 	private String contato;
+	private String nomeGrupo;
 
 	public LoginMB() {
 		logado = false;
@@ -48,7 +45,7 @@ public class LoginMB {
 			usuario.setSenha(CriaHash.SHA1(usuario.getSenha()));
 			usuario = usuarioDao.findByLoginSenha(usuario);
 			logado = true;
-			if(usuario.getGrupo()!=null) {
+			if (usuario.getGrupo() != null) {
 				temGrupo = true;
 			} else {
 				temGrupo = false;
@@ -171,21 +168,21 @@ public class LoginMB {
 			usuarioDao = new UsuarioDao(PersistenceUtil.getEntityManager());
 			usuario = usuarioDao.findByUsuarioEmail(usuario);
 			Random rand = new Random();
-			
-			String senhaNova ="sw"+ ((Integer)rand.nextInt()).toString();
+
+			String senhaNova = "sw" + ((Integer) rand.nextInt()).toString();
 			usuario.setSenha(CriaHash.SHA1(senhaNova));
 			usuarioDao.update(usuario);
-			EnviaEmail.enviar(MessagesReader.getMessages().getProperty("recuperarSenha")
-					, MessagesReader.getMessages().getProperty("novaSenhaMSG")+" " + senhaNova
-					, usuario.getEmail()
-					, usuario.getNome());			
+			EnviaEmail.enviar(
+					MessagesReader.getMessages().getProperty("recuperarSenha"),
+					MessagesReader.getMessages().getProperty("novaSenhaMSG")
+							+ " " + senhaNova, usuario.getEmail(),
+					usuario.getNome());
 			message.setDetail(MessagesReader.getMessages().getProperty(
-			"emailSenhaEnviado"));
+					"emailSenhaEnviado"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"emailSenhaEnviado"));
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
 			context.addMessage(null, message);
-			
 
 		} catch (NoResultException e) {
 
@@ -201,36 +198,38 @@ public class LoginMB {
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"problemaSistema"));
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-			context.addMessage(null, message);			
-	
+			context.addMessage(null, message);
 
 		}
 		usuario = new Usuario();
 	}
-	
+
 	public String preRecuperarUsuario() {
 		usuario = new Usuario();
 		return "recuperarLogin?faces-redirect=true";
 	}
-	
+
 	public void recuperaUsuario() {
 		FacesMessage message = new FacesMessage();
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 			usuarioDao = new UsuarioDao(PersistenceUtil.getEntityManager());
 			usuario = usuarioDao.findByEmail(usuario);
-			
-			EnviaEmail.enviar(MessagesReader.getMessages().getProperty("recuperarUsuario")
-					, MessagesReader.getMessages().getProperty("seuUsuario")+" " + usuario.getApelido()
-					, usuario.getEmail()
-					, usuario.getNome());			
+
+			EnviaEmail.enviar(
+					MessagesReader.getMessages()
+							.getProperty("recuperarUsuario"), MessagesReader
+							.getMessages().getProperty("seuUsuario")
+							+ " "
+							+ usuario.getApelido(), usuario.getEmail(), usuario
+							.getNome());
 			message.setDetail(MessagesReader.getMessages().getProperty(
-			"emailUsuarioEnviado"));
+					"emailUsuarioEnviado"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"emailUsuarioEnviado"));
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
 			context.addMessage(null, message);
-			
+
 		} catch (NoResultException e) {
 
 			message.setDetail(MessagesReader.getMessages().getProperty(
@@ -245,38 +244,84 @@ public class LoginMB {
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"problemaSistema"));
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-			context.addMessage(null, message);			
-	
+			context.addMessage(null, message);
 
 		}
 		usuario = new Usuario();
 	}
+
 	public String preContato() {
 		assunto = new String();
 		contato = new String();
 		return "contato?faces-redirect=true";
 	}
+
 	public void contatar() {
 		FacesMessage message = new FacesMessage();
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-			contato += "\n Remetente: "+ usuario.getNome()+"\n Email: "+usuario.getEmail() ;
+			contato += "\n Remetente: " + usuario.getNome() + "\n Email: "
+					+ usuario.getEmail();
 			EnviaEmail.enviar(assunto, contato, Config.EMAIL_ADM, Config.ADM);
 			message.setDetail(MessagesReader.getMessages().getProperty(
-			"emailContatoEnviado"));
+					"emailContatoEnviado"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"emailContatoEnviado"));
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
 			context.addMessage(null, message);
 		} catch (Exception e) {
 			message.setDetail(MessagesReader.getMessages().getProperty(
-			"problemaSistema"));
+					"problemaSistema"));
 			message.setSummary(MessagesReader.getMessages().getProperty(
 					"problemaSistema"));
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-			context.addMessage(null, message);			
+			context.addMessage(null, message);
 		}
-	}	
+	}
+
+	public void criaGrupo() {
+		GrupoDao grupoDao = new GrupoDao(PersistenceUtil.getEntityManager());
+		FacesMessage message = new FacesMessage();
+		String codigoGrupo;
+		
+		try {	
+			codigoGrupo = CriaHash.SHA1(Math.random()
+					+ nomeGrupo);
+			usuario.setGrupo(new Grupo());
+			usuario.getGrupo().setCodigo(codigoGrupo);
+			grupoDao.createGrupo(usuario.getGrupo());
+			temGrupo = true;
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"grupoCriadoSucesso") + codigoGrupo);
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"grupoCriadoSucesso") + codigoGrupo);
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			
+		} catch (NoSuchAlgorithmException e) {
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			usuario.setGrupo(null);
+		} catch (UnsupportedEncodingException e) {
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			usuario.setGrupo(null);
+		} catch (Exception e) {
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSeverity(FacesMessage.SEVERITY_FATAL);
+			usuario.setGrupo(null);
+		}
+
+	}
+
 	public String sair() {
 		usuario = new Usuario();
 		logado = false;
@@ -345,6 +390,14 @@ public class LoginMB {
 
 	public void setTemGrupo(boolean temGrupo) {
 		this.temGrupo = temGrupo;
+	}
+
+	public String getNomeGrupo() {
+		return nomeGrupo;
+	}
+
+	public void setNomeGrupo(String nomeGrupo) {
+		this.nomeGrupo = nomeGrupo;
 	}
 
 }
