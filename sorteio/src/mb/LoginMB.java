@@ -33,6 +33,7 @@ public class LoginMB {
 	private String assunto;
 	private String contato;
 	private String nomeGrupo;
+	private String codigoGrupo;
 
 	public LoginMB() {
 		logado = false;
@@ -282,21 +283,23 @@ public class LoginMB {
 	public void criaGrupo() {
 		GrupoDao grupoDao = new GrupoDao(PersistenceUtil.getEntityManager());
 		FacesMessage message = new FacesMessage();
+		FacesContext context = FacesContext.getCurrentInstance();
 		String codigoGrupo;
-		
-		try {	
-			codigoGrupo = CriaHash.SHA1(Math.random()
-					+ nomeGrupo);
+
+		try {
+			codigoGrupo = CriaHash.SHA1(Math.random() + nomeGrupo);
 			usuario.setGrupo(new Grupo());
 			usuario.getGrupo().setCodigo(codigoGrupo);
 			grupoDao.createGrupo(usuario.getGrupo());
 			temGrupo = true;
 			message.setDetail(MessagesReader.getMessages().getProperty(
-					"grupoCriadoSucesso") + codigoGrupo);
+					"grupoCriadoSucesso")
+					+ codigoGrupo);
 			message.setSummary(MessagesReader.getMessages().getProperty(
-					"grupoCriadoSucesso") + codigoGrupo);
+					"grupoCriadoSucesso")
+					+ codigoGrupo);
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
-			
+
 		} catch (NoSuchAlgorithmException e) {
 			message.setDetail(MessagesReader.getMessages().getProperty(
 					"problemaSistema"));
@@ -319,6 +322,38 @@ public class LoginMB {
 			message.setSeverity(FacesMessage.SEVERITY_FATAL);
 			usuario.setGrupo(null);
 		}
+		context.addMessage(null, message);
+
+	}
+
+	public void inscreveGrupo() {
+		GrupoDao grupoDao = new GrupoDao(PersistenceUtil.getEntityManager());
+		UsuarioDao usuarioDao = new UsuarioDao(
+				PersistenceUtil.getEntityManager());
+
+		FacesMessage message = new FacesMessage();
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		Grupo grupo = grupoDao.findByCodigo(codigoGrupo);
+		try {
+			usuario.setGrupo(grupo);
+			usuarioDao.update(usuario);
+			temGrupo = true;
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"grupoInscritoSucesso")+ " "+grupo.getNome());
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"grupoInscritoSucesso")+ " "+grupo.getNome());
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+		} catch (Exception E) {
+			message.setDetail(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSummary(MessagesReader.getMessages().getProperty(
+					"problemaSistema"));
+			message.setSeverity(FacesMessage.SEVERITY_FATAL);
+			usuario.setGrupo(null);
+		}
+		codigoGrupo = "";
+		context.addMessage(null, message);
 
 	}
 
@@ -398,6 +433,14 @@ public class LoginMB {
 
 	public void setNomeGrupo(String nomeGrupo) {
 		this.nomeGrupo = nomeGrupo;
+	}
+
+	public String getCodigoGrupo() {
+		return codigoGrupo;
+	}
+
+	public void setCodigoGrupo(String codigoGrupo) {
+		this.codigoGrupo = codigoGrupo;
 	}
 
 }

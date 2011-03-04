@@ -35,7 +35,10 @@
 						</h:panelGrid>			
 						
 						<h:outputText rendered="#{not loginMB.temGrupo}" value="#{msg.naoTemGrupo} "></h:outputText>
-						<p:commandLink rendered="#{not loginMB.temGrupo}" ajax="false" action="criaGrupo?faces-redirect=true" value="#{msg.cliqueAqui}"></p:commandLink>				
+						<p:commandLink rendered="#{not loginMB.temGrupo}" ajax="false" action="criaGrupo?faces-redirect=true" value="#{msg.cliqueAqui} "></p:commandLink>
+						<h:outputText rendered="#{not loginMB.temGrupo}" value="#{msg.naoTemGrupo2} "></h:outputText>
+						<p:commandLink rendered="#{not loginMB.temGrupo}" ajax="false" action="inscreveGrupo?faces-redirect=true" value="#{msg.cliqueAqui} "></p:commandLink>
+										
 						</p:panel>
 						<br />
 						<div style="text-align: right;"><p:button value="#{msg.voltar}"
