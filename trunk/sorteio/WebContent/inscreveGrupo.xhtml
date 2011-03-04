@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/estilo.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:composition template="template/common.xhtml">
+		<ui:define name="content">
+			<div class="post">
+			
+					
+					<h:form id="frmInsc">						
+						<p:panel rendered="#{!loginMB.temGrupo}" >
+						<div ><p:messages id="msg" /> </div>
+						<f:facet name="header" >
+							<h:outputText value="#{msg.criarGrupo}"/>
+						</f:facet>
+							<h:panelGrid columns="2">
+								<h:outputLabel for="codigo" value="#{msg.codigo}" />
+								<p:inputText  required="true" requiredMessage="#{msg.validaCodigoRequerido}" id="codigo" validator="validaCodigoGrupo" value="#{loginMB.codigoGrupo}"></p:inputText>
+																					
+							</h:panelGrid>								
+							<br />
+							<p:commandButton update="frmInsc" action="#{loginMB.inscreveGrupo}" value="#{msg.enviar}"></p:commandButton>
+										
+						</p:panel>
+						<br />
+						<div style="text-align: right;"><p:button value="#{msg.voltar}"
+					outcome="index.xhtml?faces-redirect=true" />
+					</div>
+					</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>
