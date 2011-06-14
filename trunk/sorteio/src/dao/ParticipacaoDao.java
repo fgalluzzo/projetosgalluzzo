@@ -7,6 +7,9 @@ import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import modelo.Participacao;
 import modelo.Participante;
 import modelo.Sorteio;
@@ -74,13 +77,15 @@ public class ParticipacaoDao extends AbstractDao<Participacao> {
 	}
 
 	public List<Participante> sorteiaParticipanteSorteio(Sorteio sorteio) {
+		
 		String q = "SELECT count(id) FROM Participacao p WHERE p.sorteio = :sorteio ";
 		Query countQuery = em.createQuery(q);
 		countQuery.setParameter("sorteio", sorteio);
 		long count = (Long) countQuery.getSingleResult();
 		List<Participante> ganhadores = new ArrayList<Participante>();
+		long numSorteados = sorteio.getQuantidadeGanhadores() <= count?sorteio.getQuantidadeGanhadores():count;
 		if (count > 0) {
-			for(int i = 0;i<sorteio.getQuantidadeGanhadores();i++) {
+			for(int i = 0;i<numSorteados;i++) {
 				Random random = new Random();
 				Integer number = random.nextInt((int) count);
 				
@@ -99,10 +104,11 @@ public class ParticipacaoDao extends AbstractDao<Participacao> {
 					
 				
 			}
-
+			
 			return ganhadores;
 
 		}
+
 		return null;
 	}
 }

@@ -44,15 +44,16 @@ public class SortearPendentesInicializacao implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		SortearPendentes.sortear();
-
+		Logger logger = LoggerFactory.getLogger("agendamento de sorteios pendentes");
 		try {
-			Logger logger = LoggerFactory.getLogger("agendamento de sorteios pendentes");
+			
 			logger.info("Início do agendamento de sorteios pendentes");
 			SchedulerFactory sf = new StdSchedulerFactory();
 			Scheduler sched = sf.getScheduler();
 			
 			SorteioDao sorteioDao = new SorteioDao(PersistenceUtil.getEntityManager());
 			List<Sorteio> sorteios = (List<Sorteio>) sorteioDao.findSorteiosASortear();
+		
 			int i =0;
 			for (Sorteio sorteio : sorteios) {
 				JobDetail job = new JobDetail(sorteio.getId().toString(), Config.JOBGROUP,
@@ -62,13 +63,15 @@ public class SortearPendentesInicializacao implements ServletContextListener {
 						sorteio.getDataFimD());
 				sched.scheduleJob(job, disparo);
 				i++;
-			}					
+			}
 			sched.start();
 			logger.info("Foram agendados "+i+" sorteios");
 			logger.info("Fim do agendamento de sorteios pendentes");
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info("Erro de agendamento:" +e.getStackTrace());			
+		} catch (Exception e) {
+			logger.info("Erro:" +e.getStackTrace());			
 		}
 
 	}

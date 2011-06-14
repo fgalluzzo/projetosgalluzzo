@@ -78,46 +78,52 @@ public class SorteioDao extends AbstractDao<Sorteio> {
 	public void sortearPendentes() {
 		ParticipacaoDao participacaoDao = new ParticipacaoDao(
 				PersistenceUtil.getEntityManager());
-		Logger log = LoggerFactory.getLogger("logInicio");
-		log.info("Iniciando verificação de sorteios pendentes");
+		Logger log = LoggerFactory.getLogger("logInicio");		
 
 		String q = "From Sorteio s WHERE s.dataFim < :agora AND s.sorteado = false";
 		Query query = em.createQuery(q);
 		query.setParameter("agora", new GregorianCalendar());
-
 		List<Sorteio> sorteios = (List<Sorteio>) query.getResultList();
-		int i = 0;
-		for (Sorteio sorteio : sorteios) {
-			List<Participante> ganhadores = participacaoDao
-					.sorteiaParticipanteSorteio(sorteio);
-			sorteio.setGanhadores(ganhadores);
-			sorteio.setSorteado(true);
-			try {
-				update(sorteio);
-				i++;
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
+		
+		int i = 0;
+			
+		if(sorteios != null && sorteios.size() >0){
+			for (Sorteio sorteio : sorteios) {
+				try {
+					
+					List<Participante> ganhadores = participacaoDao
+						.sorteiaParticipanteSorteio(sorteio);
+					sorteio.setGanhadores(ganhadores);
+					sorteio.setSorteado(true);
+				
+					update(sorteio);				
+					i++;
+					
+				} catch (Exception e) {
+					log.info("Erro ao atualizar sorteio -" +e.getStackTrace());
+				}
+	
+			}
 		}
 		log.info("Foram sorteados " + i + " sorteios pendentes");
 		log.info("Final verificação de sorteios pendentes");
 
 	}
 
-	public List<Sorteio> buscar(String termo,Grupo grupo) {	
-		String q = "FROM Sorteio s WHERE s.grupo.id =:grupo AND " +
-				"(lower(s.nome) LIKE lower(:termo) OR lower(s.descricao)" +
-				" LIKE lower(:termo))";
+	public List<Sorteio> buscar(String termo, Grupo grupo) {
+		String q = "FROM Sorteio s WHERE s.grupo.id =:grupo AND "
+				+ "(lower(s.nome) LIKE lower(:termo) OR lower(s.descricao)"
+				+ " LIKE lower(:termo))";
 		Query query = em.createQuery(q);
 		query.setParameter("termo", "%" + termo + "%");
 		query.setParameter("grupo", grupo.getId());
 
 		return (List<Sorteio>) query.getResultList();
 	}
+
 	public List<Sorteio> findSorteiosASortear() {
-		String q = "FROM Sorteio s WHERE s.dataFim > :agora AND s.sorteado = false";		
+		String q = "FROM Sorteio s WHERE s.dataFim > :agora AND s.sorteado = false";
 		Query query = em.createQuery(q);
 		query.setParameter("agora", new GregorianCalendar());
 
