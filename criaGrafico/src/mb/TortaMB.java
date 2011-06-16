@@ -24,11 +24,14 @@ public class TortaMB {
 	private boolean rendered;
 
 	public TortaMB() {
-		 pieModel = new PieChartModel();
-		 rendered = false;
-		 dados = new ArrayList<DadoUmEixo>();
-		 dado = new DadoUmEixo();
+		preTortaMB();
 	}
+	
+	public String preTortaMB(){
+		reinit();
+		return "torta.xhtml?faces-redirect=true";
+	}
+	
 	
 	public void reinit(){
 		rendered = false;

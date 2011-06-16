@@ -3,14 +3,15 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.prime.com.tr/ui">
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:o="http://openfaces.org/">
 <f:loadBundle var="msg" basename="message"></f:loadBundle>
 <h:head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title><h:outputText value="#{msg.titulo}" /></title>
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
-	<link type="text/css" rel="stylesheet" href="recursos/redmond/skin.css" />
+	<link type="text/css" rel="stylesheet" href="recursos/cupertino/skin.css" />
 	<link href="recursos/style.css" rel="stylesheet" type="text/css"
 		media="screen" />
 </h:head>
@@ -26,37 +27,11 @@
 	<!-- end #logo -->
 	<div id="header">
 
-	<div id="menup">
-		<!-- <ul>			
-			<li class="current_page_item"><h:outputLink title="Home"  value="index.xhtml"><h:outputText value="Home" /> </h:outputLink> </li>
-			<li><h:outputLink title="Grafico" ><h:outputText value="Grafico" /></h:outputLink>
-				<ul>
-					<li><h:outputLink title="Torta" value="torta.xhtml"><h:outputText value="Torta" /></h:outputLink></li>
-					<li><h:outputLink title="Barra" value="torta.xhtml"><h:outputText value="Barra" /></h:outputLink></li>
-					<li><h:outputLink title="Coluna" value="torta.xhtml"><h:outputText value="Coluna" /></h:outputLink></li>
-					<li><h:outputLink title="Linha" value="linha.xhtml"><h:outputText value="Linha" /></h:outputLink></li>
-				</ul> 
-			</li>
-			<li><h:outputLink title="About" ><h:outputText value="About" /></h:outputLink> </li>
-		</ul> -->
-		<h:form>
-		<p:menubar autoSubmenuDisplay="true" >
-			<p:submenu>
-				<f:facet name="label"  >
-					<p:menuitem value="#{msg.home}" url="index.xhtml"/>
-				</f:facet>
-			</p:submenu>
-			<p:submenu  label="#{msg.grafico}">
-				<p:menuitem value="#{msg.barra}"  url="barra.xhtml"/>
-				<p:menuitem value="#{msg.coluna}" url="coluna.xhtml"/>
-				<p:menuitem value="#{msg.linha}" url="linha.xhtml"/>
-				<p:menuitem value="#{msg.torta}" url="torta.xhtml"/>
-			</p:submenu>
-			<p:submenu>
-				<f:facet name="label" >
-					<p:menuitem value="#{msg.sobre}"/>
-				</f:facet>
-			</p:submenu>
+	<div id="menup">		
+		<h:form>		
+		<p:menubar  autoSubmenuDisplay="true" >
+			<p:menuitem value="#{msg.home}" url="index.xhtml"></p:menuitem>			
+			<p:menuitem value="#{msg.grafico}" action="#{graficoMB.preGraficoMB}"></p:menuitem>				
 		</p:menubar>
 		</h:form>
 	</div>
@@ -83,7 +58,7 @@
 	<div style="clear: both;">&nbsp;</div>	</div>
 	<div id="footer-bgcontent">
 	<div id="footer">
-	<p>Copyright (c) 2010 java.galluzzo.com.br/criaGrafico. All rights reserved. Design by
+	<p>Copyright (c) 2011 <a href="http://criaGrafico.galluzzo.com.br">Cria Gráfico</a> . All rights reserved. Design by
 	<a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>
 	</div>
 	</div>

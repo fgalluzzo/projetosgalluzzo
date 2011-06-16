@@ -24,7 +24,7 @@ public class LinhaMB {
 	
 	public LinhaMB() {
 		// TODO Auto-generated constructor stub
-		reinit();
+		preLinhaMB();
 		
 	}
 	
@@ -34,6 +34,10 @@ public class LinhaMB {
 		dado = new DadosDoisEixos();
 		dados = new ArrayList<DadosDoisEixos>();
 		rendered = false;	
+	}
+	public String preLinhaMB(){
+		reinit();
+		return "linha.xhtml?faces-redirect=true";
 	}
 	public void processa(){
 		ArrayList<ChartSeries> series = new ArrayList<ChartSeries>();
@@ -57,8 +61,8 @@ public class LinhaMB {
 		}
 		cartesianModel = new CartesianChartModel();
 		for(ChartSeries s : series){
-			cartesianModel.addSeries(s);
-		}
+			cartesianModel.addSeries(s);			
+		}		
 		rendered = true;	
 	}
 	public void add(){
