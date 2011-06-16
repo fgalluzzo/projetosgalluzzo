@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:o="http://openfaces.org/">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/style.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+
+	<ui:composition template="/template/common-sidebar.xhtml">
+
+		<ui:define name="content">
+			<h:form id="frm" >
+				<div class="post">
+				<h3><h:outputText id="titulo" value="#{graficoMB.titulo}" /></h3>
+				<o:chart />
+				<!-- <p:lineChart  rendered="#{graficoMB.rendered}" id="grafico"
+					model="#{graficoMB.chartModel}"   titleX="#{graficoMB.labelX}" titleY="#{graficoMB.labelY}" >	
+					</p:lineChart>-->
+				<o:chart width="600" model="#{graficoMB.chartModel}" rendered="#{graficoMB.renderBar}" view="#{graficoMB.tipoChart}">
+					<o:chartTitle text="#{graficoMB.titulo}" ></o:chartTitle>
+					<o:chartAxis domain="both" labelVisible="true"></o:chartAxis>
+					<o:barChartView tooltip="#{graficoMB.dados.DadosDoisEixos.y}" enable3D="#{graficoMB.enable3D}" valueAxisLabel="#{graficoMB.labelY}"  keyAxisLabel="#{graficoMB.labelX}" />
+				</o:chart>
+				<o:chart width="600" model="#{graficoMB.chartModel}" rendered="#{graficoMB.renderLine}" view="#{graficoMB.tipoChart}" >
+					<o:chartTitle text="#{graficoMB.titulo}" ></o:chartTitle>
+					<o:chartAxis domain="both" labelVisible="true"></o:chartAxis>					
+					<o:lineChartView enable3D="#{graficoMB.enable3D}"  valueAxisLabel="#{graficoMB.labelY}" keyAxisLabel="#{graficoMB.labelX}" />
+				</o:chart>
+				<o:chart width="600" model="#{graficoMB.chartModel}" rendered="#{graficoMB.renderPie}" view="#{graficoMB.tipoChart}" >
+					<o:chartTitle text="#{graficoMB.titulo}" ></o:chartTitle>
+					<o:chartAxis domain="both" labelVisible="true"></o:chartAxis>			
+					<o:pieChartView  enable3D="#{graficoMB.enable3D}"></o:pieChartView>							
+				</o:chart>
+				</div> 
+			</h:form>
+		</ui:define>
+		
+		
+		
+		<ui:define name="sidebar">
+			<h:form prependId="false" id="frmInput">
+			
+				<h:outputLabel for="title" value="#{msg.title}" />
+				<p:inputText required="true" id="title" value="#{graficoMB.titulo}" />
+				 <p:tooltip for="title" value="#{msg.tooltip_titulo}"  
+               showEvent="focus" hideEvent="blur"/>  
+				
+				<h:outputLabel for="eixoX" value="#{msg.eixoX}" />
+				<p:inputText required="true" id="eixoX" value="#{graficoMB.labelX}" />
+				<p:tooltip for="eixoX" value="#{msg.tooltip_labelX}"  
+               showEvent="focus" hideEvent="blur"/>  
+				
+				<h:outputLabel for="eixoY" value="#{msg.eixoY}" />
+				<p:inputText required="true" id="eixoY" value="#{graficoMB.labelY}" />
+				<p:tooltip for="eixoY" value="#{msg.tooltip_labelY}"  
+               showEvent="focus" hideEvent="blur"/>  
+				
+				<h:outputLabel for="tipo" value="#{msg.tipo}"></h:outputLabel>
+			
+				<h:selectOneMenu   id="tipo" value="#{graficoMB.tipo}" >					
+					<f:selectItem id="item1" itemLabel="#{msg.barra}" itemValue="1"></f:selectItem>
+					<f:selectItem id="item2" itemLabel="#{msg.linha}" itemValue="2"></f:selectItem>
+					<f:selectItem id="item3" itemLabel="#{msg.torta}" itemValue="3"></f:selectItem>
+				</h:selectOneMenu>
+				<p:tooltip for="tipo" value="#{msg.tooltip_tipo}" />  
+				
+				<br />
+				
+				<h:outputLabel for="e3d" value="#{msg.ativar3d}"></h:outputLabel>
+				<h:selectBooleanCheckbox  id="e3d"  value="#{graficoMB.enable3D}"></h:selectBooleanCheckbox>
+				<p:tooltip for="e3d" value="#{msg.tooltip_3d}" />  
+				<br />
+				<br />
+				<p:fieldset legend="#{msg.adicioneDados}" >
+				<h:panelGrid id="addValor" columns="3">
+					<h:outputLabel for="nome" value="#{msg.serie}" />
+					<p:inputText id="nome" size="14"  value="#{graficoMB.dado.nome}" />
+					<p:tooltip for="nome" value="#{msg.tooltip_serie}" showEvent="focus" hideEvent="blur" />
+			
+					<h:outputLabel for="label" value="#{msg.label}" />
+					<p:inputText id="label" size="10"  value="#{graficoMB.dado.x}" />
+					<p:tooltip for="label" value="#{msg.tooltip_rotulo}" showEvent="focus" hideEvent="blur"/>
+					
+					<h:outputLabel for="valor" value="#{msg.valor}" />
+					<p:inputText id="valor" size="5"  value="#{graficoMB.dado.y}" />
+					<p:tooltip for="valor" value="#{msg.tooltip_valor}" showEvent="focus" hideEvent="blur"/>
+				</h:panelGrid>
+				
+				<br />
+				<p:commandButton value="#{msg.addDados}" action="#{graficoMB.add}"
+						update="valores,addValor">
+					<p:collector  value="#{graficoMB.dado}" addTo="#{graficoMB.dados}"></p:collector>
+				</p:commandButton>
+				</p:fieldset>
+				
+				<br />
+				<p:separator ></p:separator>	
+				<br />				
+									
+				<p:outputPanel id="valores">
+					<p:dataTable emptyMessage="#{msg.nenhumDado}" value="#{graficoMB.dados}" var="dado">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.serie}" />
+							</f:facet>
+							<h:outputText value="#{dado.nome}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.label}" />
+							</f:facet>
+							<h:outputText value="#{dado.x}" />
+						</p:column>
+						<p:column >
+							<f:facet name="header">
+								<h:outputText value="#{msg.valor}" />
+							</f:facet>
+							<h:outputText value="#{dado.y}" />
+						</p:column>			
+						<p:column >						
+							<p:commandLink update="valores" value="X">
+								<p:collector value="#{dado}" removeFrom="#{graficoMB.dados}"></p:collector>
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+				
+				<br />			
+							
+				<h:panelGrid columns="2">					
+					<p:commandButton action="#{graficoMB.processa}"
+						value="#{msg.geraGrafico}" update="frm" />
+					<p:commandButton action="#{graficoMB.reinit}" value="#{msg.limpar}"  update="frm,frmInput"></p:commandButton>
+				</h:panelGrid>
+		
+			</h:form>
+		</ui:define>
+
+	</ui:composition>
+
+
+</h:body>
+
+
+</html>

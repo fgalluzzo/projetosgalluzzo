@@ -91,7 +91,7 @@ hr { display: none; }
 /*------------*/
 #menup {
 	position:relative;
-	top:1px;
+	top:2px;
 	}
 #menu {
 	float: left;
@@ -245,7 +245,13 @@ div#menu ul li:hover ul
 
 #content {
 	float: right;
-	width: 658px;
+	width: 658px;	
+	padding-top: 10px;
+	padding-right: 30px;
+}
+#content-nosidebar {	
+	width: 800px;
+	min-height:400px;	
 	padding-top: 10px;
 	padding-right: 30px;
 }
@@ -289,6 +295,9 @@ div#menu ul li:hover ul
 
 .post .entry {
 	padding: 10px 0;
+}
+.post .entryIntro {
+	font-size: 16px;
 }
 
 .post .links {

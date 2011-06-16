@@ -32,15 +32,15 @@
 		<ui:define name="sidebar">
 			<h:form prependId="false" id="frmInput">
 				<h:outputLabel for="title" value="#{msg.title}" />
-				<h:inputText required="true" id="title" value="#{tortaMB.titulo}" />
+				<p:inputText required="true" id="title" value="#{tortaMB.titulo}" />
 				
 				<h:outputText value="#{msg.adicioneDados}" />
 				<h:panelGrid id="addValor" columns="2">
 					<h:outputLabel for="nome" value="#{msg.label}" />
-					<h:inputText id="nome" size="14"  value="#{tortaMB.dado.nome}" />
+					<p:inputText id="nome" size="14"  value="#{tortaMB.dado.nome}" />
 			
 					<h:outputLabel for="valor" value="#{msg.valor}" />
-					<h:inputText id="valor" size="5"  value="#{tortaMB.dado.valor}" />
+					<p:inputText id="valor" size="5"  value="#{tortaMB.dado.valor}" />
 				</h:panelGrid>
 				<p:commandButton value="#{msg.addDados}" action="#{tortaMB.add}"
 						update="valores,addValor">

@@ -15,6 +15,12 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsf-api.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsf-impl.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces-2.2.RC2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces-2.2.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/cssparser.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jcommon.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jfreechart.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/openfaces.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/sac.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

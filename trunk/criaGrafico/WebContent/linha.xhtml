@@ -3,7 +3,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.prime.com.tr/ui">
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:o="http://openfaces.org/">
 
 <h:head>
 	<title></title>
@@ -20,8 +21,9 @@
 			<h:form id="frm" >
 				<div class="post">
 				<h3><h:outputText id="titulo" value="#{linhaMB.titulo}" /></h3>
+				<o:chart />
 				<p:lineChart  rendered="#{linhaMB.rendered}" id="grafico"
-					model="#{linhaMB.cartesianModel}" titleX="#{linhaMB.labelX}" titleY="#{linhaMB.labelY}" >	
+					model="#{linhaMB.cartesianModel}"   titleX="#{linhaMB.labelX}" titleY="#{linhaMB.labelY}" >	
 					</p:lineChart></div>
 
 			</h:form>
@@ -29,25 +31,25 @@
 		<ui:define name="sidebar">
 			<h:form prependId="false" id="frmInput">
 				<h:outputLabel for="title" value="#{msg.title}" />
-				<h:inputText required="true" id="title" value="#{linhaMB.titulo}" />
+				<p:inputText required="true" id="title" value="#{linhaMB.titulo}" />
 				
 				<h:outputLabel for="eixoX" value="#{msg.eixoX}" />
-				<h:inputText required="true" id="eixoX" value="#{linhaMB.labelX}" />
+				<p:inputText required="true" id="eixoX" value="#{linhaMB.labelX}" />
 				
 				<h:outputLabel for="eixoY" value="#{msg.eixoY}" />
-				<h:inputText required="true" id="eixoY" value="#{linhaMB.labelY}" />
+				<p:inputText required="true" id="eixoY" value="#{linhaMB.labelY}" />
 
 				
 				<h:outputText value="#{msg.adicioneDados}" />
 				<h:panelGrid id="addValor" columns="2">
 					<h:outputLabel for="nome" value="#{msg.serie}" />
-					<h:inputText id="nome" size="14"  value="#{linhaMB.dado.nome}" />
+					<p:inputText id="nome" size="14"  value="#{linhaMB.dado.nome}" />
 			
 					<h:outputLabel for="label" value="#{msg.label}" />
-					<h:inputText id="label" size="10"  value="#{linhaMB.dado.x}" />
+					<p:inputText id="label" size="10"  value="#{linhaMB.dado.x}" />
 					
 					<h:outputLabel for="valor" value="#{msg.valor}" />
-					<h:inputText id="valor" size="5"  value="#{linhaMB.dado.y}" />
+					<p:inputText id="valor" size="5"  value="#{linhaMB.dado.y}" />
 				</h:panelGrid>
 				<p:commandButton value="#{msg.addDados}" action="#{linhaMB.add}"
 						update="valores,addValor">
