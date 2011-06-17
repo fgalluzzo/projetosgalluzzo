@@ -102,7 +102,7 @@ public class GrafMB {
 			jFreeChart.setBackgroundPaint(Color.white);
 			jFreeChart.setBackgroundImageAlpha(Color.TRANSLUCENT);	
 			String filePath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/WEB-INF/arquivos");
-			File file = new File(filePath+titulo.hashCode() + ".png");
+			File file = new File(filePath+ "grafico.png");
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ChartUtilities.writeChartAsPNG(baos, jFreeChart, 650, 400);
 			ChartUtilities.saveChartAsPNG(file, jFreeChart, 650, 400);
