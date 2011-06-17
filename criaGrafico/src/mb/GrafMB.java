@@ -103,11 +103,11 @@ public class GrafMB {
 			jFreeChart.setBackgroundImageAlpha(Color.TRANSLUCENT);	
 			String filePath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/WEB-INF/arquivos");
 			File file = new File(filePath+ "grafico.png");
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ChartUtilities.writeChartAsPNG(baos, jFreeChart, 650, 400);
-			ChartUtilities.saveChartAsPNG(file, jFreeChart, 650, 400);
 			graficoDownload = new DefaultStreamedContent(new FileInputStream(
 					file), "image/png", "GraficoDe"+stringTipo+"-"+titulo.hashCode() + ".png");
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ChartUtilities.writeChartAsPNG(baos, jFreeChart, 650, 400);
+			ChartUtilities.saveChartAsPNG(file, jFreeChart, 650, 400);			
 			ByteArrayInputStream bais = new ByteArrayInputStream(
 					baos.toByteArray());
 			grafico = new DefaultStreamedContent(bais);
@@ -121,7 +121,11 @@ public class GrafMB {
 	}
 
 	public void add() {
+		processa();
+		String nome = dado.getNome();
 		dado = new DadosDoisEixos();
+		dado.setNome(nome);
+		
 	}
 
 	public String getTitulo() {

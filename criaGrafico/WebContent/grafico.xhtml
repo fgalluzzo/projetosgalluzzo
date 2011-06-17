@@ -58,7 +58,7 @@
 				
 				<h:outputLabel for="tipo" value="#{msg.tipo}"></h:outputLabel>
 			
-				<h:selectOneMenu   id="tipo" value="#{grafMB.tipo}" >					
+				<h:selectOneMenu   id="tipo" value="#{grafMB.tipo}"  >					
 					<f:selectItem id="item1" itemLabel="#{msg.barra}" itemValue="1"></f:selectItem>
 					<f:selectItem id="item2" itemLabel="#{msg.linha}" itemValue="2"></f:selectItem>
 					<f:selectItem id="item3" itemLabel="#{msg.torta}" itemValue="3"></f:selectItem>
@@ -91,7 +91,7 @@
 				
 				<br />
 				<p:commandButton value="#{msg.addDados}" action="#{grafMB.add}" 
-						update="valores,addValor" oncomplete="javascript: document.getElementById('nome').focus();" >
+						update="valores,addValor,frm" oncomplete="javascript: document.getElementById('label').focus();" >
 					<p:collector  value="#{grafMB.dado}" addTo="#{grafMB.dados}"></p:collector>
 				</p:commandButton>
 			
