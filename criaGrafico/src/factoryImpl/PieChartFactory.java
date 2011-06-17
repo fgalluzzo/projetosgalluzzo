@@ -1,5 +1,6 @@
 package factoryImpl;
 
+import java.awt.Color;
 import java.util.List;
 
 import modelo.DadosDoisEixos;
@@ -29,6 +30,7 @@ public class PieChartFactory {
 		JFreeChart subChart = mPlot.getPieChart();
 		PiePlot plot = (PiePlot) subChart.getPlot();
 		plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{1}"));
+		plot.setBackgroundPaint(Color.WHITE);
 		return chart;
 	}
 	public static JFreeChart getChart3D(String title,List<DadosDoisEixos> dados){
@@ -37,6 +39,7 @@ public class PieChartFactory {
 		JFreeChart subChart = mPlot.getPieChart();
 		PiePlot3D plot = (PiePlot3D) subChart.getPlot();		
 		plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{1}"));
+		plot.setBackgroundPaint(Color.WHITE);
 		return chart;
 	}
 	
