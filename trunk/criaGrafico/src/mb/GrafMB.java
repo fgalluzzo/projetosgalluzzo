@@ -101,8 +101,11 @@ public class GrafMB {
 			}
 			jFreeChart.setBackgroundPaint(Color.white);
 			jFreeChart.setBackgroundImageAlpha(Color.TRANSLUCENT);	
-			String filePath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/WEB-INF/arquivos");
-			File file = new File(filePath+ "grafico.png");
+			String filePath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/WEB-INF/");
+			File file = new File(filePath+ "/grafico");
+			if(!file.exists()) {
+				file.createNewFile();
+			}
 			graficoDownload = new DefaultStreamedContent(new FileInputStream(
 					file), "image/png", "GraficoDe"+stringTipo+"-"+titulo.hashCode() + ".png");
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
