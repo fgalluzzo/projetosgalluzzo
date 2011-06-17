@@ -1,5 +1,6 @@
 package factoryImpl;
 
+import java.awt.Color;
 import java.awt.Paint;
 import java.util.List;
 
@@ -23,6 +24,11 @@ public class LineChartFactory extends AbstractDataset  {
 		CategoryPlot plot = (CategoryPlot) chart.getPlot();
 		AbstractCategoryItemRenderer renderer = (AbstractCategoryItemRenderer) plot.getRenderer();
 		renderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+		plot.setBackgroundPaint(Color.WHITE);
+		plot.setRangeGridlinePaint(Color.BLACK);
+		plot.setRangeGridlinesVisible(true);
+		plot.setDomainGridlinePaint(Color.BLACK);
+		plot.setDomainGridlinesVisible(true);
 		return chart;
 	}
 	public static JFreeChart getChart3D(String title,String categoria,String valor,List<DadosDoisEixos> dados){
@@ -30,6 +36,11 @@ public class LineChartFactory extends AbstractDataset  {
 		CategoryPlot plot = (CategoryPlot) chart.getPlot();
 		AbstractCategoryItemRenderer renderer = (AbstractCategoryItemRenderer) plot.getRenderer();
 		renderer.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+		plot.setRangeGridlinePaint(Color.BLACK);
+		plot.setBackgroundPaint(Color.WHITE);
+		plot.setRangeGridlinesVisible(true);
+		plot.setDomainGridlinePaint(Color.BLACK);
+		plot.setDomainGridlinesVisible(true);
 		return chart;
 	}
 }
