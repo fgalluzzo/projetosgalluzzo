@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import modelo.DadosDoisEixos;
 
@@ -98,13 +100,14 @@ public class GrafMB {
 
 			}
 			jFreeChart.setBackgroundPaint(Color.white);
-			jFreeChart.setBackgroundImageAlpha(Color.TRANSLUCENT);
-			File file = new File(titulo + ".png");
+			jFreeChart.setBackgroundImageAlpha(Color.TRANSLUCENT);	
+			String filePath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/WEB-INF/arquivos");
+			File file = new File(filePath+titulo.hashCode() + ".png");
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ChartUtilities.writeChartAsPNG(baos, jFreeChart, 650, 400);
 			ChartUtilities.saveChartAsPNG(file, jFreeChart, 650, 400);
 			graficoDownload = new DefaultStreamedContent(new FileInputStream(
-					file), "image/png", "GraficoDe"+stringTipo+"-"+titulo + ".png");
+					file), "image/png", "GraficoDe"+stringTipo+"-"+titulo.hashCode() + ".png");
 			ByteArrayInputStream bais = new ByteArrayInputStream(
 					baos.toByteArray());
 			grafico = new DefaultStreamedContent(bais);
