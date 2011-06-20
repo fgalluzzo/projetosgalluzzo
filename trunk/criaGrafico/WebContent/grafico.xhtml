@@ -27,12 +27,19 @@
 					<p:graphicImage rendered="#{grafMB.rendered}" cache="false" id="img" value="#{grafMB.grafico}" />
 								
 				</div> 
-				<div style="text-align: right;"> 
+				<div style="text-align: right;">
+					 
 						<p:commandLink rendered="#{grafMB.rendered}" ajax="false" title="Download">  
 						    <p:graphicImage value="recursos/images/download.png" />  
-						    <p:fileDownload value="#{grafMB.graficoDownload}" />  
+						    <p:fileDownload value="#{grafMB.graficoDownload}" />						     
 						</p:commandLink>
-					</div>   	
+						<p:spacer width="10"></p:spacer>
+						<h:outputLink rendered="#{grafMB.rendered}" title="#{msg.imprimir}" id="lnk" value="#"> 
+							<p:printer target="img"></p:printer>
+							<p:graphicImage value="recursos/images/impressora.gif" />  
+						</h:outputLink>
+
+				</div>   	
 			</h:form>
 		</ui:define>
 		
