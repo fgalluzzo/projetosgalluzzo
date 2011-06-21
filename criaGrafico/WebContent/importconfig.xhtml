@@ -16,7 +16,7 @@
 	<ui:composition template="/template/common.xhtml">
 		<ui:define name="content">
 
-			<div class="post"><p:dialog width="1100" height="800" widgetVar="dlgGrafico" modal="true">
+			<div class="post"><p:dialog width="830" height="630" widgetVar="dlgGrafico" modal="true">
 				<h:form id="frmGraf">
 					<p:panel id="grafico" rendered="#{importMB.rendered}">
 						<p:graphicImage cache="false" id="img" value="#{importMB.grafico}" />
@@ -50,7 +50,7 @@
 
 					<p:spacer height="30"></p:spacer>
 
-					<p:outputPanel id="dadosPlanilha">
+					<p:outputPanel  id="dadosPlanilha">
 						<h:panelGrid rendered="#{importMB.renderDadosPlanilhaEscolhida}"
 							columns="3">
 							<h:outputText value="Numero de linhas" />
@@ -63,29 +63,32 @@
 
 								<p:column>
 									<p:panel>
-										<h:outputText id="col" value="#{coluna}" />
+										<h:outputText id="col" value="#{coluna.cabecalho}" />	
+										<br />									
+										
 
-										<p:draggable for="col" revert="true"></p:draggable>
+										<p:draggable for="col" scope="#{coluna.escopo}" revert="true"></p:draggable>
 									</p:panel>
+									<h:outputText styleClass="textoPequeno" value="#{coluna.escopo}"/>
 								</p:column>
 								<p:spacer width="10"></p:spacer>
 							</p:dataGrid>
 							<h:inputHidden />
 
 
-							<p:fieldset id="eixox" legend="#{msg.eixoX}" styleClass="slot">
-								<p:droppable datasource="avaibleCols" tolerance="touch"
+							<p:fieldset id="eixox" legend="#{msg.eixoXTexto}" styleClass="slot">
+								<p:droppable  datasource="avaibleCols" tolerance="touch"
 									dropListener="#{importMB.listenerX}"></p:droppable>
 								<p:spacer height="20"></p:spacer>
 							</p:fieldset>
-							<p:fieldset id="eixoy" legend="#{msg.eixoY}" styleClass="slot">
-								<p:droppable datasource="avaibleCols" tolerance="touch"
+							<p:fieldset id="eixoy"  legend="#{msg.eixoYNumerico}" styleClass="slot">
+								<p:droppable scope="numerico" datasource="avaibleCols" tolerance="touch"
 									dropListener="#{importMB.listenerY}"></p:droppable>
 								<p:spacer height="20"></p:spacer>
 							</p:fieldset>
 						</h:panelGrid>
 						<p:spacer height="30"></p:spacer>
-						<p:commandButton value="#{msg.geraGrafico}"
+						<p:commandButton value="#{msg.geraGrafico}" rendered="#{importMB.renderDadosPlanilhaEscolhida}"
 							action="#{importMB.gerarGrafico}" oncomplete="dlgGrafico.show()" update="frmGraf"></p:commandButton>
 					</p:outputPanel>
 
