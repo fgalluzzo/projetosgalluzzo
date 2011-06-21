@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/style.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:composition template="/template/common.xhtml">
+		<ui:define name="content">
+			<div class="post"><h:form id="frmUpload" prependId="false"
+				method="post" enctype="multipart/form-data">
+				<div class="entryIntro"><p:panel>
+					<h:panelGrid columns="2">
+						<p:column>
+							<h:outputLabel for="upload" value="#{msg.arquivo}"></h:outputLabel>
+						</p:column>
+
+						<p:column>
+							<!-- <div id="div-input-file">										
+										<input name="file-original"  readonly="readonly" onchange="document.getElementById('file-falso').value = this.value;" type="file" size="30" id="file-original"/>
+										<div id="div-input-falso"><input name="file-falso" type="text" id="file-falso" /></div>
+									</div>
+									 -->
+							<p:fileUpload widgetVar="uploader" height="32" width="32"
+								fileUploadListener="#{importMB.upload}"
+								image="recursos/images/upload.png" cancelImage="recursos/images/cancel.gif"
+								allowTypes="*.xls" description="Excel File" id="upload"
+								customUI="true" update="frmUpload"/>
+								
+						</p:column>
+
+						<p:column colspan="2">
+							<p:commandButton process="frmUpload" value="#{msg.enviar}"
+								onclick="uploader.upload()"></p:commandButton>
+						</p:column>
+						
+						
+					</h:panelGrid>
+					<p:commandButton id="btnContinua" rendered="#{not empty importMB.nomeArquivo}" value="#{msg.continuar}" action="#{importMB.continuar}"/>
+				</p:panel></div>
+			</h:form></div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>

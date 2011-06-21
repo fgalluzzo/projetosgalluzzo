@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<h:head>
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="recursos/style.css" rel="stylesheet" type="text/css"
+		media="screen" />
+</h:head>
+<h:body>
+	<ui:composition template="/template/common.xhtml">
+		<ui:define name="content">
+
+			<div class="post"><p:dialog width="1100" height="800" widgetVar="dlgGrafico" modal="true">
+				<h:form id="frmGraf">
+					<p:panel id="grafico" rendered="#{importMB.rendered}">
+						<p:graphicImage cache="false" id="img" value="#{importMB.grafico}" />
+					</p:panel>
+				</h:form>
+			</p:dialog> <h:form id="frmUpload" prependId="false" method="post"
+				enctype="multipart/form-data">
+				<div class="entryIntro"><p:panel>
+
+					<h:panelGrid columns="2">
+						<h:outputLabel for="arquivo" value="#{msg.arquivo}:"></h:outputLabel>
+
+						<h:outputText id="arquivo" value="#{importMB.nomeArquivo}" />
+
+
+					</h:panelGrid>
+					<p:spacer height="30"></p:spacer>
+					<p:dataTable var="sheet" value="#{importMB.sheets}"
+						selection="#{importMB.planilhaEscolhida}" selectionMode="single"
+						update="dadosPlanilha">
+						<f:facet name="header">
+							<h:outputText value="#{msg.planilhas}" />
+						</f:facet>
+
+
+						<p:column headerText="#{msg.nomePlanilha}">
+							<h:outputText value="#{sheet.nome}" />
+						</p:column>
+
+					</p:dataTable>
+
+					<p:spacer height="30"></p:spacer>
+
+					<p:outputPanel id="dadosPlanilha">
+						<h:panelGrid rendered="#{importMB.renderDadosPlanilhaEscolhida}"
+							columns="3">
+							<h:outputText value="Numero de linhas" />
+							<h:outputText value="#{importMB.planilhaEscolhida.rows}" />
+							<h:inputHidden />
+
+							<h:outputText value="#{msg.colunasDeDados}" />
+							<p:dataGrid id="avaibleCols" var="coluna"
+								value="#{importMB.planilhaEscolhida.header}">
+
+								<p:column>
+									<p:panel>
+										<h:outputText id="col" value="#{coluna}" />
+
+										<p:draggable for="col" revert="true"></p:draggable>
+									</p:panel>
+								</p:column>
+								<p:spacer width="10"></p:spacer>
+							</p:dataGrid>
+							<h:inputHidden />
+
+
+							<p:fieldset id="eixox" legend="#{msg.eixoX}" styleClass="slot">
+								<p:droppable datasource="avaibleCols" tolerance="touch"
+									dropListener="#{importMB.listenerX}"></p:droppable>
+								<p:spacer height="20"></p:spacer>
+							</p:fieldset>
+							<p:fieldset id="eixoy" legend="#{msg.eixoY}" styleClass="slot">
+								<p:droppable datasource="avaibleCols" tolerance="touch"
+									dropListener="#{importMB.listenerY}"></p:droppable>
+								<p:spacer height="20"></p:spacer>
+							</p:fieldset>
+						</h:panelGrid>
+						<p:spacer height="30"></p:spacer>
+						<p:commandButton value="#{msg.geraGrafico}"
+							action="#{importMB.gerarGrafico}" oncomplete="dlgGrafico.show()" update="frmGraf"></p:commandButton>
+					</p:outputPanel>
+
+
+				</p:panel> <p:spacer height="30"></p:spacer></div>
+			</h:form></div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>
