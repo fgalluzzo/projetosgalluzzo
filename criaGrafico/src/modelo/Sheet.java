@@ -2,7 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 
-import org.apache.poi.hssf.usermodel.HSSFHeader;
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
@@ -11,7 +11,7 @@ public class Sheet {
 	private String nome;
 	private HSSFSheet sheet;
 	private int rows;
-	private ArrayList<String> header;	
+	private ArrayList<Coluna> header;	
 	
 	public Sheet(int index,String nome,HSSFSheet sheet) {
 		this.index = index;
@@ -19,12 +19,39 @@ public class Sheet {
 		this.sheet = sheet;
 	}
 	
-	public ArrayList<String> getHeader(){
+	public ArrayList<Coluna> getHeader(){
 		HSSFRow row =  sheet.getRow(sheet.getFirstRowNum());
-		ArrayList<String> colunas  = new ArrayList<String>();
+		ArrayList<Coluna> colunas  = new ArrayList<Coluna>();
+		if(row.getCell(0) == null) {
+			return null;
+		}
 		for(int i = 0;i< row.getLastCellNum();i++){
-			String cabecalho = row.getCell(i).getStringCellValue();
+			Coluna cabecalho = new Coluna();
+			cabecalho.setCabecalho(row.getCell(i).getStringCellValue());
+			cabecalho.setIndex(row.getCell(i).getColumnIndex());
+			
 			colunas.add(cabecalho);
+		}
+		row = sheet.getRow(sheet.getFirstRowNum()+1);
+		for (int i = 0; i < colunas.size(); i++) {
+			for(int j=0;j<row.getLastCellNum();j++){
+				HSSFCell cell = row.getCell(j);
+				if(cell.getColumnIndex() == colunas.get(i).getIndex()){
+					if(cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC){
+						colunas.get(i).setEscopo("numerico");
+					}else {
+						String valor = cell.getStringCellValue();
+						try{
+							Double d = Double.parseDouble(valor);
+							colunas.get(i).setEscopo("numerico");
+						} catch(NumberFormatException e) {
+							colunas.get(i).setEscopo("texto");
+						}
+						
+					}
+				}
+				
+			}
 		}
 		return colunas;
 		

@@ -477,3 +477,6 @@ div#menu ul li:hover ul
 	font-size:18px;
 	font-family: Verdana;
 }
+.textoPequeno {
+	font-size:10px;
+}
