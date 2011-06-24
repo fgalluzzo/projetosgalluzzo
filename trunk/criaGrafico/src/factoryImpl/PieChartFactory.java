@@ -15,6 +15,7 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.util.TableOrder;
 
+
 public class PieChartFactory {
 	protected static CategoryDataset getDataset(List<DadosDoisEixos> dados) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -30,7 +31,7 @@ public class PieChartFactory {
 		JFreeChart subChart = mPlot.getPieChart();
 		PiePlot plot = (PiePlot) subChart.getPlot();
 		plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{1}"));
-		plot.setBackgroundPaint(Color.WHITE);
+		plot.setBackgroundPaint(Color.WHITE);		
 		return chart;
 	}
 	public static JFreeChart getChart3D(String title,List<DadosDoisEixos> dados){

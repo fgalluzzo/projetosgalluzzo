@@ -64,18 +64,23 @@
                showEvent="focus" hideEvent="blur"/>  
 				
 				<h:outputLabel for="tipo" value="#{msg.tipo}"></h:outputLabel>
-			
-				<h:selectOneMenu   id="tipo" value="#{grafMB.tipo}"  >					
+				
+				<p:selectOneMenu id="tipo" value="#{grafMB.tipo}"  valueChangeListener="#{grafMB.mudaGrafico}" >
+					<f:ajax render="frmInput"></f:ajax>							
 					<f:selectItem id="item1" itemLabel="#{msg.barra}" itemValue="1"></f:selectItem>
 					<f:selectItem id="item2" itemLabel="#{msg.linha}" itemValue="2"></f:selectItem>
 					<f:selectItem id="item3" itemLabel="#{msg.torta}" itemValue="3"></f:selectItem>
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 				<p:tooltip for="tipo" value="#{msg.tooltip_tipo}" />  
 				
 				<br />				
 				<h:outputLabel for="e3d" value="#{msg.ativar3d}"></h:outputLabel>
-				<h:selectBooleanCheckbox  id="e3d"  value="#{grafMB.enable3D}"></h:selectBooleanCheckbox>
+				<p:selectBooleanCheckbox id="e3d"  value="#{grafMB.enable3D}"></p:selectBooleanCheckbox>
+				
 				<p:tooltip for="e3d" value="#{msg.tooltip_3d}" />  
+				<br />
+				<h:outputLabel id="lblCor" rendered="#{grafMB.renderCor}" for="cor" value="Cor"></h:outputLabel>
+				<p:colorPicker rendered="#{grafMB.renderCor}" id="cor" value="#{grafMB.cor}" ></p:colorPicker>
 				<br />
 				<br />
 				<!-- Área de inserção de dados -->
