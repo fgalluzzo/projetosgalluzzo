@@ -16,85 +16,127 @@
 	<ui:composition template="/template/common.xhtml">
 		<ui:define name="content">
 
-			<div class="post"><p:dialog width="830" height="630" widgetVar="dlgGrafico" modal="true">
-				<h:form id="frmGraf">
-					<p:panel id="grafico" rendered="#{importMB.rendered}">
-						<p:graphicImage cache="false" id="img" value="#{importMB.grafico}" />
-					</p:panel>
-				</h:form>
-			</p:dialog> <h:form id="frmUpload" prependId="false" method="post"
-				enctype="multipart/form-data">
-				<div class="entryIntro"><p:panel>
-
-					<h:panelGrid columns="2">
-						<h:outputLabel for="arquivo" value="#{msg.arquivo}:"></h:outputLabel>
-
-						<h:outputText id="arquivo" value="#{importMB.nomeArquivo}" />
+			<div class="post"><p:tabView id="tbView"
+				activeIndex="#{importMB.activeTab}" widgetVar="tabview">
 
 
-					</h:panelGrid>
-					<p:spacer height="30"></p:spacer>
-					<p:dataTable var="sheet" value="#{importMB.sheets}"
-						selection="#{importMB.planilhaEscolhida}" selectionMode="single"
-						update="dadosPlanilha">
-						<f:facet name="header">
-							<h:outputText value="#{msg.planilhas}" />
-						</f:facet>
+				<p:tab title="#{msg.config}">
+					<!-- </p:dialog>-->
+					<h:form id="frmUpload" prependId="false" method="post"
+						enctype="multipart/form-data">
+						<div class="entry"><p:panel>
+
+							<h:panelGrid columns="2">
+								<h:outputLabel for="arquivo" value="#{msg.arquivo}:"></h:outputLabel>
+
+								<h:outputText id="arquivo" value="#{importMB.nomeArquivo}" />
 
 
-						<p:column headerText="#{msg.nomePlanilha}">
-							<h:outputText value="#{sheet.nome}" />
-						</p:column>
+							</h:panelGrid>
+							<p:spacer height="30"></p:spacer>
+							<p:dataTable var="sheet" id="tbPlanilhas"
+								value="#{importMB.sheets}"
+								selection="#{importMB.planilhaEscolhida}" selectionMode="single"
+								update="dadosPlanilha">
+								<f:facet name="header">
+									<h:outputText value="#{msg.escolhaPlanilha}" />
+								</f:facet>
 
-					</p:dataTable>
-
-					<p:spacer height="30"></p:spacer>
-
-					<p:outputPanel  id="dadosPlanilha">
-						<h:panelGrid rendered="#{importMB.renderDadosPlanilhaEscolhida}"
-							columns="3">
-							<h:outputText value="Numero de linhas" />
-							<h:outputText value="#{importMB.planilhaEscolhida.rows}" />
-							<h:inputHidden />
-
-							<h:outputText value="#{msg.colunasDeDados}" />
-							<p:dataGrid id="avaibleCols" var="coluna"
-								value="#{importMB.planilhaEscolhida.header}">
 
 								<p:column>
-									<p:panel>
-										<h:outputText id="col" value="#{coluna.cabecalho}" />	
-										<br />									
-										
-
-										<p:draggable for="col" scope="#{coluna.escopo}" revert="true"></p:draggable>
-									</p:panel>
-									<h:outputText styleClass="textoPequeno" value="#{coluna.escopo}"/>
+									<h:outputText value="#{sheet.nome}" />
 								</p:column>
-								<p:spacer width="10"></p:spacer>
-							</p:dataGrid>
-							<h:inputHidden />
+
+							</p:dataTable>
+
+							<p:spacer height="30"></p:spacer>
+
+							<p:outputPanel id="dadosPlanilha">
+								<p:messages id="msgs" />
+								<h:panelGrid rendered="#{importMB.renderDadosPlanilhaEscolhida}"
+									columns="3">
+									<h:outputText value="Numero de linhas" />
+									<h:outputText value="#{importMB.planilhaEscolhida.rows}" />
+									<h:inputHidden />
+
+									<h:outputText value="#{msg.colunasDeDados}" />
+									<p:dataGrid id="avaliableCols" var="coluna"
+										value="#{importMB.planilhaEscolhida.header}">
+
+										<p:column>
+											<p:panel>
+												<p:outputPanel id="col">
+													<h:outputText value="#{coluna.cabecalho}" />
+													<br />
 
 
-							<p:fieldset id="eixox" legend="#{msg.eixoXTexto}" styleClass="slot">
-								<p:droppable  datasource="avaibleCols" tolerance="touch"
-									dropListener="#{importMB.listenerX}"></p:droppable>
-								<p:spacer height="20"></p:spacer>
-							</p:fieldset>
-							<p:fieldset id="eixoy"  legend="#{msg.eixoYNumerico}" styleClass="slot">
-								<p:droppable scope="numerico" datasource="avaibleCols" tolerance="touch"
-									dropListener="#{importMB.listenerY}"></p:droppable>
-								<p:spacer height="20"></p:spacer>
-							</p:fieldset>
-						</h:panelGrid>
-						<p:spacer height="30"></p:spacer>
-						<p:commandButton value="#{msg.geraGrafico}" rendered="#{importMB.renderDadosPlanilhaEscolhida}"
-							action="#{importMB.gerarGrafico}" oncomplete="dlgGrafico.show()" update="frmGraf"></p:commandButton>
-					</p:outputPanel>
+													<p:draggable for="col" revert="true"></p:draggable>
+													<h:outputText styleClass="textoPequeno"
+														value="#{coluna.escopo}" />
+												</p:outputPanel>
+												<p:droppable datasource="avaliableCols" tolerance="touch"
+													dropListener="#{importMB.back}" onDropUpdate="msgs,eixos"></p:droppable>
+											</p:panel>
 
 
-				</p:panel> <p:spacer height="30"></p:spacer></div>
-			</h:form></div>
+										</p:column>
+										<p:spacer width="10"></p:spacer>
+									</p:dataGrid>
+									<h:inputHidden />
+								</h:panelGrid>
+
+								<h:panelGrid rendered="#{importMB.renderDadosPlanilhaEscolhida}"
+									id="eixos" columns="3">
+									<p:fieldset id="eixox" legend="#{msg.eixoXTextoNumerico}"
+										styleClass="slot">
+										<p:droppable datasource="avaliableCols" tolerance="touch"
+											dropListener="#{importMB.listenerX}" onDropUpdate="msgs"></p:droppable>
+										<p:spacer height="60"></p:spacer>
+
+									</p:fieldset>
+
+									<p:fieldset id="eixoy" legend="#{msg.eixoYNumerico}"
+										styleClass="slot">
+
+										<p:droppable datasource="avaliableCols" tolerance="touch"
+											dropListener="#{importMB.listenerY}" onDropUpdate="msgs"></p:droppable>
+										<p:spacer height="60"></p:spacer>
+
+									</p:fieldset>
+									<h:inputHidden />
+								</h:panelGrid>
+
+								<p:spacer height="30"></p:spacer>
+								<p:commandButton value="#{msg.geraGrafico}"
+									rendered="#{importMB.renderDadosPlanilhaEscolhida}"
+									action="#{importMB.gerarGrafico}" update="frmGraf,msgs,tbView" onstart="dlgStatus.show()" oncomplete="dlgStatus.hide()">
+								</p:commandButton>
+								<p:commandButton value="#{msg.reiniciar}"
+									rendered="#{importMB.renderDadosPlanilhaEscolhida}"
+									action="#{importMB.reset}" update="dadosPlanilha"></p:commandButton>
+							</p:outputPanel>
+
+
+						</p:panel> <p:spacer height="30"></p:spacer></div>
+
+					</h:form>
+				</p:tab>
+
+				<p:tab id="tabGrafico" title="#{msg.grafico}">
+
+					<h:form id="frmGraf">
+						<p:fieldset id="grafico">
+							<p:graphicImage  cache="false" id="img"
+								value="#{importMB.grafico}" />
+						</p:fieldset>
+
+					</h:form>
+				</p:tab>
+
+			</p:tabView></div>
+			<p:dialog modal="true"  widgetVar="dlgStatus">
+				<p:progressBar ajax="true"  value="#{importMB.progress}" ></p:progressBar>
+			</p:dialog>
 		</ui:define>
 	</ui:composition>
 </h:body>

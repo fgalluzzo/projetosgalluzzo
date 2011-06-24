@@ -11,10 +11,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import modelo.Coluna;
 import modelo.DadosDoisEixos;
 import modelo.Sheet;
 
@@ -30,13 +33,18 @@ import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
+
+import util.MessagesReader;
 
 import factoryImpl.LineChartFactory;
 
 @ManagedBean(name = "importMB")
 @SessionScoped
 public class ImportMB {
-
+	private final int TAB_CONFIGURACOES = 0;
+	private final int TAB_GRAFICO = 1;
+	
 	private File arquivo;
 	private ArrayList<Sheet> sheets;
 	private Sheet planilhaEscolhida;
@@ -44,10 +52,13 @@ public class ImportMB {
 	private String nomeArquivo;
 	private int colunaRotuloIndex;
 	private int colunaValorIndex;
-	private String colunaRotulo;
-	private String colunaValor;
+	private Coluna colunaRotulo;
+	private Coluna colunaValor;
 	private StreamedContent grafico;
 	private boolean rendered;
+	private UploadedFile file;
+	private int activeTab;
+	private int progress;
 
 	private void reinit() {
 		arquivo = null;
@@ -57,14 +68,24 @@ public class ImportMB {
 		nomeArquivo = null;
 		colunaRotuloIndex = 0;
 		colunaValorIndex = 0;
-		colunaRotulo = "";
-		colunaValor = "";		
+		colunaRotulo = new Coluna();
+		colunaValor= new Coluna();
 		rendered = false;
+		activeTab = TAB_CONFIGURACOES;
 	}
 
 	public String preImport() {
 		reinit();
 		return "import.xhtml?faces-redirect=true";
+	}
+
+	public void reset() {
+		colunaRotuloIndex = 0;
+		colunaValorIndex = 0;
+		colunaRotulo = new Coluna();
+		colunaValor = new Coluna();
+		rendered = false;
+		
 	}
 
 	public void upload(FileUploadEvent e) {
@@ -84,6 +105,9 @@ public class ImportMB {
 			}
 			FileOutputStream fos = new FileOutputStream(arquivo);
 			fos.write(e.getFile().getContents());
+			continuar();
+			FacesContext.getCurrentInstance().getExternalContext()
+					.redirect("importconfig.xhtml?faces-redirect=true");
 
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -93,15 +117,32 @@ public class ImportMB {
 	}
 
 	public void listenerX(DragDropEvent event) {
-		colunaRotulo = (String) event.getData();
-
+		Coluna coluna = (Coluna) event.getData();
+		colunaRotulo.setCabecalho(coluna.getCabecalho());
+		
 	}
 
 	public void listenerY(DragDropEvent event) {
-		colunaValor = (String) event.getData();
+		Coluna coluna = (Coluna) event.getData();
+		if (!coluna.getEscopo().equals("numerico")) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					MessagesReader.getMessages()
+							.getProperty("erroTipoNumerico"), MessagesReader
+							.getMessages().getProperty("erroTipoNumerico"));
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			colunaValor  = new Coluna();
+		} else 
+			colunaValor.setCabecalho(coluna.getCabecalho());
 	}
-
-	public String continuar() {
+	public void back(DragDropEvent event) {
+		Coluna coluna = (Coluna) event.getData();
+		if( colunaValor.getCabecalho() != null && colunaValor.getCabecalho().equals(coluna.getCabecalho())){
+			colunaValor = new Coluna();
+		} else if(colunaRotulo.getCabecalho() != null && colunaRotulo.getCabecalho().equals(coluna.getCabecalho())) {
+			colunaRotulo = new Coluna();
+		}
+	}
+	public void continuar() {
 		FileInputStream fis;
 		try {
 			fis = new FileInputStream(arquivo);
@@ -120,77 +161,104 @@ public class ImportMB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "importconfig.xhtml?faces-redirect=true";
+		// return "importconfig.xhtml?faces-redirect=true";
 	}
 
 	public void gerarGrafico() {
 		try {
-			HSSFSheet sheet = planilhaEscolhida.getSheet();
-			Iterator iter = sheet.rowIterator();
-			ArrayList<DadosDoisEixos> dados = new ArrayList<DadosDoisEixos>();
-			while (iter.hasNext()) {
-				HSSFRow row = (HSSFRow) iter.next();
-				Iterator cellIter = row.cellIterator();
-				DadosDoisEixos dado = new DadosDoisEixos();
-				boolean discard = false;				
-				while (cellIter.hasNext()) {
+			progress = 0;
+			if(colunaRotulo.getCabecalho()!=null && colunaValor.getCabecalho() !=null && !colunaRotulo.getCabecalho().isEmpty() && !colunaValor.getCabecalho().isEmpty()){
+				HSSFSheet sheet = planilhaEscolhida.getSheet();
+				Iterator iter = sheet.rowIterator();
+				ArrayList<DadosDoisEixos> dados = new ArrayList<DadosDoisEixos>();
+				progress = 10;
+				while (iter.hasNext()) {
+					HSSFRow row = (HSSFRow) iter.next();
+					Iterator cellIter = row.cellIterator();
+					DadosDoisEixos dado = new DadosDoisEixos();
+					boolean discard = false;
+					while (cellIter.hasNext()) {
 
-					HSSFCell cell = (HSSFCell) cellIter.next();
-					if(row.getRowNum() == sheet.getFirstRowNum()) {
-						if (cell.getStringCellValue().equals(colunaRotulo)) {
-							discard = true;
-							colunaRotuloIndex = cell.getColumnIndex();
-						} else if (cell.getStringCellValue().equals(colunaValor)) {
-							discard = true;
-							colunaValorIndex = cell.getColumnIndex();
-						}
-					}else {
-						if (cell.getColumnIndex() == colunaRotuloIndex) {
-							dado.setX(cell.getStringCellValue());
-							
-						} else if (cell.getColumnIndex() == colunaValorIndex) {
-							if(cell.getCellType() == cell.CELL_TYPE_STRING)
-								dado.setY(Double.parseDouble(cell.getStringCellValue()));
-							else if(cell.getCellType() == cell.CELL_TYPE_NUMERIC){
-								dado.setY(cell.getNumericCellValue());
+						HSSFCell cell = (HSSFCell) cellIter.next();
+						if (row.getRowNum() == sheet.getFirstRowNum()) {
+							if (cell.getStringCellValue().equals(colunaRotulo.getCabecalho())) {
+								discard = true;
+								colunaRotuloIndex = cell.getColumnIndex();
+							} else if (cell.getStringCellValue()
+									.equals(colunaValor.getCabecalho())) {
+								discard = true;
+								colunaValorIndex = cell.getColumnIndex();
+							}
+						} else {
+							if (cell.getColumnIndex() == colunaRotuloIndex) {
+								if(cell.getCellType() == cell.CELL_TYPE_NUMERIC){
+									dado.setX(String.valueOf(cell.getNumericCellValue()));
+								} else if(cell.getCellType() == cell.CELL_TYPE_STRING) {
+									dado.setX(cell.getStringCellValue());
+								}
+								
+
+							} else if (cell.getColumnIndex() == colunaValorIndex) {
+								if (cell.getCellType() == cell.CELL_TYPE_STRING)
+									dado.setY(Double.parseDouble(cell
+											.getStringCellValue()));
+								else if (cell.getCellType() == cell.CELL_TYPE_NUMERIC) {
+									dado.setY(cell.getNumericCellValue());
+								}
 							}
 						}
+
 					}
-					 
+
+					if (!discard) {
+						dado.setNome("");
+						dados.add(dado);
+					}
 
 				}
+				progress = 25;
+				JFreeChart jFreeChart = LineChartFactory.getChart("Gráfico "
+						+ nomeArquivo.substring(0, nomeArquivo.lastIndexOf(".")),
+						colunaRotulo.getCabecalho(), colunaValor.getCabecalho(), dados,
+						CategoryLabelPositions.STANDARD);
+				jFreeChart.setBackgroundPaint(Color.white);
+				jFreeChart.setBackgroundImageAlpha(Color.TRANSLUCENT);
+				/*
+				 * String filePath = FacesContext.getCurrentInstance()
+				 * .getExternalContext().getRealPath("/WEB-INF/"); File file = new
+				 * File(filePath + "/grafico"); if (!file.exists()) {
+				 * 
+				 * file.createNewFile();
+				 * 
+				 * }
+				 */
+				/*
+				 * graficoDownload = new DefaultStreamedContent(new FileInputStream(
+				 * file), "image/png", "GraficoDe"+stringTipo+"-"+titulo.hashCode()
+				 * + ".png");
+				 */
+				progress = 50;
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				ChartUtilities.writeChartAsPNG(baos, jFreeChart, 750, 600);
+				// ChartUtilities.saveChartAsPNG(file, jFreeChart, 650, 400);
+				ByteArrayInputStream bais = new ByteArrayInputStream(
+						baos.toByteArray());
+				progress = 75;
+				setGrafico(new DefaultStreamedContent(bais));
+				rendered = true;
+				setActiveTab(TAB_GRAFICO);
+				progress = 100;
+			} else {
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN,
+						MessagesReader.getMessages()
+								.getProperty("naoPodeGerarGrafico"), MessagesReader
+								.getMessages().getProperty("naoPodeGerarGrafico"));
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+				rendered = false;
 				
-				if(!discard){
-					dado.setNome("");
-					dados.add(dado);
-				}
-					
 			}
-			JFreeChart jFreeChart = LineChartFactory.getChart("Gráfico "
-					+ nomeArquivo.substring(0, nomeArquivo.lastIndexOf(".")),
-					colunaRotulo, colunaValor, dados,CategoryLabelPositions.DOWN_90);
-			jFreeChart.setBackgroundPaint(Color.white);
-			jFreeChart.setBackgroundImageAlpha(Color.TRANSLUCENT);
-			/*String filePath = FacesContext.getCurrentInstance()
-					.getExternalContext().getRealPath("/WEB-INF/");
-			File file = new File(filePath + "/grafico");
-			if (!file.exists()) {
-
-				file.createNewFile();
-
-			}*/
-			/*
-			 * graficoDownload = new DefaultStreamedContent(new FileInputStream(
-			 * file), "image/png", "GraficoDe"+stringTipo+"-"+titulo.hashCode()
-			 * + ".png");
-			 */
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ChartUtilities.writeChartAsPNG(baos, jFreeChart,1024,768);
-			// ChartUtilities.saveChartAsPNG(file, jFreeChart, 650, 400);
-			ByteArrayInputStream bais = new ByteArrayInputStream(
-					baos.toByteArray());
-			setGrafico(new DefaultStreamedContent(bais));
-			rendered = true;
+				
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -239,22 +307,7 @@ public class ImportMB {
 		return renderDadosPlanilhaEscolhida;
 	}
 
-	public String getColunaRotulo() {
-		return colunaRotulo;
-	}
-
-	public void setColunaRotulo(String colunaRotulo) {
-		this.colunaRotulo = colunaRotulo;
-	}
-
-	public String getColunaValor() {
-		return colunaValor;
-	}
-
-	public void setColunaValor(String colunaValor) {
-		this.colunaValor = colunaValor;
-	}
-
+	
 	public void setGrafico(StreamedContent grafico) {
 		this.grafico = grafico;
 	}
@@ -269,6 +322,46 @@ public class ImportMB {
 
 	public boolean isRendered() {
 		return rendered;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
+
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public Coluna getColunaRotulo() {
+		return colunaRotulo;
+	}
+
+	public void setColunaRotulo(Coluna colunaRotulo) {
+		this.colunaRotulo = colunaRotulo;
+	}
+
+	public Coluna getColunaValor() {
+		return colunaValor;
+	}
+
+	public void setColunaValor(Coluna colunaValor) {
+		this.colunaValor = colunaValor;
+	}
+
+	public void setActiveTab(int activeTab) {
+		this.activeTab = activeTab;
+	}
+
+	public int getActiveTab() {
+		return activeTab;
+	}
+
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
+
+	public int getProgress() {
+		return progress;
 	}
 
 }
