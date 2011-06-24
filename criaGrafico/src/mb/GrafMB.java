@@ -12,6 +12,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletRequest;
 
 import modelo.DadosDoisEixos;
@@ -40,6 +41,8 @@ public class GrafMB {
 	private String labelPosition;
 	private StreamedContent grafico;
 	private StreamedContent graficoDownload;
+	private String cor;
+	private boolean renderCor;
 
 	public GrafMB() {
 		// TODO Auto-generated constructor stub
@@ -54,13 +57,29 @@ public class GrafMB {
 		dado = new DadosDoisEixos();
 		dados = new ArrayList<DadosDoisEixos>();
 		rendered = false;
+		renderCor = true;
 	}
 
 	public String preGraficoMB() {
 		reinit();
 		return "grafico.xhtml?faces-redirect=true";
 	}
-
+	
+	public void mudaTipo(ValueChangeEvent event) {
+		int valor = (Integer) event.getNewValue();
+		switch (valor) {
+			case 1:
+				renderCor = true;
+				break;
+			case 2:
+				renderCor = true;
+				break;
+			case 3:
+				renderCor = false;
+				break;
+		}
+		
+	}
 	public void processa() {
 		try {
 			JFreeChart jFreeChart = null;
@@ -69,22 +88,22 @@ public class GrafMB {
 				if (!enable3D) {
 
 					jFreeChart = BarChartFactory.getChart(titulo, labelX,
-							labelY, dados);
+							labelY, dados,cor);
 					stringTipo = "Barra";
 				} else {
 					jFreeChart = BarChartFactory.getChart3D(titulo, labelX,
-							labelY, dados);
+							labelY, dados,cor);
 					stringTipo = "Barra3d";
 				}
 				break;
 			case 2:
 				if (!enable3D) {
 					jFreeChart = LineChartFactory.getChart(titulo, labelX,
-							labelY, dados);
+							labelY, dados,cor);
 					stringTipo = "Linha";
 				} else {
 					jFreeChart = LineChartFactory.getChart3D(titulo, labelX,
-							labelY, dados);
+							labelY, dados,cor);
 					stringTipo = "Linha3d";
 				}
 				break;
@@ -217,6 +236,22 @@ public class GrafMB {
 
 	public StreamedContent getGraficoDownload() {
 		return graficoDownload;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
+	}
+
+	public String getCor() {
+		return cor;
+	}
+
+	public void setRenderCor(boolean renderCor) {
+		this.renderCor = renderCor;
+	}
+
+	public boolean isRenderCor() {
+		return renderCor;
 	}
 
 }
