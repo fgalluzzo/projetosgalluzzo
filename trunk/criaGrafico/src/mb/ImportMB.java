@@ -61,7 +61,7 @@ public class ImportMB {
 	private boolean rendered;
 	private UploadedFile file;
 	private int activeTab;
-	private int progress;
+	private Integer progress;
 	private String cor;
 	private Color color;
 	private int tipo;
@@ -84,6 +84,7 @@ public class ImportMB {
 		tipo=0;
 		enable3D = false;
 		color = null;
+		progress = new Integer(0);
 	}
 
 	public String preImport() {
@@ -161,7 +162,10 @@ public class ImportMB {
 		}
 	}
 	public void tabChangedListener(TabChangeEvent event){
-		activeTab = TAB_CONFIGURACOES;
+		setActiveTab(TAB_CONFIGURACOES); 
+	}
+	public void onComplete(){
+		setProgress(0);
 	}
 	public void continuar() {
 		FileInputStream fis;
@@ -187,7 +191,7 @@ public class ImportMB {
 
 	public void gerarGrafico() {
 		try {
-			progress = 0;
+			setProgress(0);
 			if (colunaRotulo.getCabecalho() != null
 					&& colunaValor.getCabecalho() != null
 					&& !colunaRotulo.getCabecalho().isEmpty()
@@ -195,7 +199,7 @@ public class ImportMB {
 				HSSFSheet sheet = planilhaEscolhida.getSheet();
 				Iterator iter = sheet.rowIterator();
 				ArrayList<DadosDoisEixos> dados = new ArrayList<DadosDoisEixos>();
-				progress = 10;
+				setProgress(10);
 				while (iter.hasNext()) {
 					HSSFRow row = (HSSFRow) iter.next();
 					Iterator cellIter = row.cellIterator();
@@ -241,7 +245,7 @@ public class ImportMB {
 					}
 
 				}
-				progress = 25;
+				setProgress(25);
 				JFreeChart jFreeChart = null;
 				switch (tipo) {
 				case 0:
@@ -317,17 +321,17 @@ public class ImportMB {
 				 * FileInputStream( file), "image/png",
 				 * "GraficoDe"+stringTipo+"-"+titulo.hashCode() + ".png");
 				 */
-				progress = 50;
+				setProgress(50);
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				ChartUtilities.writeChartAsPNG(baos, jFreeChart, 750, 600);
 				// ChartUtilities.saveChartAsPNG(file, jFreeChart, 650, 400);
 				ByteArrayInputStream bais = new ByteArrayInputStream(
 						baos.toByteArray());
-				progress = 75;
+				setProgress(75);
 				setGrafico(new DefaultStreamedContent(bais));
 				rendered = true;
-				setActiveTab(TAB_GRAFICO);
-				progress = 100;
+				setProgress(100);
+				setActiveTab(TAB_GRAFICO);				
 			} else {
 				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN,
 						MessagesReader.getMessages().getProperty(

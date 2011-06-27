@@ -131,8 +131,8 @@
 								<p:spacer height="30"></p:spacer>
 								<p:commandButton value="#{msg.geraGrafico}"
 									rendered="#{importMB.renderDadosPlanilhaEscolhida}"
-									action="#{importMB.gerarGrafico}" update="frmGraf,msgs,tbView"
-									onstart="dlgStatus.show()" oncomplete="dlgStatus.hide()">
+									action="#{importMB.gerarGrafico}" update="msgs,frmGraf,tbView"
+									onstart="dlgStatus.show()"  onclick="pbAjax.start();" >
 								</p:commandButton>
 								<p:commandButton value="#{msg.reiniciar}"
 									rendered="#{importMB.renderDadosPlanilhaEscolhida}"
@@ -160,8 +160,11 @@
 				</p:tab>
 
 			</p:tabView></div>
-			<p:dialog modal="true" widgetVar="dlgStatus">
-				<p:progressBar ajax="true" value="#{importMB.progress}"></p:progressBar>
+			<p:dialog header="#{msg.processando}" modal="true" widgetVar="dlgStatus">
+				<p:progressBar widgetVar="pbAjax" ajax="true"
+					completeListener="#{importMB.onComplete}"
+					oncomplete="dlgStatus.hide()" value="#{importMB.progress}">
+				</p:progressBar>
 			</p:dialog>
 		</ui:define>
 	</ui:composition>
