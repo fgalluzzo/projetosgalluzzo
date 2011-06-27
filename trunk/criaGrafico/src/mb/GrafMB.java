@@ -88,22 +88,22 @@ public class GrafMB {
 				if (!enable3D) {
 
 					jFreeChart = BarChartFactory.getChart(titulo, labelX,
-							labelY, dados,cor);
+							labelY, dados);
 					stringTipo = "Barra";
 				} else {
 					jFreeChart = BarChartFactory.getChart3D(titulo, labelX,
-							labelY, dados,cor);
+							labelY, dados);
 					stringTipo = "Barra3d";
 				}
 				break;
 			case 2:
 				if (!enable3D) {
 					jFreeChart = LineChartFactory.getChart(titulo, labelX,
-							labelY, dados,cor);
+							labelY, dados);
 					stringTipo = "Linha";
 				} else {
 					jFreeChart = LineChartFactory.getChart3D(titulo, labelX,
-							labelY, dados,cor);
+							labelY, dados);
 					stringTipo = "Linha3d";
 				}
 				break;

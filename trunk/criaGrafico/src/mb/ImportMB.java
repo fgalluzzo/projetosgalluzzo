@@ -31,20 +31,23 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryLabelPositions;
 import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.TabChangeEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import util.MessagesReader;
 
+import factoryImpl.BarChartFactory;
 import factoryImpl.LineChartFactory;
+import factoryImpl.PieChartFactory;
 
 @ManagedBean(name = "importMB")
 @SessionScoped
 public class ImportMB {
 	private final int TAB_CONFIGURACOES = 0;
 	private final int TAB_GRAFICO = 1;
-	
+
 	private File arquivo;
 	private ArrayList<Sheet> sheets;
 	private Sheet planilhaEscolhida;
@@ -59,6 +62,12 @@ public class ImportMB {
 	private UploadedFile file;
 	private int activeTab;
 	private int progress;
+	private String cor;
+	private Color color;
+	private int tipo;
+	private String stringTipo;
+	private boolean enable3D;
+	private boolean planilhaSemDados;
 
 	private void reinit() {
 		arquivo = null;
@@ -69,9 +78,12 @@ public class ImportMB {
 		colunaRotuloIndex = 0;
 		colunaValorIndex = 0;
 		colunaRotulo = new Coluna();
-		colunaValor= new Coluna();
+		colunaValor = new Coluna();
 		rendered = false;
 		activeTab = TAB_CONFIGURACOES;
+		tipo=0;
+		enable3D = false;
+		color = null;
 	}
 
 	public String preImport() {
@@ -85,7 +97,10 @@ public class ImportMB {
 		colunaRotulo = new Coluna();
 		colunaValor = new Coluna();
 		rendered = false;
-		
+		tipo=0;
+		enable3D = false;
+		color = null;
+
 	}
 
 	public void upload(FileUploadEvent e) {
@@ -119,7 +134,7 @@ public class ImportMB {
 	public void listenerX(DragDropEvent event) {
 		Coluna coluna = (Coluna) event.getData();
 		colunaRotulo.setCabecalho(coluna.getCabecalho());
-		
+
 	}
 
 	public void listenerY(DragDropEvent event) {
@@ -130,17 +145,23 @@ public class ImportMB {
 							.getProperty("erroTipoNumerico"), MessagesReader
 							.getMessages().getProperty("erroTipoNumerico"));
 			FacesContext.getCurrentInstance().addMessage(null, msg);
-			colunaValor  = new Coluna();
-		} else 
+			colunaValor = new Coluna();
+		} else
 			colunaValor.setCabecalho(coluna.getCabecalho());
 	}
+
 	public void back(DragDropEvent event) {
 		Coluna coluna = (Coluna) event.getData();
-		if( colunaValor.getCabecalho() != null && colunaValor.getCabecalho().equals(coluna.getCabecalho())){
+		if (colunaValor.getCabecalho() != null
+				&& colunaValor.getCabecalho().equals(coluna.getCabecalho())) {
 			colunaValor = new Coluna();
-		} else if(colunaRotulo.getCabecalho() != null && colunaRotulo.getCabecalho().equals(coluna.getCabecalho())) {
+		} else if (colunaRotulo.getCabecalho() != null
+				&& colunaRotulo.getCabecalho().equals(coluna.getCabecalho())) {
 			colunaRotulo = new Coluna();
 		}
+	}
+	public void tabChangedListener(TabChangeEvent event){
+		activeTab = TAB_CONFIGURACOES;
 	}
 	public void continuar() {
 		FileInputStream fis;
@@ -167,7 +188,10 @@ public class ImportMB {
 	public void gerarGrafico() {
 		try {
 			progress = 0;
-			if(colunaRotulo.getCabecalho()!=null && colunaValor.getCabecalho() !=null && !colunaRotulo.getCabecalho().isEmpty() && !colunaValor.getCabecalho().isEmpty()){
+			if (colunaRotulo.getCabecalho() != null
+					&& colunaValor.getCabecalho() != null
+					&& !colunaRotulo.getCabecalho().isEmpty()
+					&& !colunaValor.getCabecalho().isEmpty()) {
 				HSSFSheet sheet = planilhaEscolhida.getSheet();
 				Iterator iter = sheet.rowIterator();
 				ArrayList<DadosDoisEixos> dados = new ArrayList<DadosDoisEixos>();
@@ -181,22 +205,23 @@ public class ImportMB {
 
 						HSSFCell cell = (HSSFCell) cellIter.next();
 						if (row.getRowNum() == sheet.getFirstRowNum()) {
-							if (cell.getStringCellValue().equals(colunaRotulo.getCabecalho())) {
+							if (cell.getStringCellValue().equals(
+									colunaRotulo.getCabecalho())) {
 								discard = true;
 								colunaRotuloIndex = cell.getColumnIndex();
-							} else if (cell.getStringCellValue()
-									.equals(colunaValor.getCabecalho())) {
+							} else if (cell.getStringCellValue().equals(
+									colunaValor.getCabecalho())) {
 								discard = true;
 								colunaValorIndex = cell.getColumnIndex();
 							}
 						} else {
 							if (cell.getColumnIndex() == colunaRotuloIndex) {
-								if(cell.getCellType() == cell.CELL_TYPE_NUMERIC){
-									dado.setX(String.valueOf(cell.getNumericCellValue()));
-								} else if(cell.getCellType() == cell.CELL_TYPE_STRING) {
+								if (cell.getCellType() == cell.CELL_TYPE_NUMERIC) {
+									dado.setX(String.valueOf(cell
+											.getNumericCellValue()));
+								} else if (cell.getCellType() == cell.CELL_TYPE_STRING) {
 									dado.setX(cell.getStringCellValue());
 								}
-								
 
 							} else if (cell.getColumnIndex() == colunaValorIndex) {
 								if (cell.getCellType() == cell.CELL_TYPE_STRING)
@@ -217,25 +242,80 @@ public class ImportMB {
 
 				}
 				progress = 25;
-				JFreeChart jFreeChart = LineChartFactory.getChart("Gráfico "
-						+ nomeArquivo.substring(0, nomeArquivo.lastIndexOf(".")),
-						colunaRotulo.getCabecalho(), colunaValor.getCabecalho(), dados,
-						CategoryLabelPositions.STANDARD);
+				JFreeChart jFreeChart = null;
+				switch (tipo) {
+				case 0:
+					if (!enable3D) {
+
+						jFreeChart = BarChartFactory.getChart(
+								"Gráfico "
+										+ nomeArquivo.substring(0,
+												nomeArquivo.lastIndexOf(".")),
+								colunaRotulo.getCabecalho(),
+								colunaValor.getCabecalho(), dados, color);
+						stringTipo = "Barra";
+					} else {
+						jFreeChart = BarChartFactory.getChart3D(
+								"Gráfico "
+										+ nomeArquivo.substring(0,
+												nomeArquivo.lastIndexOf(".")),
+								colunaRotulo.getCabecalho(),
+								colunaValor.getCabecalho(), dados, color);
+						stringTipo = "Barra3d";
+					}
+					break;
+				case 1:
+					if (!enable3D) {
+						jFreeChart = LineChartFactory.getChart(
+								"Gráfico "
+										+ nomeArquivo.substring(0,
+												nomeArquivo.lastIndexOf(".")),
+								colunaRotulo.getCabecalho(),
+								colunaValor.getCabecalho(), dados,
+								CategoryLabelPositions.STANDARD, color);
+						stringTipo = "Linha";
+					} else {
+						jFreeChart = LineChartFactory.getChart3D(
+								"Gráfico "
+										+ nomeArquivo.substring(0,
+												nomeArquivo.lastIndexOf(".")),
+								colunaRotulo.getCabecalho(),
+								colunaValor.getCabecalho(), dados,
+								CategoryLabelPositions.STANDARD, color);
+						stringTipo = "Linha3d";
+					}
+					break;
+				case 2:
+					if (!enable3D) {
+						jFreeChart = PieChartFactory.getChart("Gráfico "
+								+ nomeArquivo.substring(0,
+										nomeArquivo.lastIndexOf(".")), dados);
+						stringTipo = "Torta";
+					} else {
+						jFreeChart = PieChartFactory.getChart3D("Gráfico "
+								+ nomeArquivo.substring(0,
+										nomeArquivo.lastIndexOf(".")), dados);
+						stringTipo = "Torta3d";
+					}
+					break;
+
+				}
+				
 				jFreeChart.setBackgroundPaint(Color.white);
 				jFreeChart.setBackgroundImageAlpha(Color.TRANSLUCENT);
 				/*
 				 * String filePath = FacesContext.getCurrentInstance()
-				 * .getExternalContext().getRealPath("/WEB-INF/"); File file = new
-				 * File(filePath + "/grafico"); if (!file.exists()) {
+				 * .getExternalContext().getRealPath("/WEB-INF/"); File file =
+				 * new File(filePath + "/grafico"); if (!file.exists()) {
 				 * 
 				 * file.createNewFile();
 				 * 
 				 * }
 				 */
 				/*
-				 * graficoDownload = new DefaultStreamedContent(new FileInputStream(
-				 * file), "image/png", "GraficoDe"+stringTipo+"-"+titulo.hashCode()
-				 * + ".png");
+				 * graficoDownload = new DefaultStreamedContent(new
+				 * FileInputStream( file), "image/png",
+				 * "GraficoDe"+stringTipo+"-"+titulo.hashCode() + ".png");
 				 */
 				progress = 50;
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -250,15 +330,15 @@ public class ImportMB {
 				progress = 100;
 			} else {
 				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN,
-						MessagesReader.getMessages()
-								.getProperty("naoPodeGerarGrafico"), MessagesReader
-								.getMessages().getProperty("naoPodeGerarGrafico"));
+						MessagesReader.getMessages().getProperty(
+								"naoPodeGerarGrafico"), MessagesReader
+								.getMessages().getProperty(
+										"naoPodeGerarGrafico"));
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 				rendered = false;
-				
+
 			}
-				
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -290,7 +370,14 @@ public class ImportMB {
 	}
 
 	public void setPlanilhaEscolhida(Sheet planilhaEscolhida) {
-		this.renderDadosPlanilhaEscolhida = true;
+		if(planilhaEscolhida.getRows()>0){
+			this.renderDadosPlanilhaEscolhida = true;
+			this.planilhaSemDados = false;
+		} else{
+			this.renderDadosPlanilhaEscolhida = false;
+			this.planilhaSemDados = true;
+		}
+			
 		this.planilhaEscolhida = planilhaEscolhida;
 	}
 
@@ -307,7 +394,6 @@ public class ImportMB {
 		return renderDadosPlanilhaEscolhida;
 	}
 
-	
 	public void setGrafico(StreamedContent grafico) {
 		this.grafico = grafico;
 	}
@@ -362,6 +448,46 @@ public class ImportMB {
 
 	public int getProgress() {
 		return progress;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
+	}
+
+	public String getCor() {
+		return cor;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
+
+	public int getTipo() {
+		return tipo;
+	}
+
+	public boolean isEnable3D() {
+		return enable3D;
+	}
+
+	public void setEnable3D(boolean enable3d) {
+		enable3D = enable3d;
+	}
+
+	public void setPlanilhaSemDados(boolean planilhaSemDados) {
+		this.planilhaSemDados = planilhaSemDados;
+	}
+
+	public boolean isPlanilhaSemDados() {
+		return planilhaSemDados;
 	}
 
 }
