@@ -167,6 +167,9 @@ public class ImportMB {
 	public void onComplete(){
 		setProgress(0);
 	}
+	public void onCancel(){
+		setProgress(0);
+	}
 	public void continuar() {
 		FileInputStream fis;
 		try {
@@ -238,8 +241,8 @@ public class ImportMB {
 						}
 
 					}
-
-					if (!discard) {
+					
+					if (!discard && dado.getX()!= null && dado.getY() != null) {
 						dado.setNome("");
 						dados.add(dado);
 					}
@@ -346,7 +349,16 @@ public class ImportMB {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_FATAL,
+					MessagesReader.getMessages().getProperty(
+							"erroGeracaoGrafico"), MessagesReader
+							.getMessages().getProperty(
+									"erroGeracaoGrafico"));
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			rendered = false;
+		} 
 	}
 
 	public void setArquivo(File arquivo) {
