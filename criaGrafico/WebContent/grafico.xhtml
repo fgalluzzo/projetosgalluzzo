@@ -3,8 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.prime.com.tr/ui"
-	>
+	xmlns:p="http://primefaces.prime.com.tr/ui">
 
 <h:head>
 	<title></title>
@@ -12,115 +11,125 @@
 	<meta name="description" content="" />
 	<link href="recursos/style.css" rel="stylesheet" type="text/css"
 		media="screen" />
-	<script type="text/javascript" src="recursos/js/util.js"  />
+	<script type="text/javascript" src="recursos/js/util.js" />
 </h:head>
 <h:body>
 
 	<ui:composition template="/template/common-sidebar.xhtml">
-	
-		<ui:define name="content">
-			
-			<h:form id="frm" >				
-				<div class="post">
-				<!-- Gráfico  -->
-				<h3><h:outputText  id="titulo" value="#{grafMB.titulo}" /></h3>		
-					<p:graphicImage rendered="#{grafMB.rendered}" cache="false" id="img" value="#{grafMB.grafico}" />
-								
-				</div> 
-				<div style="text-align: right;">
-					 
-						<p:commandLink rendered="#{grafMB.rendered}" ajax="false" title="Download">  
-						    <p:graphicImage value="recursos/images/download.png" />  
-						    <p:fileDownload value="#{grafMB.graficoDownload}" />						     
-						</p:commandLink>
-						<p:spacer width="10"></p:spacer>
-						<h:outputLink rendered="#{grafMB.rendered}" title="#{msg.imprimir}" id="lnk" value="#"> 
-							<p:printer target="img"></p:printer>
-							<p:graphicImage value="recursos/images/impressora.gif" />  
-						</h:outputLink>
 
-				</div>   	
+		<ui:define name="content">
+
+			<h:form id="frm">
+				<div class="post"><!-- Gráfico  -->
+				<h3><h:outputText id="titulo" value="#{grafMB.titulo}" /></h3>
+				<p:graphicImage rendered="#{grafMB.rendered}" cache="false" id="img"
+					value="#{grafMB.grafico}" /></div>
+				<div style="text-align: right;"><p:commandLink
+					rendered="#{grafMB.rendered}" ajax="false" title="Download">
+					<p:graphicImage value="recursos/images/download.png" />
+					<p:fileDownload value="#{grafMB.graficoDownload}" />
+				</p:commandLink> <p:spacer width="10"></p:spacer> <h:outputLink
+					rendered="#{grafMB.rendered}" title="#{msg.imprimir}" id="lnk"
+					value="#">
+					<p:printer target="img"></p:printer>
+					<p:graphicImage value="recursos/images/impressora.gif" />
+				</h:outputLink></div>
 			</h:form>
 		</ui:define>
-		
-		
-		
+
+
+
 		<ui:define name="sidebar">
 			<h:form prependId="false" id="frmInput">
 				<!-- Dados gerais -->
-				<h:outputLabel for="title" value="#{msg.title}" />
-				<p:inputText required="true" id="title" value="#{grafMB.titulo}" />
-				 <p:tooltip for="title" value="#{msg.tooltip_titulo}"  
-               showEvent="focus" hideEvent="blur"/>  
-				
-				<h:outputLabel for="eixoX" value="#{msg.eixoX}" />
-				<p:inputText required="true" id="eixoX" value="#{grafMB.labelX}" />
-				<p:tooltip for="eixoX" value="#{msg.tooltip_labelX}"  
-               showEvent="focus" hideEvent="blur"/>  
-				
-				<h:outputLabel for="eixoY" value="#{msg.eixoY}" />
-				<p:inputText required="true" id="eixoY" value="#{grafMB.labelY}" />
-				<p:tooltip for="eixoY" value="#{msg.tooltip_labelY}"  
-               showEvent="focus" hideEvent="blur"/>  
-				
+
+				<h:panelGrid>
+					<h:outputLabel for="title" value="#{msg.title}" />
+					<p:inputText required="true" id="title" value="#{grafMB.titulo}" />
+
+					
+
+					<h:outputLabel for="eixoX" value="#{msg.eixoX}" />
+					<p:inputText required="true" id="eixoX" value="#{grafMB.labelX}" />
+
+					
+
+					<h:outputLabel for="eixoY" value="#{msg.eixoY}" />
+					<p:inputText required="true" id="eixoY" value="#{grafMB.labelY}" />
+
+					
+				</h:panelGrid>
+				<h:panelGrid columns="2">
 				<h:outputLabel for="tipo" value="#{msg.tipo}"></h:outputLabel>
-				
-				<p:selectOneMenu id="tipo" value="#{grafMB.tipo}"  valueChangeListener="#{grafMB.mudaGrafico}" >
-					<f:ajax render="frmInput"></f:ajax>							
+				<h:selectOneMenu id="tipo" value="#{grafMB.tipo}">
 					<f:selectItem id="item1" itemLabel="#{msg.barra}" itemValue="1"></f:selectItem>
 					<f:selectItem id="item2" itemLabel="#{msg.linha}" itemValue="2"></f:selectItem>
 					<f:selectItem id="item3" itemLabel="#{msg.torta}" itemValue="3"></f:selectItem>
-				</p:selectOneMenu>
-				<p:tooltip for="tipo" value="#{msg.tooltip_tipo}" />  
-				
-				<br />				
-				<h:outputLabel for="e3d" value="#{msg.ativar3d}"></h:outputLabel>
-				<p:selectBooleanCheckbox id="e3d"  value="#{grafMB.enable3D}"></p:selectBooleanCheckbox>
-				
-				<p:tooltip for="e3d" value="#{msg.tooltip_3d}" />  
-				<br />
-				<h:outputLabel id="lblCor" rendered="#{grafMB.renderCor}" for="cor" value="Cor"></h:outputLabel>
-				<p:colorPicker rendered="#{grafMB.renderCor}" id="cor" value="#{grafMB.cor}" ></p:colorPicker>
+				</h:selectOneMenu>
+	
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+
+					<h:outputLabel for="e3d" value="#{msg.ativar3d}"></h:outputLabel>
+					<p:selectBooleanCheckbox id="e3d" value="#{grafMB.enable3D}"></p:selectBooleanCheckbox>
+				</h:panelGrid>
+
+
+				<!-- tooltips -->
+				<p:tooltip for="title" value="#{msg.tooltip_titulo}"
+					showEvent="focus" hideEvent="blur" />
+				<p:tooltip for="eixoX" value="#{msg.tooltip_labelX}"
+					showEvent="focus" hideEvent="blur" />
+				<p:tooltip for="eixoY" value="#{msg.tooltip_labelY}"
+					showEvent="focus" hideEvent="blur" />
+				<p:tooltip for="tipo" value="#{msg.tooltip_tipo}" />
+				<p:tooltip for="e3d" value="#{msg.tooltip_3d}" />
 				<br />
 				<br />
 				<!-- Área de inserção de dados -->
-				<p:fieldset legend="#{msg.adicioneDados}" >
-				
-				<h:panelGrid id="addValor" columns="3">
-					<h:outputLabel for="nome" value="#{msg.serie}" />
-					<p:inputText  id="nome" size="14"  value="#{grafMB.dado.nome}" />
-					<p:tooltip for="nome" value="#{msg.tooltip_serie}" showEvent="focus" hideEvent="blur" />
-			
-					<h:outputLabel for="label" value="#{msg.label}" />
-					<p:inputText  id="label" size="10"  value="#{grafMB.dado.x}" />
-					<p:tooltip for="label" value="#{msg.tooltip_rotulo}" showEvent="focus" hideEvent="blur"/>
-					
-					<h:outputLabel for="valor" value="#{msg.valor}" />
-					<p:inputText    id="valor" size="5"  value="#{grafMB.dado.y}" >						
-					</p:inputText>
-					<p:tooltip for="valor" value="#{msg.tooltip_valor}" showEvent="focus" hideEvent="blur"/>
-				</h:panelGrid>
-				
-				<br />
-				<p:commandButton value="#{msg.addDados}" action="#{grafMB.add}" 
-						update="valores,addValor,frm" oncomplete="javascript: document.getElementById('label').focus();" >
-					<p:collector  value="#{grafMB.dado}" addTo="#{grafMB.dados}"></p:collector>
-				</p:commandButton>
-			
+				<p:fieldset legend="#{msg.adicioneDados}">
+
+					<h:panelGrid id="addValor" columns="3">
+						<h:outputLabel for="nome" value="#{msg.serie}" />
+						<p:inputText id="nome" size="14" value="#{grafMB.dado.nome}" />
+						<p:tooltip for="nome" value="#{msg.tooltip_serie}"
+							showEvent="focus" hideEvent="blur" />
+
+						<h:outputLabel for="label" value="#{msg.label}" />
+						<p:inputText id="label" size="10" value="#{grafMB.dado.x}" />
+						<p:tooltip for="label" value="#{msg.tooltip_rotulo}"
+							showEvent="focus" hideEvent="blur" />
+
+						<h:outputLabel for="valor" value="#{msg.valor}" />
+						<p:inputText id="valor" size="5" value="#{grafMB.dado.y}">
+						</p:inputText>
+						<p:tooltip for="valor" value="#{msg.tooltip_valor}"
+							showEvent="focus" hideEvent="blur" />
+					</h:panelGrid>
+
+					<br />
+					<p:commandButton value="#{msg.addDados}" action="#{grafMB.add}"
+						update="valores,addValor,frm"
+						oncomplete="javascript: document.getElementById('label').focus();">
+						<p:collector value="#{grafMB.dado}" addTo="#{grafMB.dados}"></p:collector>
+					</p:commandButton>
+
 				</p:fieldset>
 				<!-- opções para geração do gráfico ou para resetar os dados -->
-				<h:panelGrid columns="2">					
-					<p:commandButton action="#{grafMB.processa}" 
+				<h:panelGrid columns="2">
+					<p:commandButton action="#{grafMB.processa}"
 						value="#{msg.geraGrafico}" update="frm,img" />
-					<p:commandButton action="#{grafMB.reinit}" value="#{msg.limpar}"  update="frm,frmInput"></p:commandButton>
+					<p:commandButton action="#{grafMB.reinit}" value="#{msg.limpar}"
+						update="frm,frmInput"></p:commandButton>
 				</h:panelGrid>
 				<br />
-				<p:separator ></p:separator>	
-				<br />				
-				<!-- tabela com os dados inseridos -->				
+				<p:separator></p:separator>
+				<br />
+				<!-- tabela com os dados inseridos -->
 				<p:outputPanel id="valores">
-					<p:dataTable emptyMessage="#{msg.nenhumDado}" value="#{grafMB.dados}" var="dado">
-						
+					<p:dataTable emptyMessage="#{msg.nenhumDado}"
+						value="#{grafMB.dados}" var="dado">
+
 						<p:column>
 							<f:facet name="header">
 								<h:outputText value="#{msg.serie}" />
@@ -133,24 +142,24 @@
 							</f:facet>
 							<h:outputText value="#{dado.x}" />
 						</p:column>
-						<p:column >
+						<p:column>
 							<f:facet name="header">
 								<h:outputText value="#{msg.valor}" />
 							</f:facet>
 							<h:outputText value="#{dado.y}" />
-						</p:column>			
-						<p:column >						
+						</p:column>
+						<p:column>
 							<p:commandLink update="valores" value="X">
 								<p:collector value="#{dado}" removeFrom="#{grafMB.dados}"></p:collector>
 							</p:commandLink>
 						</p:column>
-						
+
 					</p:dataTable>
 				</p:outputPanel>
-				
-				<br />			
-											
-		
+
+				<br />
+
+
 			</h:form>
 		</ui:define>
 
