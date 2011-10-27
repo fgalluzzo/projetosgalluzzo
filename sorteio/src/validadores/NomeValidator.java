@@ -27,7 +27,7 @@ public class NomeValidator implements Validator {
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(message);
 		}
-		Pattern p = Pattern.compile("^[a-zA-Z]+$");
+		Pattern p = Pattern.compile("^[a-zA-Z]+[\\sa-zA-Z]+$");
 		// Match the given string with the pattern
 		Matcher m = p.matcher(nome);
 
