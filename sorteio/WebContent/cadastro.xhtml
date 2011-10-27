@@ -16,7 +16,7 @@
 	<ui:composition template="template/common.xhtml">
 		<ui:define name="content">
 			<h:form id="frmCadast">
-				<p:wizard widgetVar="wiz"  nextLabel="#{msg.proximo}" backLabel="#{msg.anterior}"  showStepStatus="true">
+				<p:wizard widgetVar="wiz"   nextLabel="#{msg.proximo}" backLabel="#{msg.anterior}"  showStepStatus="true">
 					<p:tab id="dadosPessoais" title="#{msg.dadosPessoais}">
 						<p:panel>
 							<p:messages></p:messages>
@@ -55,19 +55,25 @@
 						</p:panel>
 					</p:tab>
 					<p:tab id="grupo" title="#{msg.dadosGrupo}">
-						<p:panel>
+						<p:panel id="grupoPnl">
 							<p:messages></p:messages>
 							<h:panelGrid columns="2">
 								<h:outputLabel for="nomeGrupo" value="#{msg.nome}" />
-								<p:inputText id="nomeGrupo" validator="validaGrupoExistente" value="#{usuarioMB.usuario.grupo.nome}"></p:inputText>
+								<p:inputText  required="#{usuarioMB.nomeGrupoRequired}" requiredMessage="#{msg.erroNomeGrupoRequerido}" id="nomeGrupo" value="#{usuarioMB.usuario.grupo.nome}">
+									<f:validator for="nomeGrupo" validatorId="validaGrupoExistente"></f:validator>									
+								</p:inputText>
 								
 								<h:outputLabel for="codGrupo" value="#{msg.codigo}"/>
-								<p:inputText id="codGrupo" value="#{usuarioMB.codigoGrupo}" validator="validaCodigoGrupo"/>						
+								<p:inputText   id="codGrupo" value="#{usuarioMB.codigoGrupo}" validator="validaCodigoGrupo">
+									<p:ajax  listener="#{usuarioMB.requererNomeGrupo}" event="blur"
+                                                                update="nomeGrupo" />
+
+								</p:inputText>	
+												
 							</h:panelGrid>
 							<p:separator></p:separator>
 							<h:outputText value="#{msg.msgGrupo}"/>		
-							<h:outputText value="#{msg.msgGrupo2}"/>	
-							<h:outputText value="#{msg.msgGrupo3}"/>	
+							<h:outputText value="#{msg.msgGrupo2}"/>					
 						</p:panel>
 					</p:tab>
 					<p:tab id="confima" title="#{msg.confirmacao}">

@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 
 import modelo.Grupo;
 import modelo.Usuario;
@@ -23,15 +24,18 @@ public class UsuarioMB {
 	private Usuario usuario;
 	private TimeZone timeZone = TimeZone.getTimeZone("America/Sao_Paulo");
 	private String codigoGrupo;
+	private boolean nomeGrupoRequired;
 
 	public UsuarioMB() {
 		usuario = new Usuario();
 		usuario.setGrupo(new Grupo());
+		nomeGrupoRequired = true;
 	}
 
 	public String preCadast() {
 		usuario = new Usuario();
 		usuario.setGrupo(new Grupo());
+		nomeGrupoRequired = true;
 		return "cadastro?faces-redirect=true";
 	}
 
@@ -85,7 +89,13 @@ public class UsuarioMB {
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, message);
 	}
-
+	public void requererNomeGrupo() {		
+		if(!codigoGrupo.trim().equals("")){
+			nomeGrupoRequired = false;
+		} else {
+			nomeGrupoRequired = true;
+		}
+	}
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -108,5 +118,13 @@ public class UsuarioMB {
 
 	public void setCodigoGrupo(String codigoGrupo) {
 		this.codigoGrupo = codigoGrupo;
+	}
+
+	public boolean isNomeGrupoRequired() {
+		return nomeGrupoRequired;
+	}
+
+	public void setNomeGrupoRequired(boolean nomeGrupoRequired) {
+		this.nomeGrupoRequired = nomeGrupoRequired;
 	}
 }
